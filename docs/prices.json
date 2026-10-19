@@ -1,0 +1,1912 @@
+{
+ "revision": "c48ce454ae6c4c65",
+ "generated_from": "catalog revision c48ce454ae6c4c65, price book 2",
+ "prices": {
+  "version": "2",
+  "effective_at": "2026-10-17T11:00:33.380Z",
+  "currency": "USD"
+ },
+ "base_url": "https://api.dataxapi.com",
+ "rules": {
+  "failed_call": "not charged",
+  "object_not_found": "not charged",
+  "next_page": "a new call, charged on its own",
+  "empty_result": "charged what `charge_when_empty` says for the endpoint"
+ },
+ "endpoints": [
+  {
+   "id": "douyin.comments.replies.list",
+   "path": "/v1/douyin/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/comments/replies/list/"
+  },
+  {
+   "id": "douyin.hashtags.videos.list",
+   "path": "/v1/douyin/hashtags/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/hashtags/videos/list/"
+  },
+  {
+   "id": "bilibili.comments.replies.list",
+   "path": "/v1/bilibili/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/comments/replies/list/"
+  },
+  {
+   "id": "bilibili.trends.list",
+   "path": "/v1/bilibili/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/trends/list/"
+  },
+  {
+   "id": "bilibili.users.get",
+   "path": "/v1/bilibili/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/bilibili/users/get/"
+  },
+  {
+   "id": "bilibili.users.videos.list",
+   "path": "/v1/bilibili/users/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/users/videos/list/"
+  },
+  {
+   "id": "bilibili.videos.comments.list",
+   "path": "/v1/bilibili/videos/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/comments/list/"
+  },
+  {
+   "id": "bilibili.videos.get",
+   "path": "/v1/bilibili/videos/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/get/"
+  },
+  {
+   "id": "bilibili.videos.search",
+   "path": "/v1/bilibili/videos/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/search/"
+  },
+  {
+   "id": "bilibili.videos.trending",
+   "path": "/v1/bilibili/videos/trending",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/trending/"
+  },
+  {
+   "id": "douyin.index.brands.history",
+   "path": "/v1/douyin/index/brands/history",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/index/brands/history/"
+  },
+  {
+   "id": "douyin.index.brands.metrics",
+   "path": "/v1/douyin/index/brands/metrics",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/index/brands/metrics/"
+  },
+  {
+   "id": "douyin.index.creators.videos.list",
+   "path": "/v1/douyin/index/creators/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/index/creators/videos/list/"
+  },
+  {
+   "id": "douyin.index.creators.audience.get",
+   "path": "/v1/douyin/index/creators/audience/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/index/creators/audience/get/"
+  },
+  {
+   "id": "douyin.index.creators.metrics",
+   "path": "/v1/douyin/index/creators/metrics",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/index/creators/metrics/"
+  },
+  {
+   "id": "douyin.index.keywords.audience.get",
+   "path": "/v1/douyin/index/keywords/audience/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/index/keywords/audience/get/"
+  },
+  {
+   "id": "douyin.index.keywords.history",
+   "path": "/v1/douyin/index/keywords/history",
+   "unit": "call",
+   "price": "0.006",
+   "max_charge": "0.006",
+   "charge_when_empty": "0.006",
+   "docs": "https://dataxapi.com/apis/douyin/index/keywords/history/"
+  },
+  {
+   "id": "douyin.index.keywords.related",
+   "path": "/v1/douyin/index/keywords/related",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/index/keywords/related/"
+  },
+  {
+   "id": "douyin.index.trends.list",
+   "path": "/v1/douyin/index/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/index/trends/list/"
+  },
+  {
+   "id": "douyin.index.videos.search",
+   "path": "/v1/douyin/index/videos/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/index/videos/search/"
+  },
+  {
+   "id": "douyin.trends.list",
+   "path": "/v1/douyin/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/trends/list/"
+  },
+  {
+   "id": "douyin.users.get",
+   "path": "/v1/douyin/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/users/get/"
+  },
+  {
+   "id": "douyin.users.history",
+   "path": "/v1/douyin/users/history",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/users/history/"
+  },
+  {
+   "id": "douyin.users.search",
+   "path": "/v1/douyin/users/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/users/search/"
+  },
+  {
+   "id": "douyin.users.videos.list",
+   "path": "/v1/douyin/users/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/users/videos/list/"
+  },
+  {
+   "id": "douyin.videos.comments.list",
+   "path": "/v1/douyin/videos/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/videos/comments/list/"
+  },
+  {
+   "id": "douyin.videos.get",
+   "path": "/v1/douyin/videos/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/videos/get/"
+  },
+  {
+   "id": "douyin.videos.metrics",
+   "path": "/v1/douyin/videos/metrics",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/videos/metrics/"
+  },
+  {
+   "id": "douyin.videos.related",
+   "path": "/v1/douyin/videos/related",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/videos/related/"
+  },
+  {
+   "id": "douyin.videos.search",
+   "path": "/v1/douyin/videos/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/douyin/videos/search/"
+  },
+  {
+   "id": "douyin.videos.trending",
+   "path": "/v1/douyin/videos/trending",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/videos/trending/"
+  },
+  {
+   "id": "douyin.xingtu.creators.rates.get",
+   "path": "/v1/douyin/xingtu/creators/rates/get",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/"
+  },
+  {
+   "id": "kuaishou.comments.replies.list",
+   "path": "/v1/kuaishou/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/kuaishou/comments/replies/list/"
+  },
+  {
+   "id": "kuaishou.trends.list",
+   "path": "/v1/kuaishou/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/kuaishou/trends/list/"
+  },
+  {
+   "id": "kuaishou.users.get",
+   "path": "/v1/kuaishou/users/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/kuaishou/users/get/"
+  },
+  {
+   "id": "kuaishou.users.search",
+   "path": "/v1/kuaishou/users/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/kuaishou/users/search/"
+  },
+  {
+   "id": "kuaishou.users.videos.list",
+   "path": "/v1/kuaishou/users/videos/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "variants": [
+    {
+     "param": "sort",
+     "value": "popular",
+     "unit": "call",
+     "price": "0.002",
+     "max_charge": "0.002",
+     "charge_when_empty": "0.002"
+    }
+   ],
+   "docs": "https://dataxapi.com/apis/kuaishou/users/videos/list/"
+  },
+  {
+   "id": "kuaishou.videos.comments.list",
+   "path": "/v1/kuaishou/videos/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/kuaishou/videos/comments/list/"
+  },
+  {
+   "id": "kuaishou.videos.get",
+   "path": "/v1/kuaishou/videos/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/kuaishou/videos/get/"
+  },
+  {
+   "id": "kuaishou.videos.search",
+   "path": "/v1/kuaishou/videos/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/kuaishou/videos/search/"
+  },
+  {
+   "id": "telegram.channels.get",
+   "path": "/v1/telegram/channels/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/telegram/channels/get/"
+  },
+  {
+   "id": "telegram.channels.messages.list",
+   "path": "/v1/telegram/channels/messages/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/telegram/channels/messages/list/"
+  },
+  {
+   "id": "telegram.messages.get",
+   "path": "/v1/telegram/messages/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/telegram/messages/get/"
+  },
+  {
+   "id": "x.communities.posts.list",
+   "path": "/v1/x/communities/posts/list",
+   "unit": "item",
+   "price": "0.0003",
+   "minimum": "0.0003",
+   "max_charge": "0.006",
+   "charge_when_empty": "0.0003",
+   "docs": "https://dataxapi.com/apis/x/communities/posts/list/"
+  },
+  {
+   "id": "x.lists.posts.list",
+   "path": "/v1/x/lists/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/x/lists/posts/list/"
+  },
+  {
+   "id": "x.posts.article.get",
+   "path": "/v1/x/posts/article/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/posts/article/get/"
+  },
+  {
+   "id": "x.posts.get",
+   "path": "/v1/x/posts/get",
+   "unit": "call",
+   "price": "0.0003",
+   "max_charge": "0.0003",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/posts/get/"
+  },
+  {
+   "id": "facebook.pages.get",
+   "path": "/v1/facebook/pages/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/facebook/pages/get/"
+  },
+  {
+   "id": "facebook.pages.posts.list",
+   "path": "/v1/facebook/pages/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/facebook/pages/posts/list/"
+  },
+  {
+   "id": "facebook.posts.comments.list",
+   "path": "/v1/facebook/posts/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/facebook/posts/comments/list/"
+  },
+  {
+   "id": "facebook.posts.get",
+   "path": "/v1/facebook/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/facebook/posts/get/"
+  },
+  {
+   "id": "google.ads.get",
+   "path": "/v1/google/ads/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/google/ads/get/"
+  },
+  {
+   "id": "google.advertisers.ads.list",
+   "path": "/v1/google/advertisers/ads/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/google/advertisers/ads/list/"
+  },
+  {
+   "id": "google.advertisers.search",
+   "path": "/v1/google/advertisers/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/google/advertisers/search/"
+  },
+  {
+   "id": "linkedin.ads.get",
+   "path": "/v1/linkedin/ads/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/linkedin/ads/get/"
+  },
+  {
+   "id": "linkedin.ads.search",
+   "path": "/v1/linkedin/ads/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/linkedin/ads/search/"
+  },
+  {
+   "id": "linkedin.companies.get",
+   "path": "/v1/linkedin/companies/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/linkedin/companies/get/"
+  },
+  {
+   "id": "linkedin.companies.posts.list",
+   "path": "/v1/linkedin/companies/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/linkedin/companies/posts/list/"
+  },
+  {
+   "id": "linkedin.posts.get",
+   "path": "/v1/linkedin/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/linkedin/posts/get/"
+  },
+  {
+   "id": "linkedin.posts.search",
+   "path": "/v1/linkedin/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/linkedin/posts/search/"
+  },
+  {
+   "id": "meta.ads.get",
+   "path": "/v1/meta/ads/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/meta/ads/get/"
+  },
+  {
+   "id": "meta.ads.search",
+   "path": "/v1/meta/ads/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/meta/ads/search/"
+  },
+  {
+   "id": "meta.ads.transcript.get",
+   "path": "/v1/meta/ads/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/meta/ads/transcript/get/"
+  },
+  {
+   "id": "meta.advertisers.ads.list",
+   "path": "/v1/meta/advertisers/ads/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/meta/advertisers/ads/list/"
+  },
+  {
+   "id": "meta.advertisers.search",
+   "path": "/v1/meta/advertisers/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/meta/advertisers/search/"
+  },
+  {
+   "id": "threads.posts.get",
+   "path": "/v1/threads/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/threads/posts/get/"
+  },
+  {
+   "id": "threads.posts.search",
+   "path": "/v1/threads/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/threads/posts/search/"
+  },
+  {
+   "id": "threads.users.get",
+   "path": "/v1/threads/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/threads/users/get/"
+  },
+  {
+   "id": "threads.users.posts.list",
+   "path": "/v1/threads/users/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/threads/users/posts/list/"
+  },
+  {
+   "id": "instagram.comments.replies.list",
+   "path": "/v1/instagram/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/instagram/comments/replies/list/"
+  },
+  {
+   "id": "instagram.hashtags.posts.list",
+   "path": "/v1/instagram/hashtags/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/instagram/hashtags/posts/list/"
+  },
+  {
+   "id": "instagram.posts.comments.list",
+   "path": "/v1/instagram/posts/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/instagram/posts/comments/list/"
+  },
+  {
+   "id": "instagram.posts.get",
+   "path": "/v1/instagram/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/instagram/posts/get/"
+  },
+  {
+   "id": "instagram.posts.transcript.get",
+   "path": "/v1/instagram/posts/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/instagram/posts/transcript/get/"
+  },
+  {
+   "id": "instagram.users.get",
+   "path": "/v1/instagram/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/instagram/users/get/"
+  },
+  {
+   "id": "instagram.users.posts.list",
+   "path": "/v1/instagram/users/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/instagram/users/posts/list/"
+  },
+  {
+   "id": "instagram.users.search",
+   "path": "/v1/instagram/users/search",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0.004",
+   "docs": "https://dataxapi.com/apis/instagram/users/search/"
+  },
+  {
+   "id": "tiktok.ads.search",
+   "path": "/v1/tiktok/ads/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/ads/search/"
+  },
+  {
+   "id": "tiktok.ads.get",
+   "path": "/v1/tiktok/ads/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/ads/get/"
+  },
+  {
+   "id": "tiktok.comments.replies.list",
+   "path": "/v1/tiktok/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/comments/replies/list/"
+  },
+  {
+   "id": "tiktok.creative_center.ads.get",
+   "path": "/v1/tiktok/creative_center/ads/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/creative_center/ads/get/"
+  },
+  {
+   "id": "tiktok.creative_center.ads.search",
+   "path": "/v1/tiktok/creative_center/ads/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/creative_center/ads/search/"
+  },
+  {
+   "id": "tiktok.hashtags.videos.list",
+   "path": "/v1/tiktok/hashtags/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/hashtags/videos/list/"
+  },
+  {
+   "id": "tiktok.users.get",
+   "path": "/v1/tiktok/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/users/get/"
+  },
+  {
+   "id": "tiktok.users.search",
+   "path": "/v1/tiktok/users/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/users/search/"
+  },
+  {
+   "id": "tiktok.users.videos.list",
+   "path": "/v1/tiktok/users/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/users/videos/list/"
+  },
+  {
+   "id": "tiktok.videos.comments.list",
+   "path": "/v1/tiktok/videos/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/videos/comments/list/"
+  },
+  {
+   "id": "tiktok.videos.get",
+   "path": "/v1/tiktok/videos/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/videos/get/"
+  },
+  {
+   "id": "tiktok.videos.search",
+   "path": "/v1/tiktok/videos/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/videos/search/"
+  },
+  {
+   "id": "tiktok.videos.transcript.get",
+   "path": "/v1/tiktok/videos/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/videos/transcript/get/"
+  },
+  {
+   "id": "weibo.comments.replies.list",
+   "path": "/v1/weibo/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/comments/replies/list/"
+  },
+  {
+   "id": "weibo.posts.comments.list",
+   "path": "/v1/weibo/posts/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/posts/comments/list/"
+  },
+  {
+   "id": "weibo.posts.get",
+   "path": "/v1/weibo/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/weibo/posts/get/"
+  },
+  {
+   "id": "weibo.posts.likers.list",
+   "path": "/v1/weibo/posts/likers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/posts/likers/list/"
+  },
+  {
+   "id": "weibo.posts.search",
+   "path": "/v1/weibo/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/posts/search/"
+  },
+  {
+   "id": "weibo.trends.list",
+   "path": "/v1/weibo/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/trends/list/"
+  },
+  {
+   "id": "weibo.users.followers.list",
+   "path": "/v1/weibo/users/followers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/users/followers/list/"
+  },
+  {
+   "id": "weibo.users.get",
+   "path": "/v1/weibo/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/weibo/users/get/"
+  },
+  {
+   "id": "weibo.users.posts.list",
+   "path": "/v1/weibo/users/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/users/posts/list/"
+  },
+  {
+   "id": "weibo.users.search",
+   "path": "/v1/weibo/users/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/users/search/"
+  },
+  {
+   "id": "x.posts.quotes.list",
+   "path": "/v1/x/posts/quotes/list",
+   "unit": "item",
+   "price": "0.0003",
+   "minimum": "0.0003",
+   "max_charge": "0.006",
+   "charge_when_empty": "0.0003",
+   "variants": [
+    {
+     "param": "sort",
+     "value": "popular",
+     "unit": "call",
+     "price": "0.002",
+     "max_charge": "0.002",
+     "charge_when_empty": "0.002"
+    }
+   ],
+   "docs": "https://dataxapi.com/apis/x/posts/quotes/list/"
+  },
+  {
+   "id": "x.posts.replies.list",
+   "path": "/v1/x/posts/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/x/posts/replies/list/"
+  },
+  {
+   "id": "x.posts.retweeters.list",
+   "path": "/v1/x/posts/retweeters/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/x/posts/retweeters/list/"
+  },
+  {
+   "id": "x.posts.search",
+   "path": "/v1/x/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/x/posts/search/"
+  },
+  {
+   "id": "x.threads.posts.list",
+   "path": "/v1/x/threads/posts/list",
+   "unit": "item",
+   "price": "0.0003",
+   "minimum": "0.0003",
+   "max_charge": "0.015",
+   "charge_when_empty": "0.0003",
+   "docs": "https://dataxapi.com/apis/x/threads/posts/list/"
+  },
+  {
+   "id": "x.trends.list",
+   "path": "/v1/x/trends/list",
+   "unit": "call",
+   "price": "0.009",
+   "max_charge": "0.009",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/trends/list/"
+  },
+  {
+   "id": "x.users.followers.list",
+   "path": "/v1/x/users/followers/list",
+   "unit": "item",
+   "price": "0.0001",
+   "minimum": "0.0004",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/users/followers/list/"
+  },
+  {
+   "id": "x.users.following.list",
+   "path": "/v1/x/users/following/list",
+   "unit": "item",
+   "price": "0.0001",
+   "minimum": "0.0004",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/users/following/list/"
+  },
+  {
+   "id": "x.users.get",
+   "path": "/v1/x/users/get",
+   "unit": "item",
+   "price": "0.0004",
+   "minimum": "0.0004",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/users/get/"
+  },
+  {
+   "id": "x.users.mentions.list",
+   "path": "/v1/x/users/mentions/list",
+   "unit": "item",
+   "price": "0.0003",
+   "minimum": "0.0003",
+   "max_charge": "0.006",
+   "charge_when_empty": "0.0003",
+   "docs": "https://dataxapi.com/apis/x/users/mentions/list/"
+  },
+  {
+   "id": "x.users.posts.list",
+   "path": "/v1/x/users/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/x/users/posts/list/"
+  },
+  {
+   "id": "x.users.search",
+   "path": "/v1/x/users/search",
+   "unit": "item",
+   "price": "0.0004",
+   "minimum": "0.0004",
+   "max_charge": "0.008",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/users/search/"
+  },
+  {
+   "id": "xiaohongshu.images.search",
+   "path": "/v1/xiaohongshu/images/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/images/search/"
+  },
+  {
+   "id": "xiaohongshu.notes.get",
+   "path": "/v1/xiaohongshu/notes/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/notes/get/"
+  },
+  {
+   "id": "xiaohongshu.comments.replies.list",
+   "path": "/v1/xiaohongshu/comments/replies/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/comments/replies/list/"
+  },
+  {
+   "id": "xiaohongshu.notes.comments.list",
+   "path": "/v1/xiaohongshu/notes/comments/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/notes/comments/list/"
+  },
+  {
+   "id": "xiaohongshu.notes.search",
+   "path": "/v1/xiaohongshu/notes/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/notes/search/"
+  },
+  {
+   "id": "xiaohongshu.pgy.keywords.history",
+   "path": "/v1/xiaohongshu/pgy/keywords/history",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/"
+  },
+  {
+   "id": "xiaohongshu.pgy.keywords.related",
+   "path": "/v1/xiaohongshu/pgy/keywords/related",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0.04",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/"
+  },
+  {
+   "id": "xiaohongshu.topics.notes.list",
+   "path": "/v1/xiaohongshu/topics/notes/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/topics/notes/list/"
+  },
+  {
+   "id": "xiaohongshu.topics.get",
+   "path": "/v1/xiaohongshu/topics/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/topics/get/"
+  },
+  {
+   "id": "xiaohongshu.trends.list",
+   "path": "/v1/xiaohongshu/trends/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/trends/list/"
+  },
+  {
+   "id": "xiaohongshu.users.get",
+   "path": "/v1/xiaohongshu/users/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/users/get/"
+  },
+  {
+   "id": "xiaohongshu.users.notes.list",
+   "path": "/v1/xiaohongshu/users/notes/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/users/notes/list/"
+  },
+  {
+   "id": "xiaohongshu.users.search",
+   "path": "/v1/xiaohongshu/users/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/users/search/"
+  },
+  {
+   "id": "youtube.channels.get",
+   "path": "/v1/youtube/channels/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/youtube/channels/get/"
+  },
+  {
+   "id": "youtube.channels.search",
+   "path": "/v1/youtube/channels/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/channels/search/"
+  },
+  {
+   "id": "youtube.channels.videos.list",
+   "path": "/v1/youtube/channels/videos/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/channels/videos/list/"
+  },
+  {
+   "id": "youtube.comments.replies.list",
+   "path": "/v1/youtube/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/comments/replies/list/"
+  },
+  {
+   "id": "youtube.videos.comments.list",
+   "path": "/v1/youtube/videos/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/videos/comments/list/"
+  },
+  {
+   "id": "youtube.videos.get",
+   "path": "/v1/youtube/videos/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/youtube/videos/get/"
+  },
+  {
+   "id": "youtube.videos.search",
+   "path": "/v1/youtube/videos/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/videos/search/"
+  },
+  {
+   "id": "youtube.videos.transcript.get",
+   "path": "/v1/youtube/videos/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/youtube/videos/transcript/get/"
+  },
+  {
+   "id": "wechat_channels.users.get",
+   "path": "/v1/wechat_channels/users/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_channels/users/get/"
+  },
+  {
+   "id": "wechat_channels.videos.get",
+   "path": "/v1/wechat_channels/videos/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_channels/videos/get/"
+  },
+  {
+   "id": "wechat_channels.videos.comments.list",
+   "path": "/v1/wechat_channels/videos/comments/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/videos/comments/list/"
+  },
+  {
+   "id": "wechat_channels.users.collections.list",
+   "path": "/v1/wechat_channels/users/collections/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/users/collections/list/"
+  },
+  {
+   "id": "wechat_channels.collections.videos.list",
+   "path": "/v1/wechat_channels/collections/videos/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/collections/videos/list/"
+  },
+  {
+   "id": "wechat_channels.users.videos.list",
+   "path": "/v1/wechat_channels/users/videos/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/users/videos/list/"
+  },
+  {
+   "id": "wechat_channels.videos.search",
+   "path": "/v1/wechat_channels/videos/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/videos/search/"
+  },
+  {
+   "id": "wechat.posts.search",
+   "path": "/v1/wechat/posts/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat/posts/search/"
+  },
+  {
+   "id": "wechat_mp.accounts.articles.list",
+   "path": "/v1/wechat_mp/accounts/articles/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_mp/accounts/articles/list/"
+  },
+  {
+   "id": "wechat_mp.accounts.get",
+   "path": "/v1/wechat_mp/accounts/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_mp/accounts/get/"
+  },
+  {
+   "id": "wechat_mp.articles.comments.list",
+   "path": "/v1/wechat_mp/articles/comments/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_mp/articles/comments/list/"
+  },
+  {
+   "id": "wechat_mp.articles.get",
+   "path": "/v1/wechat_mp/articles/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_mp/articles/get/"
+  },
+  {
+   "id": "wechat_mp.articles.metrics",
+   "path": "/v1/wechat_mp/articles/metrics",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_mp/articles/metrics/"
+  },
+  {
+   "id": "wechat_mp.comments.replies.list",
+   "path": "/v1/wechat_mp/comments/replies/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_mp/comments/replies/list/"
+  },
+  {
+   "id": "reddit.posts.comments.list",
+   "path": "/v1/reddit/posts/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/posts/comments/list/"
+  },
+  {
+   "id": "reddit.posts.get",
+   "path": "/v1/reddit/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/reddit/posts/get/"
+  },
+  {
+   "id": "reddit.posts.search",
+   "path": "/v1/reddit/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/posts/search/"
+  },
+  {
+   "id": "reddit.posts.trending",
+   "path": "/v1/reddit/posts/trending",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/posts/trending/"
+  },
+  {
+   "id": "reddit.subreddits.posts.list",
+   "path": "/v1/reddit/subreddits/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/subreddits/posts/list/"
+  },
+  {
+   "id": "reddit.trends.list",
+   "path": "/v1/reddit/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/trends/list/"
+  },
+  {
+   "id": "reddit.users.get",
+   "path": "/v1/reddit/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/reddit/users/get/"
+  },
+  {
+   "id": "reddit.users.posts.list",
+   "path": "/v1/reddit/users/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/users/posts/list/"
+  },
+  {
+   "id": "zhihu.answers.comments.list",
+   "path": "/v1/zhihu/answers/comments/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/answers/comments/list/"
+  },
+  {
+   "id": "zhihu.answers.get",
+   "path": "/v1/zhihu/answers/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/zhihu/answers/get/"
+  },
+  {
+   "id": "zhihu.articles.get",
+   "path": "/v1/zhihu/articles/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/zhihu/articles/get/"
+  },
+  {
+   "id": "zhihu.columns.articles.list",
+   "path": "/v1/zhihu/columns/articles/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/columns/articles/list/"
+  },
+  {
+   "id": "zhihu.comments.replies.list",
+   "path": "/v1/zhihu/comments/replies/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/comments/replies/list/"
+  },
+  {
+   "id": "zhihu.pins.get",
+   "path": "/v1/zhihu/pins/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/zhihu/pins/get/"
+  },
+  {
+   "id": "zhihu.posts.search",
+   "path": "/v1/zhihu/posts/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/posts/search/"
+  },
+  {
+   "id": "zhihu.questions.answers.list",
+   "path": "/v1/zhihu/questions/answers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/questions/answers/list/"
+  },
+  {
+   "id": "zhihu.questions.get",
+   "path": "/v1/zhihu/questions/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/zhihu/questions/get/"
+  },
+  {
+   "id": "zhihu.trends.list",
+   "path": "/v1/zhihu/trends/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/trends/list/"
+  },
+  {
+   "id": "zhihu.users.answers.list",
+   "path": "/v1/zhihu/users/answers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/users/answers/list/"
+  },
+  {
+   "id": "zhihu.users.articles.list",
+   "path": "/v1/zhihu/users/articles/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/users/articles/list/"
+  },
+  {
+   "id": "zhihu.users.followers.list",
+   "path": "/v1/zhihu/users/followers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/users/followers/list/"
+  },
+  {
+   "id": "zhihu.users.get",
+   "path": "/v1/zhihu/users/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/zhihu/users/get/"
+  },
+  {
+   "id": "zhihu.users.pins.list",
+   "path": "/v1/zhihu/users/pins/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/users/pins/list/"
+  },
+  {
+   "id": "zhihu.users.search",
+   "path": "/v1/zhihu/users/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/users/search/"
+  },
+  {
+   "id": "reddit.subreddits.get",
+   "path": "/v1/reddit/subreddits/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/reddit/subreddits/get/"
+  },
+  {
+   "id": "reddit.users.subreddits.list",
+   "path": "/v1/reddit/users/subreddits/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/reddit/users/subreddits/list/"
+  },
+  {
+   "id": "x.communities.get",
+   "path": "/v1/x/communities/get",
+   "unit": "call",
+   "price": "0.0004",
+   "max_charge": "0.0004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/communities/get/"
+  },
+  {
+   "id": "tiktok.shop.products.get",
+   "path": "/v1/tiktok/shop/products/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/shop/products/get/"
+  },
+  {
+   "id": "tiktok.shop.products.reviews.list",
+   "path": "/v1/tiktok/shop/products/reviews/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/shop/products/reviews/list/"
+  },
+  {
+   "id": "tiktok.shop.products.search",
+   "path": "/v1/tiktok/shop/products/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/shop/products/search/"
+  },
+  {
+   "id": "tiktok.shop.sellers.products.list",
+   "path": "/v1/tiktok/shop/sellers/products/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/shop/sellers/products/list/"
+  },
+  {
+   "id": "xiaohongshu.shop.products.get",
+   "path": "/v1/xiaohongshu/shop/products/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/shop/products/get/"
+  },
+  {
+   "id": "xiaohongshu.shop.products.reviews.list",
+   "path": "/v1/xiaohongshu/shop/products/reviews/list",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/shop/products/reviews/list/"
+  },
+  {
+   "id": "xiaohongshu.shop.products.search",
+   "path": "/v1/xiaohongshu/shop/products/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/shop/products/search/"
+  },
+  {
+   "id": "x.communities.members.list",
+   "path": "/v1/x/communities/members/list",
+   "unit": "item",
+   "price": "0.0004",
+   "minimum": "0.0004",
+   "max_charge": "0.008",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/communities/members/list/"
+  },
+  {
+   "id": "x.lists.followers.list",
+   "path": "/v1/x/lists/followers/list",
+   "unit": "item",
+   "price": "0.0004",
+   "minimum": "0.0004",
+   "max_charge": "0.008",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/lists/followers/list/"
+  },
+  {
+   "id": "x.lists.members.list",
+   "path": "/v1/x/lists/members/list",
+   "unit": "item",
+   "price": "0.0004",
+   "minimum": "0.0004",
+   "max_charge": "0.008",
+   "charge_when_empty": "0.0004",
+   "docs": "https://dataxapi.com/apis/x/lists/members/list/"
+  },
+  {
+   "id": "linkedin.posts.transcript.get",
+   "path": "/v1/linkedin/posts/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/linkedin/posts/transcript/get/"
+  },
+  {
+   "id": "reddit.posts.transcript.get",
+   "path": "/v1/reddit/posts/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/reddit/posts/transcript/get/"
+  },
+  {
+   "id": "x.posts.transcript.get",
+   "path": "/v1/x/posts/transcript/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/x/posts/transcript/get/"
+  },
+  {
+   "id": "tiktok.users.followers.list",
+   "path": "/v1/tiktok/users/followers/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/tiktok/users/followers/list/"
+  },
+  {
+   "id": "youtube.channels.posts.list",
+   "path": "/v1/youtube/channels/posts/list",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/youtube/channels/posts/list/"
+  },
+  {
+   "id": "youtube.posts.get",
+   "path": "/v1/youtube/posts/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/youtube/posts/get/"
+  },
+  {
+   "id": "pinterest.pins.get",
+   "path": "/v1/pinterest/pins/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/pinterest/pins/get/"
+  },
+  {
+   "id": "pinterest.pins.search",
+   "path": "/v1/pinterest/pins/search",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/pinterest/pins/search/"
+  },
+  {
+   "id": "douyin.xingtu.creators.search",
+   "path": "/v1/douyin/xingtu/creators/search",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0.004",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/search/"
+  },
+  {
+   "id": "douyin.xingtu.creators.get",
+   "path": "/v1/douyin/xingtu/creators/get",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/get/"
+  },
+  {
+   "id": "douyin.xingtu.creators.audience.get",
+   "path": "/v1/douyin/xingtu/creators/audience/get",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/"
+  },
+  {
+   "id": "douyin.xingtu.creators.metrics",
+   "path": "/v1/douyin/xingtu/creators/metrics",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/metrics/"
+  },
+  {
+   "id": "douyin.xingtu.creators.videos.list",
+   "path": "/v1/douyin/xingtu/creators/videos/list",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0.004",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/"
+  },
+  {
+   "id": "douyin.xingtu.creators.keywords.get",
+   "path": "/v1/douyin/xingtu/creators/keywords/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/"
+  },
+  {
+   "id": "douyin.xingtu.creators.scores.get",
+   "path": "/v1/douyin/xingtu/creators/scores/get",
+   "unit": "call",
+   "price": "0.008",
+   "max_charge": "0.008",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/"
+  },
+  {
+   "id": "douyin.xingtu.creators.content_mix.get",
+   "path": "/v1/douyin/xingtu/creators/content_mix/get",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/"
+  },
+  {
+   "id": "douyin.xingtu.creators.conversion.get",
+   "path": "/v1/douyin/xingtu/creators/conversion/get",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/"
+  },
+  {
+   "id": "douyin.xingtu.campaigns.list",
+   "path": "/v1/douyin/xingtu/campaigns/list",
+   "unit": "call",
+   "price": "0.004",
+   "max_charge": "0.004",
+   "charge_when_empty": "0.004",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/campaigns/list/"
+  },
+  {
+   "id": "xiaohongshu.pgy.creators.search",
+   "path": "/v1/xiaohongshu/pgy/creators/search",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0.04",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/"
+  },
+  {
+   "id": "xiaohongshu.pgy.creators.get",
+   "path": "/v1/xiaohongshu/pgy/creators/get",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/"
+  },
+  {
+   "id": "xiaohongshu.pgy.creators.audience.get",
+   "path": "/v1/xiaohongshu/pgy/creators/audience/get",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/"
+  },
+  {
+   "id": "xiaohongshu.pgy.creators.metrics",
+   "path": "/v1/xiaohongshu/pgy/creators/metrics",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/"
+  },
+  {
+   "id": "xiaohongshu.pgy.creators.notes.list",
+   "path": "/v1/xiaohongshu/pgy/creators/notes/list",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0.04",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/"
+  }
+ ]
+}

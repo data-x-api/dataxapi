@@ -1,0 +1,41 @@
+{
+  "name": "@dataxapi/sdk",
+  "version": "1.0.0",
+  "description": "DataXAPI for TypeScript: market data from 21 platforms (Douyin, Xiaohongshu/RedNote, TikTok, WeChat, X, YouTube...) over one interface, paid per call.",
+  "keywords": [
+    "dataxapi",
+    "market data",
+    "social media data api",
+    "douyin api",
+    "xiaohongshu api",
+    "rednote api",
+    "tiktok api",
+    "wechat api",
+    "巨量算数",
+    "mcp",
+    "ai agents",
+    "sdk",
+    "typescript"
+  ],
+  "license": "MIT",
+  "homepage": "https://dataxapi.com",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "types": "./index.d.ts",
+  "files": [
+    "*.js",
+    "*.d.ts"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

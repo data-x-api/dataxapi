@@ -1,0 +1,37 @@
+[build-system]
+# 77 and later read the licence as an SPDX expression.
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataxapi"
+version = "1.0.0"
+description = "DataXAPI for Python: market data from 21 platforms (Douyin, Xiaohongshu/RedNote, TikTok, WeChat, X, YouTube...) over one interface, paid per call."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "DataXAPI (Aurevant LLC)", email = "support@dataxapi.com" }]
+keywords = ["dataxapi", "market data", "social media data api", "douyin api", "xiaohongshu api", "rednote api", "tiktok api", "wechat api", "巨量算数", "mcp", "ai agents", "sdk"]
+requires-python = ">=3.9"
+# Standard library only.
+dependencies = []
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://dataxapi.com"
+Documentation = "https://dataxapi.com/docs/sdk/"
+"All endpoints" = "https://dataxapi.com/apis/"
+Pricing = "https://dataxapi.com/pricing/"
+"MCP server" = "https://dataxapi.com/mcp/"
+Changelog = "https://dataxapi.com/changelog/"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dataxapi = ["py.typed"]
