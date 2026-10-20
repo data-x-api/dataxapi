@@ -13,7 +13,9 @@ our main repository at every release. Questions and bugs: open an issue.
 |---|---|---|
 | TypeScript SDK | `npm install @dataxapi/sdk` | `typescript/` |
 | Python SDK | `pip install dataxapi` | `python/` |
+| Command line | `npx dataxapi --help` | published on npm as one file |
 | MCP server | `https://api.dataxapi.com/mcp` | hosted |
+| Agent Skills | `npx skills add data-x-api/skills` | [data-x-api/skills](https://github.com/data-x-api/skills) |
 
 ## Quick start
 
