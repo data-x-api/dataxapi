@@ -81,6 +81,18 @@ Every endpoint, with its parameters, fields, price and a recorded example answer
 | `docs/mcp.md`, `docs/mcp/`, `docs/mcp-tools.json` | The MCP server, per platform, and its tool list |
 | `docs/prices.json` | Every endpoint's unit, price and what an empty result is charged |
 
+## Ready-to-run projects
+
+Small projects, one task each: one script or one file, no dependencies, with the output of a real run in the README.
+
+| 要办的事 / Task | Project |
+|---|---|
+| 公众号历史文章批量导出 / Export a WeChat Official Account's articles | [wechat-article-export](https://github.com/data-x-api/wechat-article-export) |
+| 把公众号变成 RSS 订阅 / WeChat Official Accounts as RSS feeds | [wechat-rss](https://github.com/data-x-api/wechat-rss) |
+| 不用登录的小红书 MCP / Xiaohongshu MCP with no login | [xiaohongshu-mcp-no-login](https://github.com/data-x-api/xiaohongshu-mcp-no-login) |
+| 查蒲公英达人的报价和数据 / Xiaohongshu PGY creator rates and data | [pugongying-api](https://github.com/data-x-api/pugongying-api) |
+| 查抖音指数和巨量算数 / Douyin index keyword trends | [douyin-index-api](https://github.com/data-x-api/douyin-index-api) |
+
 ## Links
 
 [Pricing](https://dataxapi.com/pricing/) · [Docs](https://dataxapi.com/docs/) · [All endpoints](https://dataxapi.com/apis/) ·
