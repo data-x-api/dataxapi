@@ -45,7 +45,7 @@ Per call, no subscription. From $0.0003 to $0.0080 a call; each endpoint's page 
 
 ### What if the community ID is wrong?
 
-The profile answers `not_found`, which is not charged. The posts and members lists cannot tell a community that does not exist from one with nothing in it: both come back empty and are charged as an empty result. Check the ID with the profile first.
+The profile answers `not_found`, which is not charged. The posts and members lists cannot tell a community that does not exist from one with nothing in it: both come back empty. Check the ID with the profile first.
 
 ### How many posts and members come back?
 
@@ -65,4 +65,4 @@ No. You hold one DataXAPI key: no X login, no cookie, no advertiser account.
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/x/communities/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/x/communities/)

@@ -1,6 +1,6 @@
 # Kuaishou video comments API
 
-Get a page of top-level comments on a Kuaishou video: text, commenter, likes, time posted, IP location. Up to 40 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of top-level comments on a Kuaishou video: text, commenter, likes, time posted, IP location. Up to 40 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/kuaishou/videos/comments/list`
 - ID: `kuaishou.videos.comments.list`
@@ -9,7 +9,7 @@ Get a page of top-level comments on a Kuaishou video: text, commenter, likes, ti
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: 40 a page, a page, with a cursor for the next
 - Returns the standard comment object, the same on every platform
-- `id` is in the link: `kuaishou.com/short-video/<id>`.
+- `id` is in the link: `kuaishou.com/short-video/<id>`. Or pass the whole link as `url`.
 - [Run it in the Playground](https://dataxapi.com/console/playground/?capability=kuaishou.videos.comments.list&params=%7B%22id%22%3A%223x5pf8ia4zc76tc%22%7D)
 - In Chinese: [快手作品评论 API](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/)
 
@@ -26,7 +26,8 @@ The first 2 rows of a response recorded 2026-10-12 18:53 UTC.
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `id` | text | Yes | Video ID: the part of the video's web link that starts with 3x. Example: `3x5pf8ia4zc76tc`. |
+| `id` | text | give exactly one of `id`, `url` | Video ID: the part of the video's web link that starts with 3x. With only a link or a share text, give it as url. Example: `3x5pf8ia4zc76tc`. |
+| `url` | text | give exactly one of `id`, `url` | Link to the video, pasted as it is: the https://www.kuaishou.com/short-video/… web link, the v.kuaishou.com short link the app copies, or a whole share text with one of these in it. A short link is opened once to see which video it leads to. Example: `https://www.kuaishou.com/short-video/3x5pf8ia4zc76tc`. Full link: `https://www.kuaishou.com/short-video/3x5pf8ia4zc76tc`. Share text with a link inside: `【示例】看看这个作品 https://www.kuaishou.com/short-video/3x5pf8ia4zc76tc 点击链接，打开【快手】直接观看！`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
@@ -75,15 +76,14 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-A video that does not exist cannot be told from a video without comments: both return an empty result, not a 404, and are charged as an empty result is.
+A video that does not exist cannot be told from a video without comments: both return an empty result, not a 404.
 
 ## Errors
 
@@ -113,11 +113,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -139,6 +137,7 @@ curl -G "https://api.dataxapi.com/v1/kuaishou/videos/comments/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -149,6 +148,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -291,7 +291,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["id is required"],
+  "problems": ["give exactly one of id, url"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -312,6 +312,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -324,8 +327,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "9243f3a2-5e5f-494f-ac96-51aca9b542be",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -333,6 +336,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 15k tokens as the platform's own JSON, 6,097 as DataXAPI's JSON, and 3,658 as an AI reads it through DataXAPI's MCP server: 76% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/kuaishou/videos/comments/list.example.json)
 
@@ -354,9 +359,11 @@ Part of DataXAPI's Social media data. The same key also works for: Creators, Ads
 
 The same thing on other platforms: [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Facebook post comments](https://dataxapi.com/apis/facebook/posts/comments/list/), [Instagram post comments](https://dataxapi.com/apis/instagram/posts/comments/list/), [TikTok video comments](https://dataxapi.com/apis/tiktok/videos/comments/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [X post replies](https://dataxapi.com/apis/x/posts/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [YouTube video comments](https://dataxapi.com/apis/youtube/videos/comments/list/), [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list/), [Reddit post comments](https://dataxapi.com/apis/reddit/posts/comments/list/), [Zhihu answer comments](https://dataxapi.com/apis/zhihu/answers/comments/list/)
 
-More Social media data on other platforms: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Instagram comment replies](https://dataxapi.com/apis/instagram/comments/replies/list/), [TikTok comment replies](https://dataxapi.com/apis/tiktok/comments/replies/list/), [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [YouTube comment replies](https://dataxapi.com/apis/youtube/comments/replies/list/), [WeChat Official Account article comments](https://dataxapi.com/apis/wechat_mp/articles/comments/list/), [WeChat Official Account comment replies](https://dataxapi.com/apis/wechat_mp/comments/replies/list/), [Zhihu comment replies](https://dataxapi.com/apis/zhihu/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/)
+More Social media data on other platforms: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Instagram comment replies](https://dataxapi.com/apis/instagram/comments/replies/list/), [TikTok comment replies](https://dataxapi.com/apis/tiktok/comments/replies/list/), [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [YouTube comment replies](https://dataxapi.com/apis/youtube/comments/replies/list/), [WeChat Official Account article comments](https://dataxapi.com/apis/wechat_mp/articles/comments/list/), [WeChat Official Account comment replies](https://dataxapi.com/apis/wechat_mp/comments/replies/list/), [WeChat Channels comment replies](https://dataxapi.com/apis/wechat_channels/comments/replies/list/), [Zhihu comment replies](https://dataxapi.com/apis/zhihu/comments/replies/list/)
 
 Kuaishou endpoints: [Kuaishou comment replies](https://dataxapi.com/apis/kuaishou/comments/replies/list/), [Kuaishou hot list](https://dataxapi.com/apis/kuaishou/trends/list/), [Kuaishou user profile](https://dataxapi.com/apis/kuaishou/users/get/), [Kuaishou user search](https://dataxapi.com/apis/kuaishou/users/search/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Kuaishou video comments](https://dataxapi.com/apis/kuaishou/videos/comments/list/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search/)
+
+How-to guides and answers: [Kuaishou API in Python: videos and comments (2026)](https://dataxapi.com/guides/kuaishou-api-python/), [What are did and kww on Kuaishou? (2026)](https://dataxapi.com/answers/kuaishou-did-kww/), [Kuaishou data API: videos, users and comments (2026)](https://dataxapi.com/answers/kuaishou-data-apis/), [Kuaishou MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/kuaishou-mcp/), [How to find Kuaishou video and user ids (2026)](https://dataxapi.com/answers/kuaishou-video-user-id/), [Kuaishou API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/kuaishou-api-for-ai-agents/), [How to read the IP location of accounts and comments in bulk: 28 endpoints on 8 platforms (2026)](https://dataxapi.com/answers/ip-location-by-platform/)
 
 Skills that use this endpoint: [Comments and word of mouth](https://dataxapi.com/skills/comments/)
 
@@ -370,7 +377,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -378,8 +385,8 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ### What happens if the object does not exist?
 
-A video that does not exist cannot be told from a video without comments: both return an empty result, not a 404, and are charged as an empty result is.
+A video that does not exist cannot be told from a video without comments: both return an empty result, not a 404.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/kuaishou/videos/comments/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/kuaishou/videos/comments/list/)

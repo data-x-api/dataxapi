@@ -2,6 +2,8 @@
 
 Ask your AI about Reddit and it answers with live data: 11 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 11 (on Reddit, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about Reddit:
 
 ## What to ask about Reddit, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Show the latest posts in r/skincare. | [Reddit community posts](https://dataxapi.com/apis/reddit/subreddits/posts/list/) `reddit.subreddits.posts.list` | $0.0020 |
 | Read the comment thread under this Reddit post. | [Reddit post comments](https://dataxapi.com/apis/reddit/posts/comments/list/) `reddit.posts.comments.list` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Reddit: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Reddit: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > What do people on Reddit say about standing desks?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "What do people on Reddit say about standing desks?", platform: "reddit" })` | Found reddit.posts.search · $0.0020 a call | Free |
-| `describe({ ids: ["reddit.posts.search"] })` | Takes query, sort, published_within · up to 7 a page | Free |
 | `call({ capability: "reddit.posts.search", query: "saturn rings", max_price: "0.002" })` | Up to 7 post objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 7 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 7 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Reddit skill package
 
@@ -97,4 +98,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/reddit/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/reddit/)

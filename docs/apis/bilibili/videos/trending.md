@@ -1,6 +1,6 @@
 # Bilibili popular videos API
 
-Get a page of Bilibili's popular videos: title, description, uploader, views, likes, coins, saves, danmaku count, length. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of Bilibili's popular videos: title, description, uploader, views, likes, coins, saves, danmaku count, length, section, IP location, why it is recommended. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/bilibili/videos/trending`
 - ID: `bilibili.videos.trending`
@@ -78,13 +78,18 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `ext.danmaku` | integer | Number of danmaku (comments shown over the video). | `full` | Yes |
 | `ext.duration` | number | Length of the video, in seconds. | `full` | Yes |
 | `ext.cover_url` | link | Address of the cover image. | `full` | Yes |
+| `ext.category` | text | The section the video is filed under, in the platform's words (数码, 美食制作, say). | `full` | Yes |
+| `ext.ip_location` | text | IP location as the platform shows it. | `full` | Yes |
+| `ext.cid` | text | The number of the video's first part (cid): what subtitles and danmaku are asked for by, with the BV number. | `full` | Yes |
+| `ext.parts` | integer | How many parts the video has. | `full` | Yes |
+| `ext.recommend_reason` | text | Why the popular list recommends the video, in the platform's words (很多人分享, say); null where it gives none. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 557 B, `standard` 647 B, `full` 813 B (measured on the response recorded 2026-10-12 18:47 UTC).
+Typical size of one item: `compact` 557 B, `standard` 647 B, `full` 916 B (measured on the response recorded 2026-10-12 18:47 UTC).
 
 ## Paging
 
@@ -100,11 +105,10 @@ Answers come from a shared snapshot refreshed every 10 minutes; `meta.cached` sa
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -134,11 +138,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -159,6 +161,7 @@ curl "https://api.dataxapi.com/v1/bilibili/videos/trending" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -169,6 +172,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -206,7 +210,7 @@ Add this to your MCP client, then ask your agent to call `bilibili.videos.trendi
 
 From a response recorded 2026-10-12 18:47 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 13.4 KB in the standard view (11.6 KB compact, 16.6 KB full).
+Size as sent: 13.4 KB in the standard view (11.6 KB compact, 18.6 KB full).
 
 ```jsonc
 {
@@ -334,7 +338,9 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["other is not a parameter of bilibili.videos.trending"],
+  "problems": [
+    "other is not a parameter of bilibili.videos.trending; it takes "
+  ],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -355,6 +361,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -367,8 +376,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "797a6faa-dbd1-4fec-8686-2c89bd5d3184",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -376,6 +385,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 13k tokens as the platform's own JSON, 4,764 as DataXAPI's JSON, and 3,882 as an AI reads it through DataXAPI's MCP server: 70% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/bilibili/videos/trending.example.json)
 
@@ -397,9 +408,11 @@ Part of DataXAPI's Social media data. The same key also works for: Creators, Ads
 
 The same thing on other platforms: [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending/), [Reddit popular posts](https://dataxapi.com/apis/reddit/posts/trending/)
 
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Telegram message detail](https://dataxapi.com/apis/telegram/messages/get/), [X community posts](https://dataxapi.com/apis/x/communities/posts/list/), [X list posts](https://dataxapi.com/apis/x/lists/posts/list/), [X article detail](https://dataxapi.com/apis/x/posts/article/get/), [X post detail](https://dataxapi.com/apis/x/posts/get/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [Facebook post detail](https://dataxapi.com/apis/facebook/posts/get/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/), [LinkedIn post detail](https://dataxapi.com/apis/linkedin/posts/get/)
+More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Telegram message detail](https://dataxapi.com/apis/telegram/messages/get/), [X community posts](https://dataxapi.com/apis/x/communities/posts/list/), [X list posts](https://dataxapi.com/apis/x/lists/posts/list/), [X article detail](https://dataxapi.com/apis/x/posts/article/get/), [X post detail](https://dataxapi.com/apis/x/posts/get/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [Facebook post detail](https://dataxapi.com/apis/facebook/posts/get/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/)
 
-Bilibili endpoints: [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/)
+Bilibili endpoints: [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/), [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list/)
+
+How-to guides and answers: [Bilibili API: videos, comments and uploader data (2026)](https://dataxapi.com/answers/bilibili-data-apis/), [Bilibili MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/bilibili-mcp/), [China trending API: Douyin, Weibo, Zhihu and Bilibili hot lists (2026)](https://dataxapi.com/answers/china-trending-api/)
 
 Related: [All Bilibili endpoints](https://dataxapi.com/apis/bilibili/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 3 platforms, side by side](https://dataxapi.com/roles/posts-trending/), [The post object's fields](https://dataxapi.com/docs/objects/post/)
 
@@ -411,7 +424,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -419,4 +432,4 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/bilibili/videos/trending/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/bilibili/videos/trending/)

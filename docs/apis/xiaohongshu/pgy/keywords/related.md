@@ -1,6 +1,6 @@
 # Xiaohongshu (RedNote) PGY related keywords API
 
-Get what people search on Xiaohongshu before and after a keyword, from the platform's creator marketplace, each with its place by relevance, its search index, the notes about it and their reads: for expanding a seed keyword. The search index is the platform's index, not a count of searches; for a word the platform gives no figures for, these are null. About 98 items a call, 120 at most; $0.0400 per call. Errors and timeouts are not charged; an empty result is charged $0.0400.
+Get what people search on Xiaohongshu before and after a keyword, from the platform's creator marketplace, each with its place by relevance, its search index, the notes about it and their reads: for expanding a seed keyword. The search index is the platform's index, not a count of searches; for a word the platform gives no figures for, these are null. About 98 items a call, 120 at most; $0.0400 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/xiaohongshu/pgy/keywords/related`
 - ID: `xiaohongshu.pgy.keywords.related`
@@ -42,7 +42,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | --- | --- | --- | --- | --- |
 | `keyword` | text | The related keyword. | `compact` | Yes |
 | `related_to` | text | The keyword it is related to: the one asked about. | `compact` | Yes |
-| `relation` | text | How it is related: query (searched together with the keyword asked about), posts (appears together with it in content), prior (searched before it), after (searched after it). Values: `query`, `posts`, `prior`, `after`. | `compact` | Yes |
+| `relation` | text | How it is related: query (searched together with the keyword asked about), posts (appears together with it in content), prior (searched before it), after (searched after it), suggestion (what the platform suggests as the keyword is typed into its search box). Values: `query`, `posts`, `prior`, `after`, `suggestion`. | `compact` | Yes |
 | `rank` | integer | Position by relevance among the keywords of the same relation, from 1. | `compact` | Yes |
 | `relevance` | number | How closely it is related to the keyword asked about, 0 to 1. | `compact` | The platform has none |
 | `search_index` | integer | Search index of the related keyword: the platform's index, not a count of searches; null where the platform gives no figure for the word. | `compact` | Yes |
@@ -68,11 +68,10 @@ Everything comes in one page; no cursor is issued.
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0400, once per call |
-| An empty result | $0.0400 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0400 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -84,7 +83,7 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 
 | HTTP | Code | Meaning | Charged | Retry |
 | --- | --- | --- | --- | --- |
-| 400 | `invalid_params` | A parameter is invalid | No | After a fix |
+| 400 | `invalid_params` | A parameter is invalid | As the answer's charged field says | After a fix |
 | 400 | `request_not_served` | This combination of parameters cannot be served at present | No | After a fix |
 | 400 | `max_price_exceeded` | The most this call could cost is above the limit you set | No | After a fix |
 | 401 | `unauthorized` | No credential was sent, or it is invalid, disabled or expired | No | No |
@@ -103,10 +102,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -128,6 +125,7 @@ curl -G "https://api.dataxapi.com/v1/xiaohongshu/pgy/keywords/related" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -138,6 +136,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -291,6 +290,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.04",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -303,8 +305,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "8203b5e1-da06-4f7a-990c-b092153fc56d",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -331,13 +333,15 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-More Social media data on other platforms: [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related/), [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/)
+More Social media data on other platforms: [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related/)
 
-Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/)
+Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/), [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history/), [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related/), [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending/), [Xiaohongshu PGY creator costs and data summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/metrics/), [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics/), [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history/), [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/)
 
-Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/)
+Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related/), [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get/)
 
 Xiaohongshu Shop endpoints: [Xiaohongshu product detail](https://dataxapi.com/apis/xiaohongshu/shop/products/get/), [Xiaohongshu product reviews](https://dataxapi.com/apis/xiaohongshu/shop/products/reviews/list/), [Xiaohongshu product search](https://dataxapi.com/apis/xiaohongshu/shop/products/search/)
+
+How-to guides and answers: [How to get a keyword's search index and related keywords on Xiaohongshu PGY](https://dataxapi.com/guides/xiaohongshu-pgy-keywords/), [What is Xiaohongshu PGY?](https://dataxapi.com/answers/what-is-xiaohongshu-pgy/)
 
 Related: [All Xiaohongshu PGY endpoints](https://dataxapi.com/apis/xiaohongshu/pgy/), [All Xiaohongshu (RedNote) endpoints](https://dataxapi.com/apis/xiaohongshu/), [Social media data](https://dataxapi.com/categories/social/), [The related keyword object's fields](https://dataxapi.com/docs/objects/keyword_related/)
 
@@ -349,7 +353,7 @@ $0.0400 per call. The most one call can cost is $0.0400.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0400.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -361,4 +365,4 @@ A keyword the platform has no data for reads like one with no related keywords: 
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/)

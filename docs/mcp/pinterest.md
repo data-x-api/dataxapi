@@ -2,6 +2,8 @@
 
 Ask your AI about Pinterest and it answers with live data: 2 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 2 (on Pinterest, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -20,26 +22,25 @@ Ask about Pinterest:
 
 ## What to ask about Pinterest, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
 | Find Pinterest pins for “minimalist kitchen”. | [Pinterest pin search](https://dataxapi.com/apis/pinterest/pins/search/) `pinterest.pins.search` | $0.0020 |
 | What does this pin show, and where does it link? | [Pinterest pin detail](https://dataxapi.com/apis/pinterest/pins/get/) `pinterest.pins.get` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Pinterest: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Pinterest: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > Find Pinterest pins for “minimalist kitchen”.
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "Find Pinterest pins for “minimalist kitchen”.", platform: "pinterest" })` | Found pinterest.pins.search · $0.0020 a call | Free |
-| `describe({ ids: ["pinterest.pins.search"] })` | Takes query · up to 20 a page | Free |
 | `call({ capability: "pinterest.pins.search", query: "mid century living room", max_price: "0.002" })` | Up to 20 post objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 20 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 20 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Pinterest skill package
 
@@ -86,4 +87,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/pinterest/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/pinterest/)

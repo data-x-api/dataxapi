@@ -1,0 +1,334 @@
+# DataXAPI：全部接口
+
+> 237 个接口，每个一行：名称（链到完整约定）、请求、价格、返回什么。基础地址 `https://api.dataxapi.com`。怎么调用、怎么付费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
+
+生成自 catalog revision 720fc3ea8dadb865, price book 19。英文版：https://dataxapi.com/llms-full.txt
+
+## 抖音
+
+- [抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list.md) `GET /v1/douyin/comments/replies/list` $0.002 一次。按评论编号和它所在的视频编号取一页这条评论下的回复：正文、回复者、点赞数、发布时间。
+- [抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list.md) `GET /v1/douyin/hashtags/videos/list` $0.002 一次。按话题编号取一页带这个话题的抖音视频，可按综合、最多点赞或最新发布排序：文案、作者、互动数、发布时间。
+- [抖音巨量算数品牌指数趋势](https://dataxapi.com/zh/apis/douyin/index/brands/history.md) `GET /v1/douyin/index/brands/history` $0.002 一次。按品牌名和起止日期，取这个品牌在抖音上逐日的搜索指数、内容指数和传播指数（巨量算数）。指数是平台算出的分，不是次数；日期是中国时间（UTC+8）的自然日。
+- [抖音巨量算数品牌指数对比](https://dataxapi.com/zh/apis/douyin/index/brands/metrics.md) `GET /v1/douyin/index/brands/metrics` $0.002 一次。按品牌名和起止日期，取这个品牌在抖音上搜索指数、内容指数、传播指数的日均值（巨量算数），并带同行业全部品牌和前 3、5、10、15、30 名品牌的均值作参照。指数是平台算出的分，不是次数。
+- [抖音巨量算数达人热门视频](https://dataxapi.com/zh/apis/douyin/index/creators/videos/list.md) `GET /v1/douyin/index/creators/videos/list` $0.002 一次。按抖音账号的数字编号和起止日期（最多 30 天），取巨量算数给的这个账号的热门视频，最多 20 条，按点赞数从高到低：文案、链接、发布日期、各项互动数和带来的新增粉丝数。实测平台给的都是截止日期前最后一两天发布的视频，不是整段时间里最热的；要看哪一天就把截止日期设到那一天。只有一页，没有播放数。
+- [抖音巨量算数达人粉丝画像](https://dataxapi.com/zh/apis/douyin/index/creators/audience/get.md) `GET /v1/douyin/index/creators/audience/get` $0.002 一次。按抖音账号的数字编号取巨量算数给的粉丝画像：性别、年龄、省份、城市、城市等级、手机品牌、兴趣各段的占比。不限星图达人，只给占比，不给人数。
+- [抖音巨量算数达人核心指标](https://dataxapi.com/zh/apis/douyin/index/creators/metrics.md) `GET /v1/douyin/index/creators/metrics` $0.002 一次。按抖音账号的数字编号取巨量算数给的达人核心指标：最近一周和最近一个月平均每天新增的点赞、分享、评论数和平台口径的涨粉数，以及各自和上一个周期相比的变化比例。涨粉数不是粉丝净增，比按粉丝增减算出来的大。平台没有数据的账号（各项全是 0）返回“不存在”。
+- [抖音巨量算数关键词人群画像](https://dataxapi.com/zh/apis/douyin/index/keywords/audience/get.md) `GET /v1/douyin/index/keywords/audience/get` $0.002 一次。按关键词和起止日期，取抖音上关注这个词的人群画像（巨量算数）：按年龄、性别、省份、城市、城市等级、兴趣各分一组，每组带占比和 TGI。
+- [抖音巨量算数关键词热度趋势](https://dataxapi.com/zh/apis/douyin/index/keywords/history.md) `GET|POST /v1/douyin/index/keywords/history` $0.006 一次。按一个关键词或一次 1 到 5 个关键词，加起止日期，取每个词在抖音上逐日的搜索指数和综合指数（巨量算数，也就是抖音指数），带本期、上期和去年同期的日均值。指数是平台算出的热度分，不是搜索次数；日期是中国时间（UTC+8）的自然日。
+- [抖音巨量算数关联词](https://dataxapi.com/zh/apis/douyin/index/keywords/related.md) `GET /v1/douyin/index/keywords/related` $0.002 一次。按一个关键词取它在抖音上某一周的关联词（巨量算数）：搜索里一起出现的词和内容里一起出现的词，各带相关度、相关度名次、搜索指数和综合指数。指数是平台算出的热度分，不是搜索次数。
+- [抖音巨量算数实时热点](https://dataxapi.com/zh/apis/douyin/index/trends/list.md) `GET /v1/douyin/index/trends/list` $0.002 一次。取巨量算数的实时热点榜或飙升热点榜，各约 30 条：名次、热点名称、热点指数、相关视频数、播放数和分类。热点指数是平台算出的热度分，不是搜索次数。
+- [抖音巨量算数关键词热门视频](https://dataxapi.com/zh/apis/douyin/index/videos/search.md) `GET /v1/douyin/index/videos/search` $0.002 一次。按关键词取巨量算数给出的约 20 条高指数视频：文案、链接、作者昵称、点赞数、视频指数和分类。只有一页；没有作者编号和发布时间，要这些用视频详情接口。
+- [抖音热榜](https://dataxapi.com/zh/apis/douyin/trends/list.md) `GET /v1/douyin/trends/list` $0.002 一次。取抖音的热点榜单：热搜榜、实时上升热点、话题热榜、热门搜索词或音乐榜，带名次和热度。
+- [抖音用户资料](https://dataxapi.com/zh/apis/douyin/users/get.md) `GET /v1/douyin/users/get` $0.002 一次。按账号编号或主页链接取抖音用户资料：显示名、抖音号、简介、粉丝数、关注数、作品数、获赞总数、是否认证；完整档另有认证说明、是不是企业或店铺认证（蓝 V）、主页有没有商品橱窗、能不能直播带货、是否正在直播和直播间编号。
+- [抖音达人互动与粉丝趋势](https://dataxapi.com/zh/apis/douyin/users/history.md) `GET|POST /v1/douyin/users/history` $0.002 一次。按抖音账号的数字编号取最近 7 天或 30 天的变化（巨量算数）：净增粉丝、新增点赞、评论、分享和发布数，各自和上一个周期相比的变化比例，以及现在的总数；一次最多 5 个账号。给的是一个周期的合计，不是逐日序列。
+- [抖音用户搜索](https://dataxapi.com/zh/apis/douyin/users/search.md) `GET /v1/douyin/users/search` $0.002 一次。按搜索词取一页抖音账号：账号编号、显示名、头像、粉丝数、作品数、获赞总数。
+- [抖音用户视频](https://dataxapi.com/zh/apis/douyin/users/videos/list.md) `GET /v1/douyin/users/videos/list` $0.002 一次。按账号编号取一页这个抖音账号发布的视频，从新到旧：文案、互动数、发布时间。
+- [抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list.md) `GET /v1/douyin/videos/comments/list` $0.002 一次。按视频编号取一页抖音评论：正文、评论者、点赞数、回复数、发布时间。
+- [抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get.md) `GET /v1/douyin/videos/get` $0.002 一次。按视频编号或链接取一条抖音视频或图文：文案、作者、互动数、发布时间。
+- [抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics.md) `GET /v1/douyin/videos/metrics` $0.002 一次。按视频编号取一条抖音视频此刻的数字：播放数、点赞数。
+- [抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related.md) `GET /v1/douyin/videos/related` $0.002 一次。按视频编号取抖音在这条视频旁边推荐的一批相关视频：文案、作者、互动数。推荐结果每次可能不同。
+- [抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search.md) `GET /v1/douyin/videos/search` $0.02 一次。按搜索词取一页抖音视频，可按最新或最多点赞排序、按发布时间筛选：文案、作者及粉丝数、互动数。
+- [抖音视频榜](https://dataxapi.com/zh/apis/douyin/videos/trending.md) `GET /v1/douyin/videos/trending` $0.002 一次。取抖音最近一天的视频榜：低粉爆款、高点赞率、高完播率或高涨粉率，带播放数、点赞数、作者粉丝数。
+- [抖音星图达人商业报价](https://dataxapi.com/zh/apis/douyin/xingtu/creators/rates/get.md) `GET /v1/douyin/xingtu/creators/rates/get` $0.04 一次。按星图达人编号取这位达人各种合作形式的报价和结算方式。
+- [抖音星图达人搜索](https://dataxapi.com/zh/apis/douyin/xingtu/creators/search.md) `GET /v1/douyin/xingtu/creators/search` $0.004 一次。按昵称里的词搜索星图上的抖音达人，可按粉丝数、预期 CPM（元）、性别筛选，按预期 CPM 从低到高排：星图达人编号、昵称、所在地、内容类目、粉丝数；完整档另有植入和定制视频报价、预期 CPM（元）、预估播放数、近 30 天互动率、完播率和播放中位数、电商带货等级、性别和内容标签。其他星图接口要的达人编号从这里取。
+- [抖音星图达人资料](https://dataxapi.com/zh/apis/douyin/xingtu/creators/get.md) `GET|POST /v1/douyin/xingtu/creators/get` $0.004 一次。按星图达人编号取这位抖音达人在星图上的资料：昵称、所在地、内容类目、粉丝数、性别；取一个时带抖音账号编号、抖音号、签约机构和内容标签，一次取多个（最多 50 个）时带植入和定制视频报价、预期 CPM（元）和预估播放数。
+- [抖音星图达人粉丝画像](https://dataxapi.com/zh/apis/douyin/xingtu/creators/audience/get.md) `GET /v1/douyin/xingtu/creators/audience/get` $0.004 一次。按星图达人编号取这位抖音达人的粉丝画像：性别、年龄、省份、城市、城市等级、兴趣、设备、人群、消费品类和消费金额各段的粉丝数和占比。
+- [抖音星图达人传播数据](https://dataxapi.com/zh/apis/douyin/xingtu/creators/metrics.md) `GET /v1/douyin/xingtu/creators/metrics` $0.004 一次。按星图达人编号取这位抖音达人近 30 天或 90 天视频的传播数据：视频数、播放中位数、平均点赞评论分享、互动率、完播率、预期千次播放成本和单次互动成本（人民币元）。数据算的是全部视频，平台不单给商单视频的数。
+- [抖音星图达人作品表现](https://dataxapi.com/zh/apis/douyin/xingtu/creators/videos/list.md) `GET /v1/douyin/xingtu/creators/videos/list` $0.004 一次。按星图达人编号取一页这位抖音达人的视频，从新到旧，带星图给的表现数据：播放数、点赞数、完播率、互动率、时长。商单和日常视频都在里面，平台不标哪条是商单，也不能只取商单视频。
+- [抖音星图达人内容热词](https://dataxapi.com/zh/apis/douyin/xingtu/creators/keywords/get.md) `GET /v1/douyin/xingtu/creators/keywords/get` $0.002 一次。按星图达人编号取星图从这位抖音达人少量近期视频里提出的词，约 20 个，每个带出现次数（通常只有个位数）。这些词常常只来自一两条视频，可能是一条商单：实测一个新闻媒体号返回的全是护肤品词。它不代表达人的整体内容，看内容方向请用星图内容分布接口。
+- [抖音星图达人星图指数](https://dataxapi.com/zh/apis/douyin/xingtu/creators/scores/get.md) `GET /v1/douyin/xingtu/creators/scores/get` $0.008 一次。按星图达人编号取星图给这位抖音达人打的六项指数：星图指数（综合）和传播、种草、转化、合作、性价比五个分项，每项带得分、同类达人的平均分、名次和名次排在前多大比例。
+- [抖音星图达人内容分布](https://dataxapi.com/zh/apis/douyin/xingtu/creators/content_mix/get.md) `GET /v1/douyin/xingtu/creators/content_mix/get` $0.004 一次。按星图达人编号取这位抖音达人近期视频的内容分类分布：每一类的视频数和占比。用来看这位达人的内容是不是集中在某个品类。
+- [抖音星图达人转化能力](https://dataxapi.com/zh/apis/douyin/xingtu/creators/conversion/get.md) `GET /v1/douyin/xingtu/creators/conversion/get` $0.004 一次。按星图达人编号取这位抖音达人带货视频的转化数据：相关视频数、播放中位数、推荐商品数，和销售额、千次播放成交额、商品价格、点击成本、组件点击次数、点击率各自所在的区间，以及带货品类。区间是平台给的文字，不是精确值；实测多数达人（包括电商等级 L4 的带货达人）各项区间都是空的（null），没有带货数据的达人返回“不存在”。
+- [抖音星图营销活动日历](https://dataxapi.com/zh/apis/douyin/xingtu/campaigns/list.md) `GET /v1/douyin/xingtu/campaigns/list` $0.004 一次。按起止时间取星图营销日历上的活动：平台大事件、电商节点、情绪节点、创意营销、行业活动，每个带名称、介绍、类型、进行到哪一步、招商期和活动期。一次给全，不翻页。
+- [抖音星图视频数据报告（播放量、完播率）](https://dataxapi.com/zh/apis/douyin/xingtu/videos/get.md) `GET /v1/douyin/xingtu/videos/get` $0.004 一次。按视频编号或链接取星图对一条抖音视频的数据报告：播放量和各项互动数，加上完播率、互动率、时长、作者粉丝数和作者的星图达人编号（可接着查这位达人的报价和传播数据）。星图收录的视频才有（多是星图达人的视频）。
+- [抖音搜索框联想词](https://dataxapi.com/zh/apis/douyin/keywords/related.md) `GET /v1/douyin/keywords/related` $0.02 一次。按关键词取抖音搜索框里输入这个词时给的联想词（下拉补全），按抖音列出的顺序排，一次约 10 个。只有词和名次，没有指数。
+- [抖音用户视频（备用版）](https://dataxapi.com/zh/apis/douyin/backup/users/videos/list.md) `GET /v1/douyin/backup/users/videos/list` $0.03 一次。抖音用户视频的备用版，原接口取不到时改调：参数和返回相同，价格更高。
+- [抖音视频搜索（备用版）](https://dataxapi.com/zh/apis/douyin/backup/videos/search.md) `GET /v1/douyin/backup/videos/search` $0.03 一次。抖音视频搜索的备用版，原接口取不到时改调：参数和返回相同，价格更高。
+
+## B站
+
+- [B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list.md) `GET /v1/bilibili/comments/replies/list` $0.002 一次。按评论编号和它所在视频的 BV 号取一页回复：正文、回复者、点赞数、回复的是哪一条、发布时间。
+- [B站热搜榜](https://dataxapi.com/zh/apis/bilibili/trends/list.md) `GET /v1/bilibili/trends/list` $0.002 一次。取 B 站当前的热搜词榜，最多 50 个词，带名次、热度和榜单上显示的那句话。
+- [B站用户资料](https://dataxapi.com/zh/apis/bilibili/users/get.md) `GET /v1/bilibili/users/get` $0.002 一次。按用户编号取 B 站用户资料：昵称、签名、头像、是否认证和认证说明、粉丝数、关注数、投稿视频数、累计获赞、账号等级、直播间链接。
+- [B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list.md) `GET /v1/bilibili/users/videos/list` $0.002 一次。按用户编号取一页 B 站用户投稿的视频，新的在前：标题、简介、播放数、评论数、弹幕数、时长、发布时间。
+- [B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list.md) `GET /v1/bilibili/videos/comments/list` $0.002 一次。按 BV 号取一页 B 站视频评论，可按热门或最新排：正文、评论者和他的等级、点赞数、回复数、发布时间。
+- [B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get.md) `GET /v1/bilibili/videos/get` $0.002 一次。按 BV 号或链接取一个 B 站视频：标题、简介、UP 主、播放、点赞、投币、收藏、弹幕数、时长、标签、分区、IP 属地，以及取字幕和弹幕要用的 cid。
+- [B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search.md) `GET /v1/bilibili/videos/search` $0.002 一次。按搜索词取一页 B 站视频，可按相关度、最新或播放最多排：标题、UP 主、播放、点赞、收藏、评论数、时长。
+- [B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending.md) `GET /v1/bilibili/videos/trending` $0.002 一次。取一页 B 站综合热门视频：标题、简介、UP 主、播放、点赞、投币、收藏、弹幕数、时长、分区、IP 属地、推荐理由。
+- [B站用户投稿（备用版）](https://dataxapi.com/zh/apis/bilibili/backup/users/videos/list.md) `GET /v1/bilibili/backup/users/videos/list` $0.03 一次。B站用户投稿的备用版，原接口取不到时改调：参数和返回相同（不含简介和评论数），价格更高。
+
+## 快手
+
+- [快手评论回复](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list.md) `GET /v1/kuaishou/comments/replies/list` $0.002 一次。按评论编号和它所在的作品编号取一页这条评论下的回复：正文、回复者、点赞数、发布时间、IP 属地。
+- [快手热榜](https://dataxapi.com/zh/apis/kuaishou/trends/list.md) `GET /v1/kuaishou/trends/list` $0.002 一次。取快手热榜：50 个热点词连同平台置顶的条目，带名次和热度。
+- [快手用户资料](https://dataxapi.com/zh/apis/kuaishou/users/get.md) `GET /v1/kuaishou/users/get` $0.02 一次。按用户编号取快手用户资料：显示名、快手号、简介、粉丝数、关注数、作品数、获赞总数、是否认证；完整档另有认证说明、IP 属地、性别、主页有没有快手小店。
+- [快手用户搜索](https://dataxapi.com/zh/apis/kuaishou/users/search.md) `GET /v1/kuaishou/users/search` $0.02 一次。按搜索词取一页快手账号，可只看认证账号或正在直播的账号、按性别筛选、按粉丝数排序：用户编号、显示名、快手号、简介、粉丝数、是否认证。
+- [快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list.md) `GET /v1/kuaishou/users/videos/list` $0.02 一次。带 sort=popular 时：$0.002 一次。按用户编号取一页这个快手账号发布的视频，按最新或最热门排序：文案、播放数、互动数、发布时间。
+- [快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list.md) `GET /v1/kuaishou/videos/comments/list` $0.002 一次。按作品编号取一页快手视频的一级评论：正文、评论者、点赞数、发布时间、IP 属地。
+- [快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get.md) `GET /v1/kuaishou/videos/get` $0.002 一次。按作品编号或链接取一条快手视频：文案、作者、播放数、互动数、发布时间。
+- [快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search.md) `GET /v1/kuaishou/videos/search` $0.02 一次。按搜索词取一页快手作品，可按最新或最多点赞排序、按发布时间和视频时长筛选：文案、作者、播放数、互动数、发布时间、是视频还是图集，视频带时长。
+
+## Telegram
+
+- [Telegram 频道资料](https://dataxapi.com/zh/apis/telegram/channels/get.md) `GET /v1/telegram/channels/get` $0.002 一次。按账号名取公开 Telegram 频道的资料：名称、简介、订阅数、是否认证。
+- [Telegram 频道消息](https://dataxapi.com/zh/apis/telegram/channels/messages/list.md) `GET /v1/telegram/channels/messages/list` $0.002 一次。按账号名取一页公开 Telegram 频道的消息，从最新的开始：正文、发布时间、浏览数、图片。
+- [Telegram 单条消息](https://dataxapi.com/zh/apis/telegram/messages/get.md) `GET /v1/telegram/messages/get` $0.002 一次。按“频道账号名/消息序号”或消息链接取公开 Telegram 频道的一条消息：正文、发布时间、浏览数、图片。
+
+## X（推特）
+
+- [X 社群帖子](https://dataxapi.com/zh/apis/x/communities/posts/list.md) `GET /v1/x/communities/posts/list` 按返回条数 $0.0003 一条，每次最少 $0.0003、最多 $0.006。按社群编号取一页这个 X 社群里的帖子。
+- [X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/list.md) `GET /v1/x/lists/posts/list` $0.002 一次。按列表编号取一页这个 X 列表时间线上的帖子，从最新的开始，每页约 100 条。
+- [X 长文详情](https://dataxapi.com/zh/apis/x/posts/article/get.md) `GET /v1/x/posts/article/get` $0.002 一次。按帖子编号取这条 X 帖子附带的长文：标题、全文、作者、发布时间、点赞、回复和浏览数。
+- [X 帖子详情](https://dataxapi.com/zh/apis/x/posts/get.md) `GET /v1/x/posts/get` $0.0003 一次。按帖子编号或链接取一条 X 帖子：正文、作者、发布时间、点赞、回复、转推、引用、书签和浏览数。
+- [X 帖子引用列表](https://dataxapi.com/zh/apis/x/posts/quotes/list.md) `GET /v1/x/posts/quotes/list` 按返回条数 $0.0003 一条，每次最少 $0.0003、最多 $0.006。带 sort=popular 时：$0.002 一次。按帖子编号取一页引用它的 X 帖子，可按时间或按热门排。
+- [X 帖子回复列表](https://dataxapi.com/zh/apis/x/posts/replies/list.md) `GET /v1/x/posts/replies/list` $0.002 一次。按帖子编号取一页这条 X 帖子下面的回复，按平台的相关度排；X 的回复本身是帖子，按帖子返回。
+- [X 帖子转推用户](https://dataxapi.com/zh/apis/x/posts/retweeters/list.md) `GET /v1/x/posts/retweeters/list` $0.002 一次。按帖子编号取一页转推了这条 X 帖子的账号：账号名、显示名、简介、粉丝数。
+- [X 帖子搜索](https://dataxapi.com/zh/apis/x/posts/search.md) `GET /v1/x/posts/search` $0.002 一次。按搜索词找 X 帖子，可按热门或最新排；搜索词里可以用 X 自己的搜索语法，如 from:账号名。
+- [X 帖子对话串](https://dataxapi.com/zh/apis/x/threads/posts/list.md) `GET /v1/x/threads/posts/list` 按返回条数 $0.0003 一条，每次最少 $0.0003、最多 $0.015。按对话串里任意一条帖子的编号，取这条对话串的帖子：主帖、作者的续帖和其中的回复。
+- [X 趋势榜](https://dataxapi.com/zh/apis/x/trends/list.md) `GET /v1/x/trends/list` $0.009 一次。取 X 当前的趋势榜前 30 条，带名次；可以取全球的，也可以取某个国家的。
+- [X 用户粉丝列表](https://dataxapi.com/zh/apis/x/users/followers/list.md) `GET /v1/x/users/followers/list` 按返回条数 $0.0001 一条，每次最少 $0.0004、最多 $0.02。按账号名取一页关注该 X 用户的账号，每页最多 200 个，从最新关注的开始。
+- [X 用户关注列表](https://dataxapi.com/zh/apis/x/users/following/list.md) `GET /v1/x/users/following/list` 按返回条数 $0.0001 一条，每次最少 $0.0004、最多 $0.02。按账号名取一页该 X 用户关注的账号，每页最多 200 个。
+- [X 用户资料](https://dataxapi.com/zh/apis/x/users/get.md) `GET|POST /v1/x/users/get` 按返回条数 $0.0004 一条，每次最少 $0.0004、最多 $0.04。按账号名或编号取 X 用户资料：显示名、简介、粉丝数、关注数、是否有认证标和是哪种（企业金标、政府灰标）、自填的地点、网站；可一次传最多 100 个编号。
+- [X 用户提及](https://dataxapi.com/zh/apis/x/users/mentions/list.md) `GET /v1/x/users/mentions/list` 按返回条数 $0.0003 一条，每次最少 $0.0003、最多 $0.006。按账号名取一页提及该 X 用户的帖子，从最新的开始。
+- [X 用户帖子列表](https://dataxapi.com/zh/apis/x/users/posts/list.md) `GET /v1/x/users/posts/list` $0.002 一次。按账号名取一页该 X 用户主页上的帖子，从最新的开始；用 tab 选帖子、回复或媒体分栏。帖子分栏里有这个账号的转推，ext.is_retweet 标出来，并给原帖编号和原帖作者编号。
+- [X 用户搜索](https://dataxapi.com/zh/apis/x/users/search.md) `GET /v1/x/users/search` 按返回条数 $0.0004 一条，每次最少 $0.0004、最多 $0.008。按搜索词找 X 账号，每页约 20 个：账号名、显示名、简介、粉丝数、是否认证。
+- [X 社群资料](https://dataxapi.com/zh/apis/x/communities/get.md) `GET /v1/x/communities/get` $0.0004 一次。按社群编号取 X 社群的资料：名称、简介、成员数、管理员人数、加入方式、创建时间。
+- [X 社群成员](https://dataxapi.com/zh/apis/x/communities/members/list.md) `GET /v1/x/communities/members/list` 按返回条数 $0.0004 一条，每次最少 $0.0004、最多 $0.008。按社群编号取一页加入了这个 X 社群的账号，每页约 20 个：账号名、显示名、简介、粉丝数、是否认证。
+- [X 列表关注者](https://dataxapi.com/zh/apis/x/lists/followers/list.md) `GET /v1/x/lists/followers/list` 按返回条数 $0.0004 一条，每次最少 $0.0004、最多 $0.008。按列表编号取关注了这个 X 列表的账号，最多 20 个：账号名、显示名、简介、粉丝数、是否认证。只有这一页，不能往后翻。
+- [X 列表成员](https://dataxapi.com/zh/apis/x/lists/members/list.md) `GET /v1/x/lists/members/list` 按返回条数 $0.0004 一条，每次最少 $0.0004、最多 $0.008。按列表编号取一页这个 X 列表收录的账号，每页 20 个：账号名、显示名、简介、粉丝数、是否认证。
+- [X 视频字幕](https://dataxapi.com/zh/apis/x/posts/transcript/get.md) `GET /v1/x/posts/transcript/get` $0.002 一次。按帖子编号或链接取 X 帖子里的视频说的话，全文；只支持两分钟以内的视频。
+
+## Facebook
+
+- [Facebook 主页资料](https://dataxapi.com/zh/apis/facebook/pages/get.md) `GET /v1/facebook/pages/get` $0.002 一次。按主页的账号名、编号或链接取 Facebook 公共主页资料：名称、简介、粉丝数、点赞数、类别、网站、创建日期，以及它在 Meta 广告库里的编号（查它投的广告要用）。
+- [Facebook 主页帖子](https://dataxapi.com/zh/apis/facebook/pages/posts/list.md) `GET /v1/facebook/pages/posts/list` $0.002 一次。按主页的编号、账号名或链接取一页 Facebook 主页发的帖子：正文、发布时间、点赞（全部心情）数、评论数、图片；分享数和播放数用帖子详情取。一页 3 条，可往前翻。
+- [Facebook 帖子评论](https://dataxapi.com/zh/apis/facebook/posts/comments/list.md) `GET /v1/facebook/posts/comments/list` $0.002 一次。按帖子编号取一页 Facebook 帖子或 Reel 下的评论：正文、评论者、心情数、回复数、发布时间。
+- [Facebook 帖子详情](https://dataxapi.com/zh/apis/facebook/posts/get.md) `GET /v1/facebook/posts/get` $0.002 一次。按链接取一条 Facebook 帖子或 Reel：正文、作者、发布时间、点赞（全部心情）数、评论数、分享数、播放数、图片。
+
+## Google 广告
+
+- [Google 广告详情](https://dataxapi.com/zh/apis/google/ads/get.md) `GET /v1/google/ads/get` $0.002 一次。按编号或链接取 Google 广告透明度中心里的一条广告：形态、标题、描述、落地页、图片和视频素材、首次和最近一次展示的时间、展示过的国家或地区、总展示量区间（平台公布时）。
+- [Google 广告主的广告](https://dataxapi.com/zh/apis/google/advertisers/ads/list.md) `GET /v1/google/advertisers/ads/list` $0.002 一次。按广告主编号取它在 Google 广告透明度中心里的广告：形态（文字、图片、视频）、首次和最近一次展示的时间、广告截图；可限定国家、只看一种形态。一页 40 条；文案和落地页用“Google 广告详情”取。
+- [Google 广告主搜索](https://dataxapi.com/zh/apis/google/advertisers/search.md) `GET /v1/google/advertisers/search` $0.002 一次。按名称在 Google 广告透明度中心找广告主：编号、名称、登记的国家或地区、平台估计的广告数。拿到的编号用来取这个广告主的广告。
+
+## LinkedIn
+
+- [LinkedIn 广告详情](https://dataxapi.com/zh/apis/linkedin/ads/get.md) `GET /v1/linkedin/ads/get` $0.002 一次。按编号或链接取 LinkedIn 广告库里的一条广告：广告主、文案、标题、图片和视频素材、落地页、投放起止时间、展示量档位、定向的语言和地区。
+- [LinkedIn 广告库搜索](https://dataxapi.com/zh/apis/linkedin/ads/search.md) `GET /v1/linkedin/ads/search` $0.002 一次。按关键词或公司名搜 LinkedIn 广告库里的广告：广告主、文案、标题、图片和视频素材、落地页、投放起止时间、展示量档位、定向的语言和地区；可限定国家。
+- [LinkedIn 公司主页](https://dataxapi.com/zh/apis/linkedin/companies/get.md) `GET /v1/linkedin/companies/get` $0.002 一次。按公司的账号名或链接取 LinkedIn 公司主页：名称、简介、员工数、行业、规模、公司类型、总部、网站。
+- [LinkedIn 公司帖子](https://dataxapi.com/zh/apis/linkedin/companies/posts/list.md) `GET /v1/linkedin/companies/posts/list` $0.002 一次。按公司的账号名或链接取 LinkedIn 公司主页上公开展示的最近帖子（最多 10 条）：编号、链接、正文、发布时间。不带作者和互动数，互动数用帖子详情取；只有这一页，不能往前翻。
+- [LinkedIn 帖子详情](https://dataxapi.com/zh/apis/linkedin/posts/get.md) `GET /v1/linkedin/posts/get` $0.002 一次。按帖子编号或链接取一条 LinkedIn 帖子：正文、作者、发布时间、点赞（全部心情）数、评论数、图片。
+- [LinkedIn 帖子搜索](https://dataxapi.com/zh/apis/linkedin/posts/search.md) `GET /v1/linkedin/posts/search` $0.002 一次。按搜索词找公开的 LinkedIn 帖子：正文、作者、发布时间、点赞（全部心情）数、评论数；可限定最近多久之内发布。结果来自网页搜索引擎对 LinkedIn 的收录，不是 LinkedIn 站内搜索，不保证全。
+- [LinkedIn 视频字幕](https://dataxapi.com/zh/apis/linkedin/posts/transcript/get.md) `GET /v1/linkedin/posts/transcript/get` $0.002 一次。按帖子编号或链接取 LinkedIn 帖子里的视频说的话，全文。只有平台自己为视频公开了文字稿的帖子才有，多数视频没有。
+
+## Meta 广告库
+
+- [Meta 广告详情](https://dataxapi.com/zh/apis/meta/ads/get.md) `GET /v1/meta/ads/get` $0.002 一次。按广告库编号或链接取 Meta 广告库里的一条广告：广告主、文案、标题、图片和视频素材、落地页、投放起止时间、投放到哪些平台、是否还在投。
+- [Meta 广告库搜索](https://dataxapi.com/zh/apis/meta/ads/search.md) `GET /v1/meta/ads/search` $0.002 一次。按关键词搜 Meta 广告库（Facebook、Instagram 等）里正在投放的广告：广告主、文案、标题、图片和视频素材、落地页、投放起止时间；可限定国家、只看图片或视频、按展示量或最新排序。一页 30 条。
+- [Meta 广告视频字幕](https://dataxapi.com/zh/apis/meta/ads/transcript/get.md) `GET /v1/meta/ads/transcript/get` $0.002 一次。按广告库编号或链接取 Meta 广告库里一条视频广告说的话，全文。
+- [Meta 广告主的广告](https://dataxapi.com/zh/apis/meta/advertisers/ads/list.md) `GET /v1/meta/advertisers/ads/list` $0.002 一次。按广告主（Facebook 主页）的编号取它在 Meta 广告库里正在投放的广告：文案、标题、图片和视频素材、落地页、投放起止时间；可限定国家、只看图片或视频、按展示量或最新排序。一页 30 条。
+- [Meta 广告主搜索](https://dataxapi.com/zh/apis/meta/advertisers/search.md) `GET /v1/meta/advertisers/search` $0.002 一次。按名称在 Meta 广告库里找广告主（Facebook 主页）：编号、名称、头像、类别、主页点赞数、关联的 Instagram 账号。拿到的编号用来取这个广告主的广告。
+
+## Threads
+
+- [Threads 帖子详情](https://dataxapi.com/zh/apis/threads/posts/get.md) `GET /v1/threads/posts/get` $0.002 一次。按帖子代码或链接取一条 Threads 帖子：正文、作者、发布时间、点赞、回复、转发、图片。
+- [Threads 帖子搜索](https://dataxapi.com/zh/apis/threads/posts/search.md) `GET /v1/threads/posts/search` $0.002 一次。按搜索词找 Threads 帖子：正文、作者、发布时间、点赞、回复、转发；可限定发布日期。只有一页结果。
+- [Threads 用户资料](https://dataxapi.com/zh/apis/threads/users/get.md) `GET /v1/threads/users/get` $0.002 一次。按账号名取 Threads 用户资料：显示名、简介、粉丝数、是否认证、头像。
+- [Threads 用户帖子](https://dataxapi.com/zh/apis/threads/users/posts/list.md) `GET /v1/threads/users/posts/list` $0.002 一次。按账号名取一个 Threads 用户最近发的帖子：正文、发布时间、点赞、回复、转发、图片。只有最近的一页，不能往前翻。
+
+## Instagram
+
+- [Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list.md) `GET /v1/instagram/comments/replies/list` $0.002 一次。按评论编号和它所在的帖子短码取一页回复：正文、回复者、发布时间。
+- [Instagram 话题帖子](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list.md) `GET /v1/instagram/hashtags/posts/list` $0.002 一次。按话题名取一页带这个话题的最新 Instagram 帖子，每页约 33 条：文案、作者编号、点赞评论数、发布时间、图片。
+- [Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list.md) `GET /v1/instagram/posts/comments/list` $0.002 一次。按帖子短码或链接取一页 Instagram 评论，每页约 15 条，最新在前：正文、评论者、点赞数、发布时间。
+- [Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get.md) `GET /v1/instagram/posts/get` $0.002 一次。按帖子短码或链接取一条 Instagram 帖子或 Reel：文案、作者、点赞评论播放数、图片和视频地址，联名帖的其他作者。
+- [Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get.md) `GET /v1/instagram/posts/transcript/get` $0.002 一次。按帖子短码或链接取 Instagram Reel 或视频帖里说的话，全文；只支持两分钟以内的视频。
+- [Instagram 用户资料](https://dataxapi.com/zh/apis/instagram/users/get.md) `GET /v1/instagram/users/get` $0.002 一次。按账号名取 Instagram 用户资料：显示名、简介、粉丝数、关注数、是否认证、是否私密，主页上的网站和链接。
+- [Instagram 用户帖子](https://dataxapi.com/zh/apis/instagram/users/posts/list.md) `GET /v1/instagram/users/posts/list` $0.002 一次。按账号名取一页 Instagram 用户发布的帖子，每页 12 条，可只要 Reels：文案、点赞评论播放数、发布时间、图片和视频地址，联名帖的其他作者。
+- [Instagram 用户搜索](https://dataxapi.com/zh/apis/instagram/users/search.md) `GET /v1/instagram/users/search` $0.004 一次。按关键词搜索 Instagram 账号，一次约 50 个，不翻页：账号名、显示名、头像、是否认证、是否私密。
+
+## TikTok
+
+- [TikTok 广告库搜索](https://dataxapi.com/zh/apis/tiktok/ads/search.md) `GET /v1/tiktok/ads/search` $0.002 一次。按关键词或广告主名字搜 TikTok 公开广告库（欧洲地区投放的广告）：广告主、标题、视频和图片素材、首次和最近一次展示的时间、触达人数档位；最新的在前，一页 12 条。这是广告透明度记录，和创意中心的热门广告是两份数据。
+- [TikTok 广告库广告详情](https://dataxapi.com/zh/apis/tiktok/ads/get.md) `GET /v1/tiktok/ads/get` $0.002 一次。按编号或链接取 TikTok 公开广告库里的一条广告：广告主、标题、视频和图片素材、落地页、首次和最近一次展示的时间、投放的国家、投放目标。
+- [TikTok 评论回复](https://dataxapi.com/zh/apis/tiktok/comments/replies/list.md) `GET /v1/tiktok/comments/replies/list` $0.002 一次。按评论编号和它所在的视频编号取一页回复，每页 20 条：正文、回复者、点赞数、发布时间、回复的是哪一条。
+- [TikTok 创意中心热门广告详情](https://dataxapi.com/zh/apis/tiktok/creative_center/ads/get.md) `GET /v1/tiktok/creative_center/ads/get` $0.002 一次。按编号取 TikTok 创意中心的一条热门广告（Top Ads）：广告视频、文案、品牌名、落地页、点赞数、评论数、分享数、时长、投放目标、行业代号、投放的国家。
+- [TikTok 创意中心热门广告搜索](https://dataxapi.com/zh/apis/tiktok/creative_center/ads/search.md) `GET /v1/tiktok/creative_center/ads/search` $0.002 一次。按关键词搜 TikTok 创意中心的热门广告（Top Ads）：广告视频、文案、品牌名、点赞数、时长、投放目标；一次看一个国家，可选统计周期，按推荐或点赞数排序。一页 20 条。这是表现好的广告素材展示，不是广告库：没有投放时间。
+- [TikTok 话题作品](https://dataxapi.com/zh/apis/tiktok/hashtags/videos/list.md) `GET /v1/tiktok/hashtags/videos/list` $0.002 一次。按话题名取一页带这个话题的 TikTok 视频，每页约 20 条：文案、作者、互动数、封面和播放地址。
+- [TikTok 用户资料](https://dataxapi.com/zh/apis/tiktok/users/get.md) `GET /v1/tiktok/users/get` $0.002 一次。按账号名或编号取 TikTok 用户资料：显示名、简介、粉丝数、关注数、作品数、获赞数、是否认证。
+- [TikTok 用户搜索](https://dataxapi.com/zh/apis/tiktok/users/search.md) `GET /v1/tiktok/users/search` $0.002 一次。按关键词搜索 TikTok 账号，每页 30 个：账号名、显示名、粉丝数、关注数、作品数、获赞数。
+- [TikTok 用户作品](https://dataxapi.com/zh/apis/tiktok/users/videos/list.md) `GET /v1/tiktok/users/videos/list` $0.002 一次。按账号名取一页 TikTok 用户发布的视频，每页 10 条：文案、互动数、发布时间、封面和播放地址，可按最新或最热排。
+- [TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list.md) `GET /v1/tiktok/videos/comments/list` $0.002 一次。按视频编号或链接取一页 TikTok 评论，每页 50 条：正文、评论者和评论者账号的国家或地区、点赞数、回复数、发布时间。
+- [TikTok 视频详情](https://dataxapi.com/zh/apis/tiktok/videos/get.md) `GET /v1/tiktok/videos/get` $0.002 一次。按视频编号或链接取一条 TikTok 视频：文案、作者、点赞评论分享收藏播放数、封面和播放地址。
+- [TikTok 视频搜索](https://dataxapi.com/zh/apis/tiktok/videos/search.md) `GET /v1/tiktok/videos/search` $0.002 一次。按关键词搜索 TikTok 视频，每页 30 条，可按相关度、点赞数或发布时间排，可限定发布时间。
+- [TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get.md) `GET /v1/tiktok/videos/transcript/get` $0.002 一次。按视频编号或链接取 TikTok 视频里说的话：全文和带时间的分段，可用 lang 指定字幕语言。
+- [TikTok Shop 商品详情](https://dataxapi.com/zh/apis/tiktok/shop/products/get.md) `GET /v1/tiktok/shop/products/get` $0.002 一次。按商品编号取 TikTok Shop 美国站的一件商品：标题、文字说明、图片、评分、评价数、已售件数，店铺和它的评分、粉丝数、在售商品数，商品页上显示的价格和运费。页面价比店铺列表和搜索里的价格高约一个运费，列表价用商品搜索取。
+- [TikTok Shop 商品评价](https://dataxapi.com/zh/apis/tiktok/shop/products/reviews/list.md) `GET /v1/tiktok/shop/products/reviews/list` $0.002 一次。按商品编号取 TikTok Shop 美国站这件商品排在最前的 10 条买家评价：正文、评分、时间、买的规格、晒图。
+- [TikTok Shop 商品搜索](https://dataxapi.com/zh/apis/tiktok/shop/products/search.md) `GET /v1/tiktok/shop/products/search` $0.002 一次。按搜索词取 TikTok Shop 美国站的商品：标题、现价和原价、评分、已售件数、店铺。
+- [TikTok Shop 店铺商品](https://dataxapi.com/zh/apis/tiktok/shop/sellers/products/list.md) `GET /v1/tiktok/shop/sellers/products/list` $0.002 一次。按店铺编号取一页这家 TikTok Shop 美国站店铺在售的商品：标题、现价和原价、评分、评价数、已售件数。
+- [TikTok 用户粉丝列表](https://dataxapi.com/zh/apis/tiktok/users/followers/list.md) `GET /v1/tiktok/users/followers/list` $0.002 一次。按账号名取一页关注该 TikTok 用户的账号，每页 50 个，从最新关注的开始：账号名、显示名、简介、粉丝数、关注数、作品数、获赞数，以及账号的国家或地区和语言，可看粉丝分布。
+
+## 微博
+
+- [微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list.md) `GET /v1/weibo/comments/replies/list` $0.002 一次。按评论编号取一页回复：正文、回复者、点赞数、回复的是哪一条、发布时间、IP 属地。
+- [微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list.md) `GET /v1/weibo/posts/comments/list` $0.002 一次。按微博编号取一页评论：正文、评论者、点赞数、回复数、发布时间、IP 属地。
+- [微博详情](https://dataxapi.com/zh/apis/weibo/posts/get.md) `GET /v1/weibo/posts/get` $0.002 一次。按微博编号取一条微博：全文（长微博也是全文）、作者、点赞、评论、转发、阅读数（视频微博是播放数）、图片、话题、IP 属地。
+- [微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list.md) `GET /v1/weibo/posts/likers/list` $0.002 一次。按微博编号取最近给这条微博点赞的账号，一次约 50 个：昵称、简介、头像、是否认证和认证类型、粉丝数、关注数、微博数，资料里填的性别和地区。
+- [微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search.md) `GET /v1/weibo/posts/search` $0.002 一次。按搜索词取一页微博，新发的在前：正文（长微博在这里是截短的）、作者和粉丝数、点赞、评论、转发数、视频播放数、图片、话题。
+- [微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list.md) `GET /v1/weibo/trends/list` $0.002 一次。取微博当前的热搜榜，50 个词，带名次、热度和标签（新、热等）。
+- [微博用户粉丝列表](https://dataxapi.com/zh/apis/weibo/users/followers/list.md) `GET /v1/weibo/users/followers/list` $0.002 一次。按用户编号取一页关注该微博用户的账号，每页 20 个：昵称、简介、头像、是否认证和认证类型、粉丝数、关注数、微博数、注册时间，资料里填的性别和地区。
+- [微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get.md) `GET /v1/weibo/users/get` $0.002 一次。按用户编号取微博用户资料：昵称、简介、头像、是否认证和认证说明、粉丝数、关注数、微博数，主页上的转评赞总数、获赞总数，性别和地区。
+- [微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list.md) `GET /v1/weibo/users/posts/list` $0.002 一次。按用户编号取一页该用户主页上的微博（原创和转发），新的在前：正文（长微博在这里是截短的）、点赞、评论、转发数、视频播放数、图片、话题、IP 属地、是否置顶。
+- [微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search.md) `GET /v1/weibo/users/search` $0.002 一次。按搜索词取一页微博用户：编号、昵称、头像、主页链接。
+- [微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list.md) `GET /v1/weibo/backup/trends/list` $0.03 一次。微博热搜榜的备用版，原接口取不到时改调：参数和返回相同，价格更高。
+
+## 小红书
+
+- [小红书图片搜索](https://dataxapi.com/zh/apis/xiaohongshu/images/search.md) `GET /v1/xiaohongshu/images/search` $0.02 一次。按搜索词取一页小红书图片，每条是一张图片和它所在的笔记：图片地址、笔记的标题、正文、作者、点赞、评论、收藏、分享数。分享数在这里给不了（总是 0，不交付），要看分享数请用笔记详情 xiaohongshu.notes.get。
+- [小红书笔记详情](https://dataxapi.com/zh/apis/xiaohongshu/notes/get.md) `GET /v1/xiaohongshu/notes/get` $0.02 一次。按笔记编号或链接取一篇小红书笔记：标题、正文、作者、互动数、图片，以及是不是报备过的品牌合作笔记。
+- [小红书评论回复](https://dataxapi.com/zh/apis/xiaohongshu/comments/replies/list.md) `GET /v1/xiaohongshu/comments/replies/list` $0.02 一次。按评论编号和它所在的笔记编号取一页回复：正文、回复者、点赞数、发布时间、回复的是哪一条。
+- [小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list.md) `GET /v1/xiaohongshu/notes/comments/list` $0.02 一次。按笔记编号或链接取一页小红书一级评论，按时间从新到旧，也可按最热：正文、评论者、点赞数、回复数、发布时间。
+- [小红书笔记搜索](https://dataxapi.com/zh/apis/xiaohongshu/notes/search.md) `GET /v1/xiaohongshu/notes/search` $0.02 一次。按搜索词取一页小红书笔记：标题、正文、作者、互动数、图片，链接带访问令牌可直接打开；标明哪条是报备过的品牌合作笔记。可按综合、最新、最多点赞、最多评论、最多收藏排，可只要视频或图文笔记、只要一天、一周或半年内发布的。
+- [小红书蒲公英关键词逐日搜索指数](https://dataxapi.com/zh/apis/xiaohongshu/pgy/keywords/history.md) `GET /v1/xiaohongshu/pgy/keywords/history` $0.04 一次。按一个关键词取它在小红书上最近约三个月逐日的搜索指数（蒲公英），并带每天和这个词有关的笔记数、曝光数、阅读数和互动数。时间范围由平台定，不能选；搜索指数是平台算出的指数，不是搜索次数；日期是中国时间（UTC+8）的自然日。
+- [小红书蒲公英关联词](https://dataxapi.com/zh/apis/xiaohongshu/pgy/keywords/related.md) `GET /v1/xiaohongshu/pgy/keywords/related` $0.04 一次。按一个关键词取小红书用户搜它之前和之后还会搜的词（蒲公英），各带相关度名次、搜索指数、相关笔记数和阅读数，用来拓词选题。搜索指数是平台算出的指数，不是搜索次数；平台不给数的词，这几项为 null。
+- [小红书话题笔记](https://dataxapi.com/zh/apis/xiaohongshu/topics/notes/list.md) `GET /v1/xiaohongshu/topics/notes/list` $0.02 一次。按话题页编号取该话题下的热门笔记：标题、正文、作者、互动数、图片、话题标签。
+- [小红书话题详情](https://dataxapi.com/zh/apis/xiaohongshu/topics/get.md) `GET /v1/xiaohongshu/topics/get` $0.02 一次。按话题页编号取一个小红书话题：名称、简介、浏览数、讨论数、分享链接。
+- [小红书热点](https://dataxapi.com/zh/apis/xiaohongshu/trends/list.md) `GET /v1/xiaohongshu/trends/list` $0.02 一次。取小红书创作灵感里的热点话题：名称和平台给的热度值。
+- [小红书用户资料](https://dataxapi.com/zh/apis/xiaohongshu/users/get.md) `GET /v1/xiaohongshu/users/get` $0.02 一次。按用户编号或主页链接取小红书账号资料：昵称、小红书号、简介、粉丝数、关注数、笔记数、是否认证，以及主页显示的性别和自填地区。
+- [小红书用户笔记](https://dataxapi.com/zh/apis/xiaohongshu/users/notes/list.md) `GET /v1/xiaohongshu/users/notes/list` $0.02 一次。按用户编号或主页链接取一页该账号发布的小红书笔记：标题、正文、互动数、图片、是否置顶。
+- [小红书用户搜索](https://dataxapi.com/zh/apis/xiaohongshu/users/search.md) `GET /v1/xiaohongshu/users/search` $0.02 一次。按搜索词取一页小红书账号：用户编号、小红书号、昵称、头像、是否认证。
+- [小红书商品详情](https://dataxapi.com/zh/apis/xiaohongshu/shop/products/get.md) `GET /v1/xiaohongshu/shop/products/get` $0.02 一次。按商品编号取小红书商城的一件商品：标题、现价和原价（人民币）、图片、评分、评价数、店铺。看到的是 App 海外地区版本的商品页（地区每次可能不同），促销和能不能买可能和国内用户看到的不一样。
+- [小红书商品评价](https://dataxapi.com/zh/apis/xiaohongshu/shop/products/reviews/list.md) `GET /v1/xiaohongshu/shop/products/reviews/list` $0.02 一次。按商品编号取小红书商城这件商品排在最前的一页买家评价：正文、评分、买的规格、晒图、点赞数。
+- [小红书商品搜索](https://dataxapi.com/zh/apis/xiaohongshu/shop/products/search.md) `GET /v1/xiaohongshu/shop/products/search` $0.02 一次。按搜索词取一页小红书商城的商品：标题、现价和原价（人民币）、已售件数、图片、店铺。看到的是 App 海外地区版本的商城（地区每次可能不同），促销和能不能买可能和国内用户看到的不一样。
+- [小红书蒲公英博主搜索](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/search.md) `GET /v1/xiaohongshu/pgy/creators/search` $0.04 一次。按搜索词找蒲公英上的小红书博主（按博主写的内容匹配）：博主编号、昵称、小红书号、所在地、内容类目、粉丝数，完整档另有图文和视频报价、阅读和互动中位数。也可以按蒲公英找博主的筛选条件找，或和搜索词一起用：粉丝数、报价、预估 CPM、日常和合作笔记的阅读与互动中位数、主做图文或视频、博主类目、擅长内容、人设、所在地、性别、粉丝性别和年龄、近期合作行业，可剔除低活跃和掉粉的；按粉丝数、报价、阅读、互动、外溢进店、阅读单价、回复率、涨粉、完播率等排序。一次搜索最多翻到前 5000 位。其他蒲公英接口要的博主编号从这里取。
+- [小红书蒲公英博主详情](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/get.md) `GET /v1/xiaohongshu/pgy/creators/get` $0.04 一次。按蒲公英博主编号取这位小红书博主在蒲公英上的资料：昵称、小红书号、所在地、内容类目、粉丝数，完整档另有图文和视频报价、最低报价、接不接图文和视频合作、商业笔记数和近 30 天合作笔记数、阅读和互动中位数、性别、内容特征和人设标签、合作过的行业、签约机构（MCN）、获赞与收藏。
+- [小红书蒲公英博主粉丝画像](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/audience/get.md) `GET /v1/xiaohongshu/pgy/creators/audience/get` $0.04 一次。按蒲公英博主编号取这位小红书博主的粉丝画像：性别、年龄、省份、城市、兴趣、设备各段的占比，和数据是哪一天的。
+- [小红书蒲公英博主数据表现](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/metrics.md) `GET /v1/xiaohongshu/pgy/creators/metrics` $0.04 一次。按蒲公英博主编号取这位小红书博主近 30 天或 90 天日常笔记或合作笔记的数据表现：笔记数和视频笔记数，曝光、阅读、互动、涨粉的中位数，互动率，完播率，点赞过百和过千的笔记占比，和超过了多少同类博主；曝光和阅读来自发现页、搜索、关注页等入口的占比。完整档另有逐篇笔记的曝光、阅读、互动和比中位数高出多少，以及长效笔记（约半年前发布的笔记）近期和长效阅读的数和来源。
+- [小红书蒲公英博主笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/notes/list.md) `GET /v1/xiaohongshu/pgy/creators/notes/list` $0.04 一次。按蒲公英博主编号取一页这位小红书博主的笔记（蒲公英的“笔记案例”），带蒲公英给的数据：阅读数、点赞数、收藏数、外溢进店人数、是否商业合作和合作品牌、是否带过付费推广流量。可只看合作笔记、跨域合作笔记、图文或视频，按最新、阅读最多或互动最多排，按内容特征或类目筛，阅读数可只算自然流量。
+- [小红书搜索框联想词](https://dataxapi.com/zh/apis/xiaohongshu/keywords/related.md) `GET /v1/xiaohongshu/keywords/related` $0.02 一次。按关键词取小红书搜索框里输入这个词时给的联想词（下拉补全），按小红书列出的顺序排，一次约 10 个。只有词和名次，没有指数。
+- [小红书视频笔记详情（视频地址和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/get.md) `GET /v1/xiaohongshu/videos/get` $0.02 一次。按笔记编号或链接取一篇小红书视频笔记：标题、正文、作者、互动数，加上视频文件地址、时长、封面、平台生成的中文字幕（SRT，可当文字稿），以及是不是报备过的品牌合作笔记。只用于视频笔记；图文笔记用笔记详情。
+- [小红书蒲公英博主粉丝趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/history.md) `GET /v1/xiaohongshu/pgy/creators/followers/history` $0.04 一次。按蒲公英博主编号取这位小红书博主最近 30 天或 60 天每天的粉丝数，以及这段时间净增多少、涨了百分之几。看博主有没有在涨粉、有没有突然掉粉或刷粉。
+- [小红书蒲公英相似博主](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/related.md) `GET /v1/xiaohongshu/pgy/creators/related` $0.04 一次。给一个蒲公英博主编号，取蒲公英推荐的和他相似的小红书博主：博主编号、昵称、小红书号、所在地、内容类目、粉丝数，完整档另有报价和阅读、互动中位数。一次 4 位（蒲公英一页就 4 位），通常共几位到几十位，可以翻页。
+- [小红书蒲公英内容广场热门笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/trending.md) `GET /v1/xiaohongshu/pgy/notes/trending` $0.04 一次。取蒲公英内容广场的热门笔记榜：小红书热门、产品种草、电商推广、蒲公英合作等 8 个榜，看整榜或只看和某个词有关的，近 3、7、14、30 天，可只要图文或视频。每条有标题、发布时间、阅读、点赞、收藏、评论、图片，和博主的编号、昵称、粉丝数。不用给编号，适合找爆款和选题。
+- [小红书蒲公英博主合作成本和数据概览](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/costs/metrics.md) `GET /v1/xiaohongshu/pgy/creators/costs/metrics` $0.04 一次。按蒲公英博主编号取这位小红书博主的合作成本：图文和视频的预估 CPM、预估互动单价、预估阅读单价、预估外溢进店单价，每项都带优于多少同行；还有单篇笔记曝光、阅读、互动、外溢进店的中位数，近 30 天粉丝增长率和发布笔记数，邀约 48 小时回复率和“好联系”标记，近 7 天活跃天数和“活跃”标记，蒲公英标的优势，内容类型占比和合作过的行业。可看日常笔记或合作笔记两种口径。
+- [小红书蒲公英博主粉丝概览](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/metrics.md) `GET /v1/xiaohongshu/pgy/creators/followers/metrics` $0.04 一次。按蒲公英博主编号取这位小红书博主粉丝的质量：粉丝数和近 30 天净增，活跃粉丝、互动粉丝、阅读粉丝、购买粉丝各有多少、占全部粉丝的比例，和超过了多少同类博主。看粉丝是不是真的在看、在买。
+- [小红书蒲公英博主核心数据趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/costs/history.md) `GET /v1/xiaohongshu/pgy/creators/costs/history` $0.04 一次。按蒲公英博主编号取这位小红书博主最近 30 天或 90 天每天的核心数据：CPM、CPE（互动单价）、CPV（阅读单价）、外溢进店单价，和单篇笔记曝光、阅读、互动、外溢进店人数的中位数，以及整段的汇总。可看日常笔记或合作笔记两种口径，看博主的投放性价比是在变好还是变差。
+- [小红书蒲公英笔记数据](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/get.md) `GET /v1/xiaohongshu/pgy/notes/get` $0.04 一次。按笔记编号取蒲公英给品牌看的这篇小红书笔记的数据：曝光、阅读、点赞、收藏、评论、分享、带来的涨粉，报备的合作品牌，品牌组件（评论区、正文、底部）的点击率档位，以及标题、正文、图片、发布时间和博主编号。合作笔记结案、核对博主交付用。蒲公英只给自己博主的笔记数据，取不到数据的笔记（如品牌自己发的）返回 404。
+
+## YouTube
+
+- [YouTube 频道资料](https://dataxapi.com/zh/apis/youtube/channels/get.md) `GET /v1/youtube/channels/get` $0.002 一次。按频道编号或账号名取 YouTube 频道资料：名称、简介、订阅数、视频数、总播放数、是否认证、创建日期，“关于”里列的链接（官网、其他社交账号）和频道关键词。
+- [YouTube 频道搜索](https://dataxapi.com/zh/apis/youtube/channels/search.md) `GET /v1/youtube/channels/search` $0.002 一次。按搜索词找 YouTube 频道：名称、账号名、简介、订阅数、是否认证。
+- [YouTube 频道视频](https://dataxapi.com/zh/apis/youtube/channels/videos/list.md) `GET /v1/youtube/channels/videos/list` $0.002 一次。按频道编号或账号名取一页该 YouTube 频道的视频或 Shorts，可按最新或最热排：标题、简介、发布时间、播放数、点赞数、时长。
+- [YouTube 评论回复](https://dataxapi.com/zh/apis/youtube/comments/replies/list.md) `GET /v1/youtube/comments/replies/list` $0.002 一次。用评论列表给的回复标识，取一页这条 YouTube 评论下的回复：正文、回复者、点赞数。
+- [YouTube 视频评论](https://dataxapi.com/zh/apis/youtube/videos/comments/list.md) `GET /v1/youtube/videos/comments/list` $0.002 一次。按视频编号或链接取一页 YouTube 评论，可按热门或最新排：正文、评论者、点赞数、回复数，以及取回复用的标识。
+- [YouTube 视频详情](https://dataxapi.com/zh/apis/youtube/videos/get.md) `GET /v1/youtube/videos/get` $0.002 一次。按视频编号或链接取一个 YouTube 视频：标题、简介、频道、发布时间、播放数、点赞数、评论数、时长，作者设的标签、分类、章节。
+- [YouTube 视频搜索](https://dataxapi.com/zh/apis/youtube/videos/search.md) `GET /v1/youtube/videos/search` $0.002 一次。按搜索词找 YouTube 视频，可按相关或播放数排、按发布时间筛：标题、频道、播放数、时长。
+- [YouTube 视频字幕](https://dataxapi.com/zh/apis/youtube/videos/transcript/get.md) `GET /v1/youtube/videos/transcript/get` $0.002 一次。按视频编号或链接取 YouTube 视频的字幕全文和带时间的分段，可用 lang 指定字幕语言。
+- [YouTube 频道帖子](https://dataxapi.com/zh/apis/youtube/channels/posts/list.md) `GET /v1/youtube/channels/posts/list` $0.002 一次。按频道编号或账号名取一页该 YouTube 频道“帖子”栏（原“社区”）里的帖子，从最新的开始：正文、图片、点赞数、附带的视频。
+- [YouTube 帖子详情](https://dataxapi.com/zh/apis/youtube/posts/get.md) `GET /v1/youtube/posts/get` $0.002 一次。按帖子编号或链接取一条 YouTube 频道帖子（原“社区”帖）：正文、频道、图片、点赞数、附带的视频。
+
+## 微信视频号
+
+- [微信视频号账号资料](https://dataxapi.com/zh/apis/wechat_channels/users/get.md) `GET /v1/wechat_channels/users/get` $0.02 一次。按视频号账号编号取资料：名称、简介、头像、IP 属地、作品数。
+- [微信视频号作品详情](https://dataxapi.com/zh/apis/wechat_channels/videos/get.md) `GET /v1/wechat_channels/videos/get` $0.02 一次。按作品编号、搜索结果的 export/ 编号或分享链接取一条视频号作品：文案、作者、发布时间、点赞、评论、转发、收藏数，以及视频文件地址和解密密钥。
+- [微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list.md) `GET /v1/wechat_channels/videos/comments/list` $0.02 一次。按作品编号取一页视频号作品的一级评论：正文、评论者、点赞数、发布时间、IP 属地。
+- [微信视频号作品分享链接](https://dataxapi.com/zh/apis/wechat_channels/videos/share_link/get.md) `GET /v1/wechat_channels/videos/share_link/get` $0.02 一次。按作品编号生成一条能在微信里打开的分享链接（weixin.qq.com/sph/ 开头）。同一作品每次生成的链接不同，旧链接仍然指向这个作品；链接不能用编号拼出来。
+- [微信视频号账号的合集](https://dataxapi.com/zh/apis/wechat_channels/users/collections/list.md) `GET /v1/wechat_channels/users/collections/list` $0.02 一次。按视频号账号编号取这个账号公开的全部合集：名称、简介、封面、视频数、最近更新时间。合集编号可以传给取合集里视频的接口。
+- [微信视频号合集里的视频](https://dataxapi.com/zh/apis/wechat_channels/collections/videos/list.md) `GET /v1/wechat_channels/collections/videos/list` $0.02 一次。按合集编号取一页视频号合集里的视频，按合集自己的顺序（从最早的开始），每页 20 条：文案、作者、发布时间、点赞、评论、转发、收藏数。
+- [微信视频号用户作品](https://dataxapi.com/zh/apis/wechat_channels/users/videos/list.md) `GET /v1/wechat_channels/users/videos/list` $0.02 一次。按视频号账号编号取一页它发布的视频，从新到旧：文案、发布时间、点赞、评论、转发、收藏数、视频时长。
+- [微信搜一搜视频号视频搜索](https://dataxapi.com/zh/apis/wechat_channels/videos/search.md) `GET /v1/wechat_channels/videos/search` $0.02 一次。按搜索词在微信搜一搜里取一页视频号视频，可按相关、最新或最热排、按发布时间筛：文案、发布账号的名称和头像、发布时间、点赞和收藏数、时长、封面。搜一搜不给账号编号，作品编号是 export/ 开头的加密编号：传给 wechat_channels.videos.get 的 export_id 可换出数字编号、视频文件地址和解密密钥，会过期，要尽快用。
+- [微信视频号账号资料（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/get.md) `GET /v1/wechat_channels/backup/users/get` $0.03 一次。wechat_channels.users.get 的备用版：参数和返回相同，另一来源，单独计价。不给作品数。
+- [微信视频号用户作品（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/videos/list.md) `GET /v1/wechat_channels/backup/users/videos/list` $0.06 一次。wechat_channels.users.videos.list 的备用版：参数和返回相同，另一来源，单独计价。
+- [微信搜一搜视频号视频搜索（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/videos/search.md) `GET /v1/wechat_channels/backup/videos/search` $0.1 一次。wechat_channels.videos.search 的备用版：参数和返回相同，另一来源，单独计价。不带收藏数。
+- [微信视频号账号搜索](https://dataxapi.com/zh/apis/wechat_channels/users/search.md) `GET /v1/wechat_channels/users/search` $0.06 一次。按名称找视频号账号：名称要一字不差，同名的都返回。给账号编号、名称、简介、头像、是否认证和认证信息；账号编号可以传给视频号的资料、作品列表、直播回放等接口。
+- [微信视频号作品互动数据](https://dataxapi.com/zh/apis/wechat_channels/videos/metrics.md) `GET /v1/wechat_channels/videos/metrics` $0.015 一次。按作品编号取视频号作品最近的数字：点赞、评论、转发、收藏，带作品文案和发布账号。数字不是调用这一刻的，可能是几个小时前的，返回里写明是什么时候取的。比取整个作品详情便宜。
+- [微信视频号评论回复](https://dataxapi.com/zh/apis/wechat_channels/comments/replies/list.md) `GET /v1/wechat_channels/comments/replies/list` $0.015 一次。按评论编号和作品编号取一页视频号评论下面的回复（二级评论）：正文、回复者、点赞数、发布时间、IP 属地、回复的是哪一条。一页约 10 条，可翻页。
+- [微信视频号直播回放](https://dataxapi.com/zh/apis/wechat_channels/users/live_replays/list.md) `GET /v1/wechat_channels/users/live_replays/list` $0.02 一次。按视频号账号编号取它的直播回放，从新到旧，只给第一页（实测一页最多 48 条）：标题、开播时间、时长、封面，以及回放视频的点赞、评论、转发、收藏数（是回放这条视频的数，不是直播间的观看、在线或点赞人数）。
+
+## 微信搜一搜
+
+- [微信搜一搜综合搜索](https://dataxapi.com/zh/apis/wechat/posts/search.md) `GET /v1/wechat/posts/search` $0.02 一次。按搜索词在微信搜一搜里取一页结果，公众号文章和视频号视频混在一起，每条用 type 标明是文章还是视频；可按相关、最新或最热排、按发布时间筛，也可只搜文章或只搜视频：标题或文案、来源账号名称、发布时间，文章带链接（有的带阅读数档位），视频带点赞和收藏数。搜一搜不给账号编号。
+- [微信搜一搜综合搜索（备用版）](https://dataxapi.com/zh/apis/wechat/backup/posts/search.md) `GET /v1/wechat/backup/posts/search` $0.1 一次。wechat.posts.search 的备用版：参数和返回相同，另一来源，单独计价。视频不带收藏数。
+- [微信公众号实时查找](https://dataxapi.com/zh/apis/wechat/accounts/search.md) `GET /v1/wechat/accounts/search` $0.02 一次。按搜索词在微信搜一搜里找公众号和服务号，最像的排前面，后面可能跟着不太相关的账号：原始编号、微信号、名称、简介、头像、是否认证、主体名称、原创文章数。按次计费；不带粉丝和阅读数，要这些的估计值用 wechat_mp.accounts.search。
+- [微信指数](https://dataxapi.com/zh/apis/wechat/index/keywords/history.md) `GET /v1/wechat/index/keywords/history` $0.1 一次。按关键词取它最近 30 天的微信指数，一天一个数。微信指数是微信综合搜索、文章、朋友圈等算出的热度分，不是搜索次数，不能和抖音、小红书的指数比；日期是中国时间（UTC+8）的自然日。
+- [微信搜一搜推荐词](https://dataxapi.com/zh/apis/wechat/keywords/related.md) `GET /v1/wechat/keywords/related` $0.1 一次。按关键词取微信搜一搜在搜索框里给的联想推荐词，按搜一搜列出的顺序排，一次约 10 个。只有词和名次，没有指数。
+- [微信小程序搜索](https://dataxapi.com/zh/apis/wechat/miniprograms/search.md) `GET /v1/wechat/miniprograms/search` $0.1 一次。按搜索词在微信搜一搜里找小程序，取第一页（约 25 个）：名称、简介、图标、原始编号和 AppID、主体名称和是否认证、平台显示的最近使用人数、是否小游戏。
+
+## 微信公众号
+
+- [微信公众号文章列表](https://dataxapi.com/zh/apis/wechat_mp/accounts/articles/list.md) `GET /v1/wechat_mp/accounts/articles/list` $0.02 一次。按公众号原始编号取一页它发布的文章，从新到旧：标题、摘要、链接、发布时间、头条还是次条、内容形态、封面。默认取主页的“文章”栏，也可取“视频”“贴图”栏。
+- [微信公众号资料](https://dataxapi.com/zh/apis/wechat_mp/accounts/get.md) `GET /v1/wechat_mp/accounts/get` $0.02 一次。按公众号原始编号取资料：名称、IP 属地、原创文章数、关联的视频号、是否被封禁。
+- [微信公众号文章评论](https://dataxapi.com/zh/apis/wechat_mp/articles/comments/list.md) `GET /v1/wechat_mp/articles/comments/list` $0.02 一次。按文章链接取一页公众号文章的精选评论：正文、评论者、点赞数、回复数、发布时间、IP 属地、是否置顶。
+- [微信公众号文章详情](https://dataxapi.com/zh/apis/wechat_mp/articles/get.md) `GET /v1/wechat_mp/articles/get` $0.02 一次。按文章链接取一篇公众号文章：标题、正文、发布时间、公众号的名称和编号，以及头条还是次条、内容形态、封面、摘要、署名作者、阅读原文链接和发文 IP 属地。
+- [微信公众号文章互动数据](https://dataxapi.com/zh/apis/wechat_mp/articles/metrics.md) `GET /v1/wechat_mp/articles/metrics` $0.02 一次。按文章长链接取这篇公众号文章此刻的数字：阅读、点赞、推荐、分享、收藏、评论。
+- [微信公众号评论回复](https://dataxapi.com/zh/apis/wechat_mp/comments/replies/list.md) `GET /v1/wechat_mp/comments/replies/list` $0.02 一次。按评论编号和文章链接取公众号文章一条评论下面的回复：正文、回复者、点赞数、发布时间、IP 属地、回复的是哪一条。只给前面的一批，不翻页。
+- [微信公众号账号搜索](https://dataxapi.com/zh/apis/wechat_mp/accounts/search.md) `GET /v1/wechat_mp/accounts/search` 按返回条数 $0.05635 一条，每次最少 $0.06、最多 $0.84525。按名字或关键词找公众号，最像的排前面：原始编号、微信号、名称、头像、主体名称，和第三方数据库的预估活跃粉丝、头条平均阅读和点赞、每周发文数（估计值，非官方，可能滞后数月）。按条计费，limit 定条数（默认 5，最多 15）。只要编号不要估计值，用按次计费的 wechat.accounts.search 更省。
+- [微信公众号主体信息](https://dataxapi.com/zh/apis/wechat_mp/accounts/owner/get.md) `GET /v1/wechat_mp/accounts/owner/get` $0.1 一次。按公众号原始编号取它的主体（背后的公司、机构或个人）：名称、类型、登记证照号码、国家或地区、认证状态、种类和日期，以及公众号的注册日期、授权过的第三方服务商。
+
+## Reddit
+
+- [Reddit 帖子评论](https://dataxapi.com/zh/apis/reddit/posts/comments/list.md) `GET /v1/reddit/posts/comments/list` $0.002 一次。按帖子编号或链接取一页 Reddit 评论：正文、评论者、得分、回复数、发布时间，含前几层回复。
+- [Reddit 帖子详情](https://dataxapi.com/zh/apis/reddit/posts/get.md) `GET /v1/reddit/posts/get` $0.002 一次。按帖子编号或链接取一条 Reddit 帖子：标题、正文、作者、所在社区、得分、评论数。
+- [Reddit 帖子搜索](https://dataxapi.com/zh/apis/reddit/posts/search.md) `GET /v1/reddit/posts/search` $0.002 一次。按搜索词取一页 Reddit 帖子，可按相关、最新或最高分排，可限定发布时间。
+- [Reddit 热门帖子](https://dataxapi.com/zh/apis/reddit/posts/trending.md) `GET /v1/reddit/posts/trending` $0.002 一次。取一页 Reddit 全站热门帖子（Popular）：标题、正文、作者、所在社区、得分、评论数。
+- [Reddit 社区帖子](https://dataxapi.com/zh/apis/reddit/subreddits/posts/list.md) `GET /v1/reddit/subreddits/posts/list` $0.002 一次。按社区名取一页该 Reddit 社区的帖子，可按热门、最新或最高分排。最高分默认是最近一天里的，用 window 可改成最近一周、一个月、一年或历来最高。
+- [Reddit 趋势搜索词](https://dataxapi.com/zh/apis/reddit/trends/list.md) `GET /v1/reddit/trends/list` $0.002 一次。取 Reddit 当天的趋势搜索词，按平台给出的先后排名次。
+- [Reddit 用户资料](https://dataxapi.com/zh/apis/reddit/users/get.md) `GET /v1/reddit/users/get` $0.002 一次。按用户名取 Reddit 用户的公开资料：显示名、简介、注册时间、Karma、发帖数和评论数。
+- [Reddit 用户帖子](https://dataxapi.com/zh/apis/reddit/users/posts/list.md) `GET /v1/reddit/users/posts/list` $0.002 一次。按用户名取一页该 Reddit 用户发布的帖子，从最新的开始。
+- [Reddit 社区资料](https://dataxapi.com/zh/apis/reddit/subreddits/get.md) `GET /v1/reddit/subreddits/get` $0.002 一次。按社区名取 Reddit 社区的资料：简介、成员数、最近一周的活跃用户数和发帖评论数、创建时间。
+- [Reddit 用户活跃社区](https://dataxapi.com/zh/apis/reddit/users/subreddits/list.md) `GET /v1/reddit/users/subreddits/list` $0.002 一次。按用户名取这个 Reddit 用户活跃的社区：社区名、成员数、图标，一次给全（录到过一次 215 个）。
+- [Reddit 视频字幕](https://dataxapi.com/zh/apis/reddit/posts/transcript/get.md) `GET /v1/reddit/posts/transcript/get` $0.002 一次。按帖子编号或链接取 Reddit 帖子里的视频说的话：平台为它自己托管的视频生成的字幕，全文和带时间的分段。
+
+## 知乎
+
+- [知乎回答评论](https://dataxapi.com/zh/apis/zhihu/answers/comments/list.md) `GET /v1/zhihu/answers/comments/list` $0.002 一次。按回答编号取一页知乎评论：正文、评论者、点赞数、回复数、发布时间、IP 属地。
+- [知乎回答详情](https://dataxapi.com/zh/apis/zhihu/answers/get.md) `GET /v1/zhihu/answers/get` $0.002 一次。按回答编号或链接取一条知乎回答：所属问题、正文、作者、发布时间。
+- [知乎文章详情](https://dataxapi.com/zh/apis/zhihu/articles/get.md) `GET /v1/zhihu/articles/get` $0.002 一次。按文章编号或链接取一篇知乎专栏文章：标题、正文、作者、赞同数、评论数、话题。
+- [知乎专栏文章列表](https://dataxapi.com/zh/apis/zhihu/columns/articles/list.md) `GET /v1/zhihu/columns/articles/list` $0.002 一次。按专栏编号取一页知乎专栏里的文章：标题、正文、作者、发布时间、赞同数、评论数。
+- [知乎评论回复](https://dataxapi.com/zh/apis/zhihu/comments/replies/list.md) `GET /v1/zhihu/comments/replies/list` $0.002 一次。按一级评论的编号取一页它下面的回复：正文、回复者、点赞数、回复的是哪一条、IP 属地。
+- [知乎想法详情](https://dataxapi.com/zh/apis/zhihu/pins/get.md) `GET /v1/zhihu/pins/get` $0.002 一次。按想法编号或链接取一条知乎想法：正文、图片、作者、发布时间、点赞、评论、收藏、转发数。
+- [知乎内容搜索](https://dataxapi.com/zh/apis/zhihu/posts/search.md) `GET /v1/zhihu/posts/search` $0.002 一次。按搜索词取一页知乎的回答和文章，可只要其中一种，可按相关、最新或最多赞同排。
+- [知乎问题回答](https://dataxapi.com/zh/apis/zhihu/questions/answers/list.md) `GET /v1/zhihu/questions/answers/list` $0.002 一次。按问题编号或链接取该知乎问题下排在最前的 20 条回答：正文、作者、赞同数、评论数、收藏数；不翻页。
+- [知乎问题详情](https://dataxapi.com/zh/apis/zhihu/questions/get.md) `GET /v1/zhihu/questions/get` $0.002 一次。按问题编号或链接取一个知乎问题：标题、补充说明、提问时间、回答数、关注数、浏览数。
+- [知乎热榜](https://dataxapi.com/zh/apis/zhihu/trends/list.md) `GET /v1/zhihu/trends/list` $0.002 一次。取知乎热榜：上榜的问题、名次、热度（约数）、回答数、关注数、提问时间、摘要和配图；编号可直接用来取问题详情。
+- [知乎用户回答](https://dataxapi.com/zh/apis/zhihu/users/answers/list.md) `GET /v1/zhihu/users/answers/list` $0.002 一次。按主页地址里的用户名取一页该知乎用户写的回答，从最新的开始。
+- [知乎用户文章](https://dataxapi.com/zh/apis/zhihu/users/articles/list.md) `GET /v1/zhihu/users/articles/list` $0.002 一次。按主页地址里的用户名取一页该知乎用户写的专栏文章，从最新的开始。
+- [知乎用户粉丝列表](https://dataxapi.com/zh/apis/zhihu/users/followers/list.md) `GET /v1/zhihu/users/followers/list` $0.002 一次。按主页地址里的用户名取一页关注该知乎用户的账号，每页 20 个：显示名、一句话介绍、头像、是不是机构号、粉丝数、回答数、文章数。
+- [知乎用户资料](https://dataxapi.com/zh/apis/zhihu/users/get.md) `GET /v1/zhihu/users/get` $0.002 一次。按主页地址里的用户名取知乎用户资料：显示名、一句话介绍、是否认证、是不是机构号、粉丝数、回答数、文章数、IP 属地。
+- [知乎用户想法](https://dataxapi.com/zh/apis/zhihu/users/pins/list.md) `GET /v1/zhihu/users/pins/list` $0.002 一次。按主页地址里的用户名取一页该知乎用户发的想法，从最新的开始：正文、图片、发布时间、点赞、评论、收藏、转发数。
+- [知乎用户搜索](https://dataxapi.com/zh/apis/zhihu/users/search.md) `GET /v1/zhihu/users/search` $0.002 一次。按搜索词取一页知乎用户：显示名、是否认证、是不是机构号、粉丝数、回答数、文章数、获得的赞同数、最近一次发内容的时间。一句话介绍要看用户资料。
+
+## Pinterest
+
+- [Pinterest 图钉详情](https://dataxapi.com/zh/apis/pinterest/pins/get.md) `GET /v1/pinterest/pins/get` $0.002 一次。按图钉编号或链接取一个 Pinterest 图钉：标题、描述、图片、发布者、发布时间、心情数、评论数、保存数、指向的网页。
+- [Pinterest 图钉搜索](https://dataxapi.com/zh/apis/pinterest/pins/search.md) `GET /v1/pinterest/pins/search` $0.002 一次。按搜索词找 Pinterest 图钉：标题、描述、图片、发布者、发布时间、指向的网页。不带互动数，互动数用图钉详情取。
+
+## 热榜
+
+免费看，不用 Key：每个页面里写着最新一次的榜单，每天的最终榜单另存一页。
+
+- [微博热搜榜](https://dataxapi.com/zh/tools/hot-search/weibo/) 每 4 小时读一次 · `GET /v1/weibo/trends/list?board=hot_search` $0.002 一次。
+- [抖音热搜榜](https://dataxapi.com/zh/tools/hot-search/douyin/) 每 4 小时读一次 · `GET /v1/douyin/trends/list?board=hot_search` $0.002 一次。
+- [抖音实时上升热点](https://dataxapi.com/zh/tools/hot-search/douyin/rising/) 每 4 小时读一次 · `GET /v1/douyin/trends/list?board=rising` $0.002 一次。
+- [抖音话题热榜](https://dataxapi.com/zh/tools/hot-search/douyin/topics/) 每 4 小时读一次 · `GET /v1/douyin/trends/list?board=topics` $0.002 一次。
+- [抖音热门搜索词](https://dataxapi.com/zh/tools/hot-search/douyin/searches/) 每 4 小时读一次 · `GET /v1/douyin/trends/list?board=searches` $0.002 一次。
+- [抖音音乐榜](https://dataxapi.com/zh/tools/hot-search/douyin/music/) 每 4 小时读一次 · `GET /v1/douyin/trends/list?board=music` $0.002 一次。
+- [抖音巨量算数实时热点榜](https://dataxapi.com/zh/tools/hot-search/douyin/index-topics/) 每 4 小时读一次 · `GET /v1/douyin/index/trends/list?board=topics` $0.002 一次。
+- [抖音巨量算数飙升热点榜](https://dataxapi.com/zh/tools/hot-search/douyin/index-rising/) 每 4 小时读一次 · `GET /v1/douyin/index/trends/list?board=rising` $0.002 一次。
+- [B站热搜榜](https://dataxapi.com/zh/tools/hot-search/bilibili/) 每 4 小时读一次 · `GET /v1/bilibili/trends/list?board=hot_search` $0.002 一次。
+- [快手热榜](https://dataxapi.com/zh/tools/hot-search/kuaishou/) 每 4 小时读一次 · `GET /v1/kuaishou/trends/list` $0.002 一次。
+- [知乎热榜](https://dataxapi.com/zh/tools/hot-search/zhihu/) 每 4 小时读一次 · `GET /v1/zhihu/trends/list?board=hot` $0.002 一次。
+- [小红书热点灵感](https://dataxapi.com/zh/tools/hot-search/xiaohongshu/) 每 24 小时读一次 · `GET /v1/xiaohongshu/trends/list?board=inspiration` $0.02 一次。
+- [Reddit 趋势搜索词](https://dataxapi.com/zh/tools/hot-search/reddit/) 每 4 小时读一次 · `GET /v1/reddit/trends/list?board=searches` $0.002 一次。
+- [X（推特）趋势：全球热门话题](https://dataxapi.com/zh/tools/hot-search/x/worldwide/) 每 4 小时读一次 · `GET /v1/x/trends/list?board=trends` $0.009 一次。
+- [X（推特）趋势：美国热门话题](https://dataxapi.com/zh/tools/hot-search/x/) 每 1 小时读一次 · `GET /v1/x/trends/list?board=trends&region=US` $0.009 一次。
+- [X（推特）趋势：英国热门话题](https://dataxapi.com/zh/tools/hot-search/x/gb/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=GB` $0.009 一次。
+- [X（推特）趋势：加拿大热门话题](https://dataxapi.com/zh/tools/hot-search/x/ca/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=CA` $0.009 一次。
+- [X（推特）趋势：澳大利亚热门话题](https://dataxapi.com/zh/tools/hot-search/x/au/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=AU` $0.009 一次。
+- [X（推特）趋势：印度热门话题](https://dataxapi.com/zh/tools/hot-search/x/in/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=IN` $0.009 一次。
+- [X（推特）趋势：日本热门话题](https://dataxapi.com/zh/tools/hot-search/x/jp/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=JP` $0.009 一次。
+- [X（推特）趋势：德国热门话题](https://dataxapi.com/zh/tools/hot-search/x/de/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=DE` $0.009 一次。
+- [X（推特）趋势：法国热门话题](https://dataxapi.com/zh/tools/hot-search/x/fr/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=FR` $0.009 一次。
+- [X（推特）趋势：巴西热门话题](https://dataxapi.com/zh/tools/hot-search/x/br/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=BR` $0.009 一次。
+- [X（推特）趋势：墨西哥热门话题](https://dataxapi.com/zh/tools/hot-search/x/mx/) 每 24 小时读一次 · `GET /v1/x/trends/list?board=trends&region=MX` $0.009 一次。

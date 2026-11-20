@@ -64,10 +64,16 @@ No. You hold one DataXAPI key: no Xiaohongshu login, no cookie, no advertiser ac
 
 - [TikTok Shop API](https://dataxapi.com/apis/tiktok/shop.md): TikTok Shop returns the same Product and Review objects, plus a seller's catalog.
 
+## How-to guides and answers
+
+- [How do I research products to sell on Xiaohongshu: what sells and what buyers say? (2026)](https://dataxapi.com/answers/xiaohongshu-product-research.md)
+- [Product reviews and comments from Chinese social media in bulk (2026)](https://dataxapi.com/answers/product-reviews-chinese-social-media.md)
+- [Chinese social media alternative data for investment research (2026)](https://dataxapi.com/answers/chinese-social-media-alternative-data.md)
+
 [Xiaohongshu (RedNote) API](https://dataxapi.com/apis/xiaohongshu.md)
 
 ---
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/xiaohongshu/shop/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/xiaohongshu/shop/)

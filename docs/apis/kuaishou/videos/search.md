@@ -1,6 +1,6 @@
 # Kuaishou video search API
 
-Search Kuaishou videos by terms, a page at a time: caption, author, play and engagement counts, time posted. About 10 items a call, 20 at most; $0.0200 per call. Errors and timeouts are not charged; an empty result is charged $0.0200.
+Search Kuaishou posts by terms, a page at a time, sorted newest or most liked first and filtered by time posted and video length: caption, author, play and engagement counts, time posted, whether it is a video or a photo set, and a video's length. About 10 items a call, 20 at most; $0.0200 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/kuaishou/videos/search`
 - ID: `kuaishou.videos.search`
@@ -14,10 +14,11 @@ Search Kuaishou videos by terms, a page at a time: caption, author, play and eng
 
 ## What you get
 
-The first 7 rows of a response recorded 2026-10-12 18:52 UTC.
+The first 8 rows of a response recorded 2026-10-12 18:52 UTC.
 
 | Field | Value |
 | --- | --- |
+| type | video |
 | published_at | 2026-10-10 23:04 UTC |
 | author.verified | false |
 | metrics.likes | 0 |
@@ -31,6 +32,9 @@ The first 7 rows of a response recorded 2026-10-12 18:52 UTC.
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
 | `query` | text | Yes | Search terms. Example: `露营装备`. |
+| `sort` | text |  | Order: the platform's ranking (the default), newest first, most liked first. Values: `relevance` (default), `latest`, `popular`. Example: `latest`. |
+| `published_within` | text |  | Only posts from the last day, week or month; any time when left out. Values: `day`, `week`, `month`. Example: `day`. |
+| `duration` | text |  | Only videos of this length band; any length when left out. Values: `under_1_min`, `1_to_5_min`, `over_5_min`. Example: `under_1_min`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
@@ -45,7 +49,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | --- | --- | --- | --- | --- |
 | `id` | text | ID; pass it unchanged to the get endpoint. | `compact` | Yes |
 | `url` | link | Link that opens the post. | `compact` | Yes |
-| `type` | text | Content format. Values: `video`, `image`, `text`, `article`. | `compact` | Not provided here |
+| `type` | text | Content format. Values: `video`, `image`, `text`, `article`. | `compact` | Yes |
 | `title` | text | Title. | `compact` | The platform has none |
 | `text` | text | Body text. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `compact` | Yes |
 | `lang` | text | Language of the text. | `standard` | Not provided here |
@@ -74,13 +78,14 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `post_id` | text | ID of the thread's root post when this is a reply; otherwise null. | `compact` | The platform has none |
 | `parent_id` | text | ID of the item it replies to directly; otherwise null. | `compact` | The platform has none |
 | `root_id` | text | ID of the first-level reply its thread hangs under. | `compact` | The platform has none |
+| `ext.duration` | number | Length of the video, in seconds; a photo set has none. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 377 B, `standard` 512 B, `full` 512 B (measured on the response recorded 2026-10-12 18:52 UTC).
+Typical size of one item: `compact` 392 B, `standard` 527 B, `full` 553 B (measured on the response recorded 2026-10-12 18:52 UTC).
 
 ## Paging
 
@@ -94,11 +99,10 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0200, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0200 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0200 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -128,11 +132,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -154,6 +156,7 @@ curl -G "https://api.dataxapi.com/v1/kuaishou/videos/search" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -164,6 +167,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -201,7 +205,7 @@ Add this to your MCP client, then ask your agent to call `kuaishou.videos.search
 
 From a response recorded 2026-10-12 18:52 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 5.7 KB in the standard view (4.4 KB compact, 5.7 KB full).
+Size as sent: 5.8 KB in the standard view (4.5 KB compact, 6.1 KB full).
 
 ```jsonc
 {
@@ -212,6 +216,7 @@ Size as sent: 5.7 KB in the standard view (4.4 KB compact, 5.7 KB full).
       {
         "id": "3xegr2ov53lfrqs",
         "url": "https://www.kuaishou.com/short-video/3xegr2ov53lfrqs",
+        "type": "video",
         "text": "露营装备这件事，越简单越好",
         "published_at": "2026-10-10T23:04:11.943Z",
         "author": {
@@ -246,7 +251,6 @@ Size as sent: 5.7 KB in the standard view (4.4 KB compact, 5.7 KB full).
     "cached": false,
     "replayed": false,
     "unavailable": {
-      "type": "capability",
       "title": "platform",
       "lang": "capability",
       "author.followers": "capability",
@@ -272,7 +276,7 @@ Size as sent: 5.7 KB in the standard view (4.4 KB compact, 5.7 KB full).
 
 From a recording of 2026-10-12 18:52 UTC, edited by hand to show this case. The request ID and balance are made up.
 
-Size as sent: 686 B in the standard view (686 B compact, 686 B full).
+Size as sent: 666 B in the standard view (666 B compact, 666 B full).
 
 ```jsonc
 {
@@ -293,7 +297,6 @@ Size as sent: 686 B in the standard view (686 B compact, 686 B full).
     "cached": false,
     "replayed": false,
     "unavailable": {
-      "type": "capability",
       "title": "platform",
       "lang": "capability",
       "author.followers": "capability",
@@ -350,6 +353,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.02",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -362,8 +368,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "d2df9329-6c4b-43e2-8e72-90d85ef83fc4",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -371,6 +377,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 100k tokens as the platform's own JSON, 2,248 as DataXAPI's JSON, and 1,521 as an AI reads it through DataXAPI's MCP server: 98% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/kuaishou/videos/search.example.json)
 
@@ -390,11 +398,13 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-The same thing on other platforms: [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [LinkedIn post search](https://dataxapi.com/apis/linkedin/posts/search/), [Threads post search](https://dataxapi.com/apis/threads/posts/search/), [TikTok video search](https://dataxapi.com/apis/tiktok/videos/search/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [X post search](https://dataxapi.com/apis/x/posts/search/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [YouTube video search](https://dataxapi.com/apis/youtube/videos/search/), [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search/), [WeChat Search articles and videos](https://dataxapi.com/apis/wechat/posts/search/), [Reddit post search](https://dataxapi.com/apis/reddit/posts/search/), [Zhihu content search](https://dataxapi.com/apis/zhihu/posts/search/), [Pinterest pin search](https://dataxapi.com/apis/pinterest/pins/search/)
+The same thing on other platforms: [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [LinkedIn post search](https://dataxapi.com/apis/linkedin/posts/search/), [Threads post search](https://dataxapi.com/apis/threads/posts/search/), [TikTok video search](https://dataxapi.com/apis/tiktok/videos/search/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [X post search](https://dataxapi.com/apis/x/posts/search/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [YouTube video search](https://dataxapi.com/apis/youtube/videos/search/), [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search/), [WeChat Search articles and videos](https://dataxapi.com/apis/wechat/posts/search/), [WeChat Search articles and videos (backup)](https://dataxapi.com/apis/wechat/backup/posts/search/), [WeChat Channels video search (backup)](https://dataxapi.com/apis/wechat_channels/backup/videos/search/), [Reddit post search](https://dataxapi.com/apis/reddit/posts/search/), [Zhihu content search](https://dataxapi.com/apis/zhihu/posts/search/), [Pinterest pin search](https://dataxapi.com/apis/pinterest/pins/search/), [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search/)
 
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/)
+More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/)
 
 Kuaishou endpoints: [Kuaishou comment replies](https://dataxapi.com/apis/kuaishou/comments/replies/list/), [Kuaishou hot list](https://dataxapi.com/apis/kuaishou/trends/list/), [Kuaishou user profile](https://dataxapi.com/apis/kuaishou/users/get/), [Kuaishou user search](https://dataxapi.com/apis/kuaishou/users/search/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Kuaishou video comments](https://dataxapi.com/apis/kuaishou/videos/comments/list/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search/)
+
+How-to guides and answers: [Kuaishou API in Python: videos and comments (2026)](https://dataxapi.com/guides/kuaishou-api-python/), [What are did and kww on Kuaishou? (2026)](https://dataxapi.com/answers/kuaishou-did-kww/), [Kuaishou data API: videos, users and comments (2026)](https://dataxapi.com/answers/kuaishou-data-apis/), [Kuaishou MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/kuaishou-mcp/), [China social media data API: one key for Xiaohongshu, Douyin, WeChat (2026)](https://dataxapi.com/answers/one-key-china-social-data-api/), [Social listening API for China: one keyword across Weibo, Douyin, Xiaohongshu and more (2026)](https://dataxapi.com/answers/social-listening-api-china/), [Which social media data API is best for AI agents? Count the tokens a response takes (2026)](https://dataxapi.com/answers/social-media-api-for-ai-agents/), [Kuaishou API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/kuaishou-api-for-ai-agents/), [Is a Kuaishou post a video or a photo set? Telling them apart by API (2026)](https://dataxapi.com/answers/kuaishou-photo-set-vs-video/)
 
 Skills that use this endpoint: [Keyword search and mentions](https://dataxapi.com/skills/mentions/)
 
@@ -408,7 +418,7 @@ $0.0200 per call. The most one call can cost is $0.0200.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0200.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -416,4 +426,4 @@ About 10 items a page, 20 at most. The page size is the platform's; limit is not
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/kuaishou/videos/search/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/kuaishou/videos/search/)

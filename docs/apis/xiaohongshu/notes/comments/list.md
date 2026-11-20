@@ -1,6 +1,6 @@
 # Xiaohongshu (RedNote) note comments API
 
-Get a page of top-level comments on a Xiaohongshu note by ID or link, newest first: text, commenter, likes, reply count, time posted. About 10 items a call, 20 at most; $0.0200 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0200.
+Get a page of top-level comments on a Xiaohongshu note by ID or link, newest first or hottest first: text, commenter, likes, reply count, time posted. About 10 items a call, 20 at most; $0.0200 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/xiaohongshu/notes/comments/list`
 - ID: `xiaohongshu.notes.comments.list`
@@ -29,6 +29,7 @@ The first 3 rows of a response recorded 2026-10-12 18:43 UTC.
 | --- | --- | --- | --- |
 | `id` | text | give exactly one of `id`, `url` | Note ID, 24 hexadecimal characters. With only a link or a share text, give it as url. Example: `6a9c5884000000002b002d95`. |
 | `url` | text | give exactly one of `id`, `url` | Link to the note, pasted as it is: the https://www.xiaohongshu.com/explore/… address from the browser, the https://www.xiaohongshu.com/discovery/item/… link the website shares (query parameters such as xsec_token are fine), a whole share text with such a link in it, or the xhslink.com short link the app copies (alone or in its share text). A short link is opened once to see which note it leads to; where it cannot be, paste the note's full link or its ID. Example: `https://www.xiaohongshu.com/explore/6a9c5884000000002b002d95?xsec_token=ABx1y2z3`. Full link: `https://www.xiaohongshu.com/explore/6a9c5884000000002b002d95?xsec_token=ABx1y2z3`. Share text with a link inside: `周末咖啡探店合集 https://www.xiaohongshu.com/discovery/item/6a9c5884000000002b002d95?xsec_token=ABx1y2z3 复制这段文字，打开小红书查看`. |
+| `sort` | text |  | Newest first (the default), or hottest first (most liked first). Values: `latest` (default), `popular`. Example: `latest`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
@@ -56,12 +57,20 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `post_id` | text | ID of the post it is under. | `compact` | Yes |
 | `parent_id` | text | ID of the comment it replies to directly; null for a top-level comment. | `compact` | Yes |
 | `root_id` | text | ID of the top-level comment of its thread; null for a top-level comment. | `compact` | Yes |
-| `ext.ip_location` | text | IP location as the platform shows it. | `full` | Yes |
+| `ext.ip_location` | text | IP location as the platform shows it, in English (a province by its pinyin or English name), where the app shows it in Chinese. | `full` | May be absent |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
+
+With `id`, `sort=latest`: `ext.ip_location` may be absent; `meta.unavailable` of each answer says what that answer could not give.
+
+With `id`, `sort=popular`: `ext.ip_location` may be absent; `meta.unavailable` of each answer says what that answer could not give.
+
+With `url`, `sort=latest`: `ext.ip_location` may be absent; `meta.unavailable` of each answer says what that answer could not give.
+
+With `url`, `sort=popular`: `ext.ip_location` may be absent; `meta.unavailable` of each answer says what that answer could not give.
 
 Typical size of one item: `compact` 356 B, `standard` 486 B, `full` 519 B (measured on the response recorded 2026-10-12 18:43 UTC).
 
@@ -77,12 +86,11 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0200, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0200 |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0200 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -117,11 +125,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -143,6 +149,7 @@ curl -G "https://api.dataxapi.com/v1/xiaohongshu/notes/comments/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -153,6 +160,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -308,6 +316,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.02",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -339,8 +350,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "cd021006-e945-4566-bcc2-67e88f9382d9",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -348,6 +359,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 4,683 tokens as the platform's own JSON, 2,042 as DataXAPI's JSON, and 1,461 as an AI reads it through DataXAPI's MCP server: 69% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/xiaohongshu/notes/comments/list.example.json)
 
@@ -369,13 +382,13 @@ Part of DataXAPI's Social media data. The same key also works for: Creators, Ads
 
 The same thing on other platforms: [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Kuaishou video comments](https://dataxapi.com/apis/kuaishou/videos/comments/list/), [Facebook post comments](https://dataxapi.com/apis/facebook/posts/comments/list/), [Instagram post comments](https://dataxapi.com/apis/instagram/posts/comments/list/), [TikTok video comments](https://dataxapi.com/apis/tiktok/videos/comments/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [X post replies](https://dataxapi.com/apis/x/posts/replies/list/), [YouTube video comments](https://dataxapi.com/apis/youtube/videos/comments/list/), [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list/), [Reddit post comments](https://dataxapi.com/apis/reddit/posts/comments/list/), [Zhihu answer comments](https://dataxapi.com/apis/zhihu/answers/comments/list/)
 
-Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/)
+Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related/), [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get/)
 
-Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/)
+Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/), [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history/), [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related/), [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending/), [Xiaohongshu PGY creator costs and data summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/metrics/), [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics/), [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history/), [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/)
 
 Xiaohongshu Shop endpoints: [Xiaohongshu product detail](https://dataxapi.com/apis/xiaohongshu/shop/products/get/), [Xiaohongshu product reviews](https://dataxapi.com/apis/xiaohongshu/shop/products/reviews/list/), [Xiaohongshu product search](https://dataxapi.com/apis/xiaohongshu/shop/products/search/)
 
-How-to guides and answers: [How to get Xiaohongshu (RedNote) note comments in bulk](https://dataxapi.com/guides/xiaohongshu-note-comments/), [How do I export Xiaohongshu (RedNote) data?](https://dataxapi.com/answers/export-xiaohongshu-data/), [Can ChatGPT read Xiaohongshu (RedNote)?](https://dataxapi.com/answers/can-chatgpt-read-xiaohongshu/)
+How-to guides and answers: [How to get Xiaohongshu (RedNote) note comments in bulk](https://dataxapi.com/guides/xiaohongshu-note-comments/), [Does Xiaohongshu (RedNote) have an API? Get notes and comments with Python (2026)](https://dataxapi.com/guides/xiaohongshu-api-python/), [How do I export Xiaohongshu (RedNote) data?](https://dataxapi.com/answers/export-xiaohongshu-data/), [Can ChatGPT read Xiaohongshu (RedNote)?](https://dataxapi.com/answers/can-chatgpt-read-xiaohongshu/), [What is xsec_token on Xiaohongshu?](https://dataxapi.com/answers/xiaohongshu-xsec-token/), [What is a Xiaohongshu note ID, and what is an xhslink link?](https://dataxapi.com/answers/xiaohongshu-note-id-and-xhslink/), [Which Xiaohongshu data API? The official platform, third-party APIs or your own scraper (2026)](https://dataxapi.com/answers/best-xiaohongshu-data-api/), [Can Xiaohongshu's open platform read notes and comments? (2026)](https://dataxapi.com/answers/xiaohongshu-open-platform-api/), [xiaohongshu-mcp keeps losing its login: is there a Xiaohongshu MCP that needs no login? (2026)](https://dataxapi.com/answers/xiaohongshu-mcp-without-login/), [How do Claude Code, Cursor and Codex read Xiaohongshu without cookies? (2026)](https://dataxapi.com/answers/claude-code-cursor-codex-read-xiaohongshu/), [How do I add a Xiaohongshu or Douyin Skill to my AI? (2026)](https://dataxapi.com/answers/xiaohongshu-douyin-skill/), [How do I export Xiaohongshu comments in bulk to find what users complain about? (2026)](https://dataxapi.com/answers/export-xiaohongshu-comments-pain-points/), [BettaFish has no data: how do I feed it public Xiaohongshu and Douyin data? (2026)](https://dataxapi.com/answers/bettafish-data-source/), [xiaohongshu-mcp says 300011 Account abnormal, or redirects to rednote abroad: what now? (2026)](https://dataxapi.com/answers/xiaohongshu-mcp-300011/), [I don't write code: how do I get my AI to fetch Official Account, Xiaohongshu and Douyin data? (2026)](https://dataxapi.com/answers/get-social-data-with-ai-no-code/), [MediaCrawler gets blocked on Xiaohongshu with status 461: what do I switch to? (2026)](https://dataxapi.com/answers/mediacrawler-alternative/), [What does status 461 mean on Xiaohongshu? (2026)](https://dataxapi.com/answers/xiaohongshu-461-status-code/), [How do I get Xiaohongshu data into n8n? (2026)](https://dataxapi.com/answers/xiaohongshu-n8n/), [How do I connect Xiaohongshu data to Dify? (MCP, 2026)](https://dataxapi.com/answers/xiaohongshu-dify/), [How do I spot complaints about my brand on Xiaohongshu at low cost? (2026)](https://dataxapi.com/answers/spot-xiaohongshu-brand-complaints/), [My Xiaohongshu scraper keeps getting blocked: what does keeping it up cost against paying per call? (2026)](https://dataxapi.com/answers/xiaohongshu-scraper-blocked-cost/), [What are x-s and x-t on Xiaohongshu? (2026)](https://dataxapi.com/answers/xiaohongshu-x-s-x-t/), [What do Xiaohongshu error codes 300011, 300012 and 300013 mean? (2026)](https://dataxapi.com/answers/xiaohongshu-300011-300013-error-codes/), [How do I connect Xiaohongshu data to Coze (扣子)? (2026)](https://dataxapi.com/answers/xiaohongshu-coze/), [Brand monitoring on Chinese social media: Weibo, Douyin, Xiaohongshu (2026)](https://dataxapi.com/answers/chinese-social-media-brand-monitoring/), [Product reviews and comments from Chinese social media in bulk (2026)](https://dataxapi.com/answers/product-reviews-chinese-social-media/), [Douyin, WeChat and Xiaohongshu data in Claude Code and Codex (2026)](https://dataxapi.com/answers/claude-code-codex-china-social-data/), [Collecting Weibo comments and Xiaohongshu notes for a thesis, without coding (2026)](https://dataxapi.com/answers/social-media-data-for-thesis-research/), [Xiaohongshu (RedNote) API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/xiaohongshu-api-for-ai-agents/), [Every figure on a Xiaohongshu PGY creator page: can an API get it? Field by field (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-creator-page-fields/)
 
 Skills that use this endpoint: [Comments and word of mouth](https://dataxapi.com/skills/comments/)
 
@@ -389,7 +402,7 @@ $0.0200 per call. The most one call can cost is $0.0200.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0200.
+Errors, timeouts and objects that do not exist are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -401,4 +414,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/)

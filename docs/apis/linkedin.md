@@ -4,11 +4,11 @@
 
 > 7 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## linkedin.ads.get
 
-Get one ad of the LinkedIn Ad Library by its ID or link: advertiser, text, headline, images and videos, landing page, first and last day shown, bracket of impressions, the languages and locations targeted. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one ad of the LinkedIn Ad Library by its ID or link: advertiser, text, headline, images and videos, landing page, first and last day shown, bracket of impressions, the languages and locations targeted. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: LinkedIn ad detail API
 - Request: `GET /v1/linkedin/ads/get`
@@ -17,11 +17,11 @@ Get one ad of the LinkedIn Ad Library by its ID or link: advertiser, text, headl
 
 ## linkedin.ads.search
 
-Search the ads of the LinkedIn Ad Library by keyword: advertiser, text, headline, images and videos, landing page, first and last day shown, bracket of impressions, the languages and locations targeted; can be limited to a country. Up to 24 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Search the ads of the LinkedIn Ad Library by keyword or by the company that advertises: advertiser, text, headline, images and videos, landing page, first and last day shown, bracket of impressions, the languages and locations targeted; can be limited to a country. Up to 24 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: LinkedIn Ad Library search API
 - Request: `GET /v1/linkedin/ads/search`
-- Parameters: `query` (required), `region`, `cursor`, `view`, `fields`
+- Parameters: `query`, `advertiser`, `region`, `cursor`, `view`, `fields`; give exactly one of query, advertiser
 - Whole contract: https://dataxapi.com/apis/linkedin/ads/search.md
 
 ## linkedin.companies.get
@@ -35,7 +35,7 @@ Get a LinkedIn company page by handle or link: name, description, employee count
 
 ## linkedin.companies.posts.list
 
-Get the latest posts a LinkedIn company page shows publicly (up to 10), by handle or link: ID, link, text, time. No author and no counts, which the post capability gives; this page only, with no older page. Up to 10 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get the latest posts a LinkedIn company page shows publicly (up to 10), by handle or link: ID, link, text, time. No author and no counts, which the post capability gives; this page only, with no older page. Up to 10 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: LinkedIn company posts API
 - Request: `GET /v1/linkedin/companies/posts/list`
@@ -53,7 +53,7 @@ Get one LinkedIn post by its activity ID or link: text, author, time, reaction c
 
 ## linkedin.posts.search
 
-Find public LinkedIn posts by search terms: text, author, time, reaction count, comment count; can be limited to a recent period. Results come from a web search engine's index of LinkedIn, not LinkedIn's own search, and are not complete. Up to 10 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is free.
+Find public LinkedIn posts by search terms: text, author, time, reaction count, comment count; can be limited to a recent period. Results come from a web search engine's index of LinkedIn, not LinkedIn's own search, and are not complete. Up to 10 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: LinkedIn post search API
 - Request: `GET /v1/linkedin/posts/search`

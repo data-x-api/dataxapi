@@ -1,12 +1,14 @@
 # DataXAPI MCP server: market data in your AI, connected with one prompt
 
-Copy one prompt with your key in it, paste it into your agent, and ask. It reads one page and sets itself up: 5 tools, 207 endpoints on 21 platforms, from $0.0003 a call, and a failed call is never charged.
+Copy one prompt with your key in it, paste it into your agent, and ask. It reads one page and sets itself up: 5 tools, 237 endpoints on 21 platforms, from $0.0003 a call, and a failed call is never charged.
+
+Updated 2026-11-10
 
 ## Copy this prompt
 
 > Read https://dataxapi.com/agents.md and set up DataXAPI in this agent. My API key is dx_…; use it for every DataXAPI call.
 
-Paste it into your agent. It reads the page the prompt points to and connects itself. Setup steps for Claude Code, Cursor, Codex, n8n, Cherry Studio.
+Paste it into your agent. It reads the page the prompt points to and connects itself. Setup steps for Claude Code, Cursor, Codex, n8n, Cherry Studio, Trae, 扣子 Coze, Dify, ChatGPT, Claude, Feishu (Lark).
 
 Now ask something:
 
@@ -32,20 +34,19 @@ Your AI can search and read the whole catalog before you have an account. Only `
 
 You ask in plain words. The AI does the rest by itself, and tells you what it spent.
 
-- **It searches before it calls.** No endpoint names to remember.
+- **It looks the endpoint up when it has to.** No endpoint names to remember: `find` is free, and when the endpoint is plain from the list it calls it directly.
 - **It sees the price first.** And can set the most it will pay for the call.
 - **It gets an answer that fits.** Compact by default and cut at about 20 KB; `read_more` reads the rest at no charge.
-- **It shows the bill.** Three tool calls, one charged.
+- **It shows the bill.** Two tool calls, one charged.
 
 > Which TikTok videos about camping coffee got the most likes this week?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "search tiktok videos by keyword" })` | Found tiktok.videos.search · $0.0020 a call | Free |
-| `describe({ ids: ["tiktok.videos.search"] })` | Takes query, sort, published_within · returns 30 posts a page | Free |
 | `call({ capability: "tiktok.videos.search", query: "camping coffee", sort: "popular", published_within: "week", max_price: "0.01" })` | 30 posts · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020
+2 tool calls · 1 charged · $0.0020
 
 ## You set the limits
 
@@ -65,6 +66,12 @@ Setup steps for each client. They all end at the same address: `https://api.data
 - [Setup steps for Codex](https://dataxapi.com/integrations/codex/) (1 command)
 - [Setup steps for n8n](https://dataxapi.com/integrations/n8n/) (4 fields)
 - [Setup steps for Cherry Studio](https://dataxapi.com/integrations/cherry-studio/) (4 fields)
+- [Setup steps for Trae](https://dataxapi.com/integrations/trae/) (1 fields)
+- [Setup steps for 扣子 Coze](https://dataxapi.com/integrations/coze/) (5 fields)
+- [Setup steps for Dify](https://dataxapi.com/integrations/dify/) (4 fields)
+- [Setup steps for ChatGPT](https://dataxapi.com/integrations/chatgpt/) (sign in, no key)
+- [Setup steps for Claude](https://dataxapi.com/integrations/claude/) (sign in, no key)
+- [Setup steps for Feishu (Lark)](https://dataxapi.com/integrations/feishu/) (3 fields)
 
 Any MCP client: One address and one header. A client that can read the environment takes the key from there; nothing has to be written into a file. Endpoint: `https://api.dataxapi.com/mcp`; Header: `Authorization: Bearer <key>`.
 
@@ -96,8 +103,8 @@ An answer is cut at about 20 KB, on an item boundary, and says how to read on. `
 
 ### Does it work in ChatGPT, Claude?
 
-Yes, on the web and in the desktop apps: add a custom connector with the address https://api.dataxapi.com/mcp. No key is typed in: you are asked to sign in to DataXAPI and approve, and there you choose the key its calls are charged through and that key's spending limit. ChatGPT: Settings → Apps & Connectors → turn on developer mode under Advanced → Create a connector: the MCP address, with OAuth as its authentication. Claude: On the web or in the desktop app: Settings → Connectors → Add custom connector, with the MCP address.
+Yes, on the web and in the desktop apps: add a custom connector with the address https://api.dataxapi.com/mcp. No key is typed in: you are asked to sign in to DataXAPI and approve, and there you choose the key its calls are charged through and that key's spending limit. ChatGPT: ChatGPT on the web: Plugins → + → Add custom MCP server; the name, the MCP address and OAuth as its authentication; tick the risk notice and choose Create as a plugin. Claude: On the web or in the desktop app: Customize → Connectors → + Add → Add custom connector, with the name and the MCP address, and Sign in now as its authentication (on Team and Enterprise, an owner adds it first under Organization settings → Connectors).
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/)

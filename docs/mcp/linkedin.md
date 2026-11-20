@@ -2,6 +2,8 @@
 
 Ask your AI about LinkedIn and it answers with live data: 7 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 7 (on LinkedIn, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about LinkedIn:
 
 ## What to ask about LinkedIn, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Which LinkedIn ads is this company running? | [LinkedIn Ad Library search](https://dataxapi.com/apis/linkedin/ads/search/) `linkedin.ads.search` | $0.0020 |
 | Find LinkedIn posts about AI agents in marketing. | [LinkedIn post search](https://dataxapi.com/apis/linkedin/posts/search/) `linkedin.posts.search` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about LinkedIn: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about LinkedIn: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > What has this company posted on LinkedIn lately?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "What has this company posted on LinkedIn lately?", platform: "linkedin" })` | Found linkedin.companies.posts.list · $0.0020 a call | Free |
-| `describe({ ids: ["linkedin.companies.posts.list"] })` | Takes username, url · up to 10 a page | Free |
 | `call({ capability: "linkedin.companies.posts.list", username: "unesco", max_price: "0.002" })` | Up to 10 post objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 10 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 10 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The LinkedIn skill package
 
@@ -93,4 +94,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/linkedin/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/linkedin/)

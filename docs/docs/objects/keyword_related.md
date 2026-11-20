@@ -1,6 +1,6 @@
 # Related keyword object
 
-2 endpoints on 2 platforms return the Related keyword object with the same 7 fields, so code written for one platform reads the others unchanged. A call costs $0.0020 to $0.0400. It is a preview structure and may still change.
+5 endpoints on 3 platforms return the Related keyword object with the same 7 fields, so code written for one platform reads the others unchanged. A call costs $0.0020 to $0.1. It is a preview structure and may still change.
 
 For machines: [keyword_related schema](https://dataxapi.com/openapi.json#/components/schemas/keyword_related), [openapi.json](https://dataxapi.com/openapi.json), [Object table (JSON)](https://api.dataxapi.com/v1/catalog/objects), [llms.txt](https://dataxapi.com/llms.txt)
 
@@ -16,7 +16,7 @@ A field the platform cannot give is left out of the item and named in `meta.unav
 | --- | --- | --- | --- |
 | `keyword` | text | `compact` | The related keyword |
 | `related_to` | text | `compact` | The keyword it is related to: the one asked about |
-| `relation` | text | `compact` | How it is related: query (searched together with the keyword asked about), posts (appears together with it in content), prior (searched before it), after (searched after it): `query`, `posts`, `prior`, `after` |
+| `relation` | text | `compact` | How it is related: query (searched together with the keyword asked about), posts (appears together with it in content), prior (searched before it), after (searched after it), suggestion (what the platform suggests as the keyword is typed into its search box): `query`, `posts`, `prior`, `after`, `suggestion` |
 | `rank` | integer | `compact` | Position by relevance among the keywords of the same relation, from 1 |
 | `relevance` | number | `compact` | How closely it is related to the keyword asked about, 0 to 1 |
 | `search_index` | integer | `compact` | Search index of the related keyword: the platform's index, not a count of searches; null where the platform gives no figure for the word |
@@ -29,6 +29,7 @@ The same field name does not always mean the same act on every platform. This ta
 | Field | What it holds there | On |
 | --- | --- | --- |
 | `rank` | The platform's own place by relevance; places may have gaps between them | Douyin |
+| `rank` | Place among the suggestions the search box lists, from 1, the keyword asked about itself not counted | Douyin, Xiaohongshu (RedNote), WeChat Search |
 
 ## What a platform cannot give
 
@@ -36,8 +37,9 @@ A platform stands against a field when none of its endpoints gives it.
 
 | Field | Not available on |
 | --- | --- |
-| `relevance` | Xiaohongshu (RedNote) |
-| `composite_index` | Xiaohongshu (RedNote) |
+| `relevance` | Xiaohongshu (RedNote), WeChat Search |
+| `search_index` | WeChat Search |
+| `composite_index` | Xiaohongshu (RedNote), WeChat Search |
 
 One endpoint may still leave out a field another gives: each endpoint's page lists what it cannot give, and every answer says so in `meta.unavailable`.
 
@@ -48,12 +50,20 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | Endpoint | Path | Returns | Price |
 | --- | --- | --- | --- |
 | [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related.md) | `GET /v1/douyin/index/keywords/related` | Related keyword list | $0.0020 / call |
+| [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related.md) | `GET /v1/douyin/keywords/related` | Related keyword list | $0.0200 / call |
 
 ### Xiaohongshu (RedNote)
 
 | Endpoint | Path | Returns | Price |
 | --- | --- | --- | --- |
 | [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related.md) | `GET /v1/xiaohongshu/pgy/keywords/related` | Related keyword list | $0.0400 / call |
+| [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related.md) | `GET /v1/xiaohongshu/keywords/related` | Related keyword list | $0.0200 / call |
+
+### WeChat Search
+
+| Endpoint | Path | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Search suggestions](https://dataxapi.com/apis/wechat/keywords/related.md) | `GET /v1/wechat/keywords/related` | Related keyword list | $0.1 / call |
 
 ## Example
 
@@ -79,8 +89,8 @@ One item from `douyin.index.keywords.related`, as recorded 2026-10-12 21:52 UTC.
 
 ## Other objects
 
-[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Topic object](https://dataxapi.com/docs/objects/topic/)
+[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [PGY note detail object](https://dataxapi.com/docs/objects/pgy_note/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Channels share link object](https://dataxapi.com/docs/objects/channels_share_link/), [Topic object](https://dataxapi.com/docs/objects/topic/), [Account owner object](https://dataxapi.com/docs/objects/account_owner/), [Mini program object](https://dataxapi.com/docs/objects/miniprogram/), [Follower history object](https://dataxapi.com/docs/objects/follower_history/), [PGY creator costs and summary object](https://dataxapi.com/docs/objects/pgy_creator_costs/), [PGY creator follower summary object](https://dataxapi.com/docs/objects/pgy_creator_followers/), [PGY creator core figures history object](https://dataxapi.com/docs/objects/pgy_creator_cost_history/)
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/docs/objects/keyword_related/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/keyword_related/)

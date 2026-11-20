@@ -4,11 +4,11 @@
 
 > 16 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## zhihu.answers.comments.list
 
-Get a page of comments on a Zhihu answer: text, commenter, likes, reply count, time posted. About 10 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of comments on a Zhihu answer: text, commenter, likes, reply count, time posted, IP location. About 10 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu answer comments API
 - Request: `GET /v1/zhihu/answers/comments/list`
@@ -17,7 +17,7 @@ Get a page of comments on a Zhihu answer: text, commenter, likes, reply count, t
 
 ## zhihu.answers.get
 
-Get one Zhihu answer by ID or link: its question, text, author, time posted. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Zhihu answer by ID or link: its question, text, author, time posted. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu answer detail API
 - Request: `GET /v1/zhihu/answers/get`
@@ -26,7 +26,7 @@ Get one Zhihu answer by ID or link: its question, text, author, time posted. One
 
 ## zhihu.articles.get
 
-Get one Zhihu column article by ID or link: title, text, author, upvotes, comment count. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Zhihu column article by ID or link: title, text, author, upvotes, comment count, topics. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu article detail API
 - Request: `GET /v1/zhihu/articles/get`
@@ -35,7 +35,7 @@ Get one Zhihu column article by ID or link: title, text, author, upvotes, commen
 
 ## zhihu.columns.articles.list
 
-Get a page of the articles in a Zhihu column by the column's ID: title, text, author, time published, upvotes, comment count. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the articles in a Zhihu column by the column's ID: title, text, author, time published, upvotes, comment count. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu column articles API
 - Request: `GET /v1/zhihu/columns/articles/list`
@@ -44,7 +44,7 @@ Get a page of the articles in a Zhihu column by the column's ID: title, text, au
 
 ## zhihu.comments.replies.list
 
-Get a page of the replies under a top-level Zhihu comment: text, replier, likes, which comment each answers. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the replies under a top-level Zhihu comment: text, replier, likes, which comment each answers. Each reply also gives its IP location. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu comment replies API
 - Request: `GET /v1/zhihu/comments/replies/list`
@@ -53,7 +53,7 @@ Get a page of the replies under a top-level Zhihu comment: text, replier, likes,
 
 ## zhihu.pins.get
 
-Get one Zhihu pin (short post) by ID or link: text, pictures, author, time posted, likes, comments, saves, reposts. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Zhihu pin (short post) by ID or link: text, pictures, author, time posted, likes, comments, saves, reposts. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu pin detail API
 - Request: `GET /v1/zhihu/pins/get`
@@ -62,7 +62,7 @@ Get one Zhihu pin (short post) by ID or link: text, pictures, author, time poste
 
 ## zhihu.posts.search
 
-Get a page of Zhihu answers and articles matching a search; either kind alone, by relevance, newest or most upvoted. About 18 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of Zhihu answers and articles matching a search; either kind alone, by relevance, newest or most upvoted. About 18 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu content search API
 - Request: `GET /v1/zhihu/posts/search`
@@ -71,7 +71,7 @@ Get a page of Zhihu answers and articles matching a search; either kind alone, b
 
 ## zhihu.questions.answers.list
 
-Get the first 20 answers to a Zhihu question by ID or link, in Zhihu's own order: text, author, upvotes, comment and save counts. One page only. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get the first 20 answers to a Zhihu question by ID or link, in Zhihu's own order: text, author, upvotes, comment and save counts. One page only. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu question answers API
 - Request: `GET /v1/zhihu/questions/answers/list`
@@ -80,7 +80,7 @@ Get the first 20 answers to a Zhihu question by ID or link, in Zhihu's own order
 
 ## zhihu.questions.get
 
-Get one Zhihu question by ID or link: title, details, when it was asked, answer, follower and view counts. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Zhihu question by ID or link: title, details, when it was asked, answer, follower and view counts. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu question detail API
 - Request: `GET /v1/zhihu/questions/get`
@@ -89,7 +89,7 @@ Get one Zhihu question by ID or link: title, details, when it was asked, answer,
 
 ## zhihu.trends.list
 
-Get Zhihu's hot list: the questions on it, their rank, heat (approximate) and answer count; an entry's ID is its question's. About 30 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get Zhihu's hot list: the questions on it, their rank, heat (approximate), answer and follower counts, when each was asked, its summary and picture; an entry's ID is its question's. About 30 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu hot list API
 - Request: `GET /v1/zhihu/trends/list`
@@ -98,7 +98,7 @@ Get Zhihu's hot list: the questions on it, their rank, heat (approximate) and an
 
 ## zhihu.users.answers.list
 
-Get a page of the answers a Zhihu user has written, newest first. About 20 items a call, 40 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the answers a Zhihu user has written, newest first. About 20 items a call, 40 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user answers API
 - Request: `GET /v1/zhihu/users/answers/list`
@@ -107,7 +107,7 @@ Get a page of the answers a Zhihu user has written, newest first. About 20 items
 
 ## zhihu.users.articles.list
 
-Get a page of the column articles a Zhihu user has written, newest first. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the column articles a Zhihu user has written, newest first. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user articles API
 - Request: `GET /v1/zhihu/users/articles/list`
@@ -116,7 +116,7 @@ Get a page of the column articles a Zhihu user has written, newest first. Up to 
 
 ## zhihu.users.followers.list
 
-Get a page of the accounts following a Zhihu user, 20 a page: name, headline, avatar, follower count, answer and article counts. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the accounts following a Zhihu user, 20 a page: name, headline, avatar, whether an organisation, follower count, answer and article counts. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user followers API
 - Request: `GET /v1/zhihu/users/followers/list`
@@ -125,7 +125,7 @@ Get a page of the accounts following a Zhihu user, 20 a page: name, headline, av
 
 ## zhihu.users.get
 
-Get a Zhihu user's profile by the handle in its address: name, headline, follower count, answer and article counts. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get a Zhihu user's profile by the handle in its address: name, headline, follower count, answer and article counts. It also says whether the user is verified or an organisation, and the IP location. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user profile API
 - Request: `GET /v1/zhihu/users/get`
@@ -134,7 +134,7 @@ Get a Zhihu user's profile by the handle in its address: name, headline, followe
 
 ## zhihu.users.pins.list
 
-Get a page of the pins (short posts) a Zhihu user has posted, newest first: text, pictures, time posted, likes, comments, saves, reposts. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the pins (short posts) a Zhihu user has posted, newest first: text, pictures, time posted, likes, comments, saves, reposts. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user pins API
 - Request: `GET /v1/zhihu/users/pins/list`
@@ -143,7 +143,7 @@ Get a page of the pins (short posts) a Zhihu user has posted, newest first: text
 
 ## zhihu.users.search
 
-Get a page of Zhihu users matching a search: name, headline, follower count, answer and article counts. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of Zhihu users matching a search: name, follower count, answer and article counts. Each also says whether verified, whether an organisation, upvotes received and when they last posted. The headline is in the profile. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Zhihu user search API
 - Request: `GET /v1/zhihu/users/search`

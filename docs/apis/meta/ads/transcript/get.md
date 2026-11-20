@@ -10,15 +10,15 @@ Get what is said in the video of a Meta Ad Library ad by its library ID or link,
 - Returns: 1 object, one transcript object
 - Returns the standard transcript object, the same on every platform
 - `id` is in the link: `facebook.com/ads/library/?id=<id>`. Or pass the whole link as `url`.
-- [Run it in the Playground](https://dataxapi.com/console/playground/?capability=meta.ads.transcript.get&params=%7B%22id%22%3A%221466307095509411%22%7D)
+- [Run it in the Playground](https://dataxapi.com/console/playground/?capability=meta.ads.transcript.get&params=%7B%22id%22%3A%22974466855339122%22%7D)
 - In Chinese: [Meta 广告视频字幕 API](https://dataxapi.com/zh/apis/meta/ads/transcript/get/)
 
 ## Parameters
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `id` | text | give exactly one of `id`, `url` | The ad's Library ID, a string of digits. Example: `1466307095509411`. |
-| `url` | text | give exactly one of `id`, `url` | The ad's link in the library, written facebook.com/ads/library/?id= and the ID. Example: `https://www.facebook.com/ads/library/?id=1466307095509411`. Full link: `https://www.facebook.com/ads/library/?id=1466307095509411`. |
+| `id` | text | give exactly one of `id`, `url` | The ad's Library ID, a string of digits. Example: `974466855339122`. |
+| `url` | text | give exactly one of `id`, `url` | The ad's link in the library, written facebook.com/ads/library/?id= and the ID. Example: `https://www.facebook.com/ads/library/?id=974466855339122`. Full link: `https://www.facebook.com/ads/library/?id=974466855339122`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -43,7 +43,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 137 B, `standard` 137 B, `full` 137 B (measured on the response recorded 2026-10-12 21:49 UTC).
+Typical size of one item: `compact` 544 B, `standard` 795 B, `full` 795 B (measured on the response recorded 2026-10-25 15:10 UTC).
 
 ## Paging
 
@@ -55,10 +55,10 @@ One object per call: there is nothing to page.
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -90,10 +90,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -108,34 +106,36 @@ The key is read from the environment; no key is ever written into a page.
 
 ```bash
 curl -G "https://api.dataxapi.com/v1/meta/ads/transcript/get" \
-  --data-urlencode "id=1466307095509411" \
+  --data-urlencode "id=974466855339122" \
   -H "Authorization: Bearer $DATAXAPI_API_KEY"
 ```
 
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
-result = dx.meta.ads.transcript.get(id="1466307095509411")
+result = dx.meta.ads.transcript.get(id="974466855339122")
 print(result["data"]["item"])
 ```
 
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
-const result = await dx.meta.ads.transcript.get({ id: "1466307095509411" });
+const result = await dx.meta.ads.transcript.get({ id: "974466855339122" });
 console.log(result.data.item);
 ```
 
 ### CLI
 
 ```bash
-dataxapi call meta.ads.transcript.get id=1466307095509411
+dataxapi call meta.ads.transcript.get id=974466855339122
 ```
 
 ### MCP
@@ -160,9 +160,9 @@ Add this to your MCP client, then ask your agent to call `meta.ads.transcript.ge
 
 ### 200
 
-From a response recorded 2026-10-12 21:49 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+From a response recorded 2026-10-25 15:10 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 501 B in the standard view (501 B compact, 501 B full).
+Size as sent: 1.1 KB in the standard view (960 B compact, 1.1 KB full).
 
 ```jsonc
 {
@@ -178,7 +178,7 @@ Size as sent: 501 B in the standard view (501 B compact, 501 B full).
   "meta": {
     "capability": "meta.ads.transcript.get",
     "result_status": "complete",
-    "fetched_at": "2026-10-12T21:49:48.000Z",
+    "fetched_at": "2026-10-25T15:10:17.000Z",
     "cached": false,
     "replayed": false,
     "unavailable": { "lang": "capability", "segments": "capability" },
@@ -226,6 +226,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -257,8 +260,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "b6bd08f2-5e1e-4a44-acf9-63217786c7d8",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -291,6 +294,8 @@ More Social media data on other platforms: [Douyin comment replies](https://data
 
 Meta Ad Library endpoints: [Meta ad detail](https://dataxapi.com/apis/meta/ads/get/), [Meta Ad Library search](https://dataxapi.com/apis/meta/ads/search/), [Meta ad video transcript](https://dataxapi.com/apis/meta/ads/transcript/get/), [Meta advertiser's ads](https://dataxapi.com/apis/meta/advertisers/ads/list/), [Meta advertiser search](https://dataxapi.com/apis/meta/advertisers/search/)
 
+How-to guides and answers: [Meta Ad Library API: search ads and get every ad a Facebook page runs (2026)](https://dataxapi.com/answers/meta-ad-library-api/)
+
 Skills that use this endpoint: [Videos to text](https://dataxapi.com/skills/transcripts/)
 
 Related: [All Meta Ad Library endpoints](https://dataxapi.com/apis/meta/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 7 platforms, side by side](https://dataxapi.com/roles/transcripts-get/), [The transcript object's fields](https://dataxapi.com/docs/objects/transcript/)
@@ -311,4 +316,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/meta/ads/transcript/get/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/meta/ads/transcript/get/)

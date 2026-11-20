@@ -1,9 +1,11 @@
 # WeChat Channels data in your AI
 
-Ask your AI about WeChat Channels and it answers with live data: 7 endpoints through 5 MCP tools or one skill package, from $0.0200 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about WeChat Channels and it answers with live data: 15 endpoints through 5 MCP tools or one skill package, from $0.0150 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-- Endpoints: 7 (on WeChat Channels, one response shape)
-- Price: from $0.0200 (each endpoint at its own price; a failed call is free)
+Updated 2026-11-06
+
+- Endpoints: 15 (on WeChat Channels, one response shape)
+- Price: from $0.0150 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-wechat-channels](https://dataxapi.com/skills/dataxapi-wechat-channels.zip)
 
@@ -21,7 +23,7 @@ Ask about WeChat Channels:
 
 ## What to ask about WeChat Channels, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,27 +31,26 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | How many likes and comments did this Channels video get? | [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get/) `wechat_channels.videos.get` | $0.0200 |
 | What are viewers saying under this Channels video? | [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list/) `wechat_channels.videos.comments.list` | $0.0200 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about WeChat Channels: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about WeChat Channels: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > What does this WeChat Channels account post, and how many followers does it have?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "What does this WeChat Channels account post, and how many followers does it have?", platform: "wechat_channels" })` | Found wechat_channels.users.get · $0.0200 a call | Free |
-| `describe({ ids: ["wechat_channels.users.get"] })` | Takes id · returns one object | Free |
 | `call({ capability: "wechat_channels.users.get", id: "v2_060000231003b20faec8c5e5811dc3ddce02ec30b0772029a703e1b9f446ba147658bbcfab81@finder", max_price: "0.02" })` | One account object · compact view | $0.0200 |
 
-3 tool calls · 1 charged · $0.0200. One account object came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0200. One account object came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The WeChat Channels skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 7 WeChat Channels endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 15 WeChat Channels endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-wechat-channels from https://dataxapi.com/skills/dataxapi-wechat-channels.zip.
 
-## All 7 WeChat Channels endpoints your AI can call
+## All 15 WeChat Channels endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -58,10 +59,18 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [WeChat Channels account profile](https://dataxapi.com/apis/wechat_channels/users/get/) | `wechat_channels.users.get` | $0.0200 |
 | [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get/) | `wechat_channels.videos.get` | $0.0200 |
 | [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list/) | `wechat_channels.videos.comments.list` | $0.0200 |
+| [WeChat Channels video share link](https://dataxapi.com/apis/wechat_channels/videos/share_link/get/) | `wechat_channels.videos.share_link.get` | $0.0200 |
 | [WeChat Channels account collections](https://dataxapi.com/apis/wechat_channels/users/collections/list/) | `wechat_channels.users.collections.list` | $0.0200 |
 | [WeChat Channels collection videos](https://dataxapi.com/apis/wechat_channels/collections/videos/list/) | `wechat_channels.collections.videos.list` | $0.0200 |
 | [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/) | `wechat_channels.users.videos.list` | $0.0200 |
 | [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search/) | `wechat_channels.videos.search` | $0.0200 |
+| [WeChat Channels account profile (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/get/) | `wechat_channels.backup.users.get` | $0.0300 |
+| [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list/) | `wechat_channels.backup.users.videos.list` | $0.0600 |
+| [WeChat Channels video search (backup)](https://dataxapi.com/apis/wechat_channels/backup/videos/search/) | `wechat_channels.backup.videos.search` | $0.1 |
+| [WeChat Channels account search](https://dataxapi.com/apis/wechat_channels/users/search/) | `wechat_channels.users.search` | $0.0600 |
+| [WeChat Channels video stats](https://dataxapi.com/apis/wechat_channels/videos/metrics/) | `wechat_channels.videos.metrics` | $0.0150 |
+| [WeChat Channels comment replies](https://dataxapi.com/apis/wechat_channels/comments/replies/list/) | `wechat_channels.comments.replies.list` | $0.0150 |
+| [WeChat Channels live replays](https://dataxapi.com/apis/wechat_channels/users/live_replays/list/) | `wechat_channels.users.live_replays.list` | $0.0200 |
 
 [Every WeChat Channels price, and what is charged →](https://dataxapi.com/pricing/wechat_channels/) · [WeChat Channels API](https://dataxapi.com/apis/wechat_channels/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -69,7 +78,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 
 ### What does it cost to ask about WeChat Channels?
 
-Finding endpoints, reading their parameters and reading on in a result are free. A call costs $0.0200, each WeChat Channels endpoint at its own price. A call that fails is never charged.
+Finding endpoints, reading their parameters and reading on in a result are free. A call costs from $0.0150 to $0.1, each WeChat Channels endpoint at its own price. A call that fails is never charged.
 
 ### Do I need a WeChat Channels account?
 
@@ -93,4 +102,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/wechat_channels/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/wechat_channels/)

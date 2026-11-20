@@ -1,8 +1,10 @@
 # Bilibili data in your AI
 
-Ask your AI about Bilibili and it answers with live data: 8 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Bilibili and it answers with live data: 9 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-- Endpoints: 8 (on Bilibili, one response shape)
+Updated 2026-11-06
+
+- Endpoints: 9 (on Bilibili, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-bilibili](https://dataxapi.com/skills/dataxapi-bilibili.zip)
@@ -21,7 +23,7 @@ Ask about Bilibili:
 
 ## What to ask about Bilibili, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,27 +31,26 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | What is on Bilibili's hot search right now? | [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/) `bilibili.trends.list` | $0.0020 |
 | What do the comments on this Bilibili video say? | [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/) `bilibili.videos.comments.list` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Bilibili: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Bilibili: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > Find B站 (Bilibili) videos that review the new phone.
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "Find B站 (Bilibili) videos that review the new phone.", platform: "bilibili" })` | Found bilibili.videos.search · $0.0020 a call | Free |
-| `describe({ ids: ["bilibili.videos.search"] })` | Takes query, sort · up to 20 a page | Free |
 | `call({ capability: "bilibili.videos.search", query: "机械键盘", max_price: "0.002" })` | Up to 20 post objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 20 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 20 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Bilibili skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 8 Bilibili endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 9 Bilibili endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-bilibili from https://dataxapi.com/skills/dataxapi-bilibili.zip.
 
-## All 8 Bilibili endpoints your AI can call
+## All 9 Bilibili endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -63,6 +64,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/) | `bilibili.videos.get` | $0.0020 |
 | [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/) | `bilibili.videos.search` | $0.0020 |
 | [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/) | `bilibili.videos.trending` | $0.0020 |
+| [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list/) | `bilibili.backup.users.videos.list` | $0.0300 |
 
 [Every Bilibili price, and what is charged →](https://dataxapi.com/pricing/bilibili/) · [Bilibili API](https://dataxapi.com/apis/bilibili/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -70,7 +72,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 
 ### What does it cost to ask about Bilibili?
 
-Finding endpoints, reading their parameters and reading on in a result are free. A call costs $0.0020, each Bilibili endpoint at its own price. A call that fails is never charged.
+Finding endpoints, reading their parameters and reading on in a result are free. A call costs from $0.0020 to $0.0300, each Bilibili endpoint at its own price. A call that fails is never charged.
 
 ### Do I need a Bilibili account?
 
@@ -94,4 +96,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/bilibili/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/bilibili/)

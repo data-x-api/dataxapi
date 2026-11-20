@@ -1,6 +1,6 @@
 # WeChat Official Account article detail API
 
-Get one WeChat Official Account article by its link: title, text, time published, the account's name and IDs. One object a call; $0.0200 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one WeChat Official Account article by its link: title, text, time published, the account's name and IDs. It also says whether it was the lead article or one below, its format, cover, digest, byline, "read the original" link and the IP location it was posted from. One object a call; $0.0200 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/wechat_mp/articles/get`
 - ID: `wechat_mp.articles.get`
@@ -14,7 +14,7 @@ Get one WeChat Official Account article by its link: title, text, time published
 
 ## What you get
 
-The first 2 rows of a response recorded 2026-10-12 19:03 UTC.
+The first 2 rows of a response recorded 2026-10-29 09:45 UTC.
 
 | Field | Value |
 | --- | --- |
@@ -25,7 +25,7 @@ The first 2 rows of a response recorded 2026-10-12 19:03 UTC.
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `url` | text | Yes | Link to the article: the long link with __biz, mid, idx and sn, or the short /s/ link. Example: `https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667038683&idx=1&sn=0422127e651acd7f6cf6ef7e1cff04bc`. Full link: `https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667038683&idx=1&sn=0422127e651acd7f6cf6ef7e1cff04bc`. Short link: `https://mp.weixin.qq.com/s/TSNQKkRpN1qbKsT7BvzqIw`. The link has to be opened to learn what it points at, so the result cannot be checked against it. |
+| `url` | text | Yes | Link to the article, pasted as it is: the long link with __biz, mid, idx and sn, the short /s/ link, or a share text with one of them in it. Example: `https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667038683&idx=1&sn=0422127e651acd7f6cf6ef7e1cff04bc`. Full link: `https://mp.weixin.qq.com/s?__biz=MjM5MjAxNDM4MA==&mid=2667038683&idx=1&sn=0422127e651acd7f6cf6ef7e1cff04bc`. Short link: `https://mp.weixin.qq.com/s/TSNQKkRpN1qbKsT7BvzqIw`. The link has to be opened to learn what it points at, so the result cannot be checked against it. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -68,13 +68,20 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `post_id` | text | ID of the thread's root post when this is a reply; otherwise null. | `compact` | The platform has none |
 | `parent_id` | text | ID of the item it replies to directly; otherwise null. | `compact` | The platform has none |
 | `root_id` | text | ID of the first-level reply its thread hangs under. | `compact` | The platform has none |
+| `ext.position` | integer | Its place in the push it went out in: 1 is the lead article, 2 and on the ones below it. | `full` | Yes |
+| `ext.content_type` | text | The account's own content format: article (text and pictures), video, audio, images (a picture post), text (words only) or repost. Values: `article`, `video`, `audio`, `images`, `text`, `repost`. | `full` | Yes |
+| `ext.cover_url` | link | Cover image. | `full` | Yes |
+| `ext.digest` | text | The digest its author wrote for the article; null where none was written. | `full` | Yes |
+| `ext.byline` | text | The author the article is signed by (not the account); null where it is unsigned. | `full` | Yes |
+| `ext.source_url` | link | The link of the article's "read the original" at its end; null where there is none. | `full` | Yes |
+| `ext.ip_location` | text | Where the article was posted from, as its page shows it: the province, or the country for one posted from abroad. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 1.7 KB, `standard` 2.3 KB, `full` 2.3 KB (measured on the response recorded 2026-10-12 19:03 UTC).
+Typical size of one item: `compact` 1.8 KB, `standard` 2.4 KB, `full` 2.7 KB (measured on the response recorded 2026-10-29 09:45 UTC).
 
 ## Paging
 
@@ -85,15 +92,14 @@ One object per call: there is nothing to page.
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0200, once per call |
-| The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0200 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-The answer is 404 `not_found` and nothing is charged. `reason` says which: `not_found` (it does not exist) or `private_or_deleted`.
+The answer is 404 `not_found`. `charged` and `amount` in the body say what this one cost. `reason` says which: `not_found` (it does not exist) or `private_or_deleted`.
 
 ## Errors
 
@@ -101,7 +107,7 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 
 | HTTP | Code | Meaning | Charged | Retry |
 | --- | --- | --- | --- | --- |
-| 400 | `invalid_params` | A parameter is invalid | No | After a fix |
+| 400 | `invalid_params` | A parameter is invalid | As the answer's charged field says | After a fix |
 | 400 | `request_not_served` | This combination of parameters cannot be served at present | No | After a fix |
 | 400 | `max_price_exceeded` | The most this call could cost is above the limit you set | No | After a fix |
 | 401 | `unauthorized` | No credential was sent, or it is invalid, disabled or expired | No | No |
@@ -111,7 +117,7 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 403 | `account_suspended` | The account is suspended | No | No |
 | 403 | `forbidden` | This credential may not use that option | No | No |
 | 403 | `key_scope_denied` | This key may not call this endpoint | No | No |
-| 404 | `not_found` | The object does not exist, is private or was deleted | No | No |
+| 404 | `not_found` | The object does not exist, is private or was deleted | As the answer's charged field says | No |
 | 404 | `run_not_found` | No run under this run ID | No | No |
 | 409 | `call_in_progress` | The call under this idempotency key is still running; ask again with the same key shortly | No | With the same idempotency key |
 | 409 | `idempotency_conflict` | This idempotency key was used for a different request | No | After a fix |
@@ -121,10 +127,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -146,6 +150,7 @@ curl -G "https://api.dataxapi.com/v1/wechat_mp/articles/get" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -156,6 +161,7 @@ print(result["data"]["item"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -191,9 +197,9 @@ Add this to your MCP client, then ask your agent to call `wechat_mp.articles.get
 
 ### 200
 
-From a response recorded 2026-10-12 19:03 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+From a response recorded 2026-10-29 09:45 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 2.9 KB in the standard view (2.4 KB compact, 2.9 KB full).
+Size as sent: 3.0 KB in the standard view (2.5 KB compact, 3.3 KB full).
 
 ```jsonc
 {
@@ -219,7 +225,7 @@ Size as sent: 2.9 KB in the standard view (2.4 KB compact, 2.9 KB full).
   "meta": {
     "capability": "wechat_mp.articles.get",
     "result_status": "complete",
-    "fetched_at": "2026-10-12T19:03:48.000Z",
+    "fetched_at": "2026-10-29T09:45:30.000Z",
     "cached": false,
     "replayed": false,
     "unavailable": {
@@ -279,6 +285,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.02",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -293,7 +302,8 @@ An example written to the specification, not a recorded response.
   "request_id": "4cea47e8-21a1-4bc0-b1ee-2cb91ccf433b",
   "message": "The object does not exist, is private or was deleted",
   "message_zh": "对象不存在、私密或已删除",
-  "charged": false,
+  "charged": true,
+  "amount": "0.02",
   "retry": "no",
   "retry_after_seconds": null,
   "param": null,
@@ -310,8 +320,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "7e042692-264e-4765-b6c8-4087522e0646",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -340,11 +350,11 @@ Part of DataXAPI's Social media data. The same key also works for: Creators, Ads
 
 The same thing on other platforms: [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Telegram message detail](https://dataxapi.com/apis/telegram/messages/get/), [X post detail](https://dataxapi.com/apis/x/posts/get/), [Facebook post detail](https://dataxapi.com/apis/facebook/posts/get/), [LinkedIn post detail](https://dataxapi.com/apis/linkedin/posts/get/), [Threads post detail](https://dataxapi.com/apis/threads/posts/get/), [Instagram post detail](https://dataxapi.com/apis/instagram/posts/get/), [TikTok video detail](https://dataxapi.com/apis/tiktok/videos/get/), [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [YouTube video detail](https://dataxapi.com/apis/youtube/videos/get/), [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get/), [Reddit post detail](https://dataxapi.com/apis/reddit/posts/get/), [Zhihu answer detail](https://dataxapi.com/apis/zhihu/answers/get/), [Zhihu article detail](https://dataxapi.com/apis/zhihu/articles/get/), [Zhihu pin detail](https://dataxapi.com/apis/zhihu/pins/get/), [Zhihu question detail](https://dataxapi.com/apis/zhihu/questions/get/), [Pinterest pin detail](https://dataxapi.com/apis/pinterest/pins/get/)
 
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/)
+More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/)
 
-WeChat Official Accounts endpoints: [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [WeChat Official Account profile](https://dataxapi.com/apis/wechat_mp/accounts/get/), [WeChat Official Account article comments](https://dataxapi.com/apis/wechat_mp/articles/comments/list/), [WeChat Official Account article detail](https://dataxapi.com/apis/wechat_mp/articles/get/), [WeChat Official Account article stats](https://dataxapi.com/apis/wechat_mp/articles/metrics/), [WeChat Official Account comment replies](https://dataxapi.com/apis/wechat_mp/comments/replies/list/)
+WeChat Official Accounts endpoints: [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [WeChat Official Account profile](https://dataxapi.com/apis/wechat_mp/accounts/get/), [WeChat Official Account article comments](https://dataxapi.com/apis/wechat_mp/articles/comments/list/), [WeChat Official Account article detail](https://dataxapi.com/apis/wechat_mp/articles/get/), [WeChat Official Account article stats](https://dataxapi.com/apis/wechat_mp/articles/metrics/), [WeChat Official Account comment replies](https://dataxapi.com/apis/wechat_mp/comments/replies/list/), [WeChat Official Account name search](https://dataxapi.com/apis/wechat_mp/accounts/search/), [WeChat Official Account owner](https://dataxapi.com/apis/wechat_mp/accounts/owner/get/)
 
-How-to guides and answers: [How to list a WeChat Official Account's past articles](https://dataxapi.com/guides/wechat-official-account-articles/), [Is there an API for WeChat Official Account articles?](https://dataxapi.com/answers/is-there-an-api-for-wechat-official-account-articles/)
+How-to guides and answers: [How to list a WeChat Official Account's past articles](https://dataxapi.com/guides/wechat-official-account-articles/), [Is there an API for WeChat Official Account articles?](https://dataxapi.com/answers/is-there-an-api-for-wechat-official-account-articles/), [What is __biz in a WeChat article link?](https://dataxapi.com/answers/wechat-official-account-biz/), [What do mid, idx and sn mean in a WeChat article link?](https://dataxapi.com/answers/wechat-article-link-mid-idx-sn/), [What is a WeChat Official Account's original ID (gh_)?](https://dataxapi.com/answers/wechat-official-account-original-id/)
 
 Skills that use this endpoint: [Breaking down a hit](https://dataxapi.com/skills/viral/)
 
@@ -358,12 +368,12 @@ $0.0200 per call. The most one call can cost is $0.0200.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged.
+Errors and timeouts are not charged.
 
 ### What happens if the object does not exist?
 
-The answer is 404 not_found and nothing is charged. reason says which: not_found (it does not exist) or private_or_deleted.
+The answer is 404 not_found. charged and amount in the body say what this one cost. reason says which: not_found (it does not exist) or private_or_deleted.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/wechat_mp/articles/get/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/wechat_mp/articles/get/)

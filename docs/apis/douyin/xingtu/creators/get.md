@@ -1,6 +1,6 @@
 # Douyin Xingtu creator profile API
 
-Get a Douyin creator's profile on Xingtu by Xingtu creator ID: name, location, content categories, followers; one ID also gives the Douyin account ID and handle, several IDs (up to 50) give what a video of each of two lengths costs and the views expected of one instead. One object a call; up to 50 in one request with `ids`; $0.0040 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is free.
+Get a Douyin creator's profile on Xingtu by Xingtu creator ID: name, location, content categories, followers, gender; one ID also gives the Douyin account ID, handle, agency and content labels, several IDs (up to 50) give what an integrated and a custom video cost, their expected CPMs (in yuan) and the views expected of a video instead. One object a call; up to 50 in one request with `ids`; $0.0040 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Endpoint: `GET / POST https://api.dataxapi.com/v1/douyin/xingtu/creators/get`
 - ID: `douyin.xingtu.creators.get`
@@ -50,21 +50,25 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `metrics` | object | Creator counts. | `compact` | Yes |
 | `metrics.followers` | integer | Followers. | `compact` | Yes |
 | `ext.uid` | text | The numeric ID (uid) of the creator's Douyin account; not the ID the account endpoints take. | `full` | Yes |
-| `ext.rate_21_60s` | amount | Rate for a 21 to 60 second video, in yuan. | `full` | Depends on the request |
-| `ext.rate_over_60s` | amount | Rate for a video over 60 seconds, in yuan. | `full` | Depends on the request |
+| `ext.rate_integrated` | amount | Rate for an integrated video (植入视频: the brand placed in the creator's own content), in yuan. | `full` | Depends on the request |
+| `ext.rate_custom` | amount | Rate for a custom video (定制视频: a video made for the brand), in yuan. | `full` | Depends on the request |
 | `ext.expected_views` | integer | Views the platform expects of one video. | `full` | Depends on the request |
 | `ext.agency` | text | Name of the agency (MCN) the creator is signed to; null when there is none. | `full` | Depends on the request |
+| `ext.cpm_integrated` | amount | Expected cost per thousand views (CPM) of an integrated video, in yuan: the integrated rate over the views the platform expects, times 1000; null without a rate or an estimate. | `full` | Depends on the request |
+| `ext.cpm_custom` | amount | Expected cost per thousand views (CPM) of a custom video, in yuan, worked out the same way; null where there is none. | `full` | Depends on the request |
+| `ext.gender` | text | The creator's gender: female or male; null where the platform gives none. Values: `female`, `male`. | `full` | Yes |
+| `ext.content_labels` | list of text | Theme labels Xingtu gives the creator's content, in the platform's words (the last 180 days', in search results); null where there are none. | `full` | Depends on the request |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-With `id`: `ext.rate_21_60s`, `ext.rate_over_60s`, `ext.expected_views` not returned.
+With `id`: `ext.rate_integrated`, `ext.rate_custom`, `ext.expected_views`, `ext.cpm_integrated`, `ext.cpm_custom` not returned.
 
-With `ids`: `account_id`, `username`, `ext.agency` not returned.
+With `ids`: `account_id`, `username`, `ext.agency`, `ext.content_labels` not returned.
 
-Typical size of one item: `compact` 207 B, `standard` 404 B, `full` 446 B (measured on the response recorded 2026-10-12 21:48 UTC).
+Typical size of one item: `compact` 207 B, `standard` 404 B, `full` 642 B (measured on the response recorded 2026-10-12 21:48 UTC).
 
 ## Paging
 
@@ -78,12 +82,11 @@ Up to 50 objects come back in one call with `ids`; there is no next page.
 | --- | --- |
 | A result with data | $0.0040, once per call |
 | A batch where some IDs are not found | once, as any call |
-| An empty result | not charged |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0040 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -117,10 +120,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -142,6 +143,7 @@ curl -G "https://api.dataxapi.com/v1/douyin/xingtu/creators/get" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -152,6 +154,7 @@ print(result["data"]["item"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -189,7 +192,7 @@ Add this to your MCP client, then ask your agent to call `douyin.xingtu.creators
 
 From a response recorded 2026-10-12 21:48 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 825 B in the standard view (628 B compact, 867 B full).
+Size as sent: 891 B in the standard view (694 B compact, 1.1 KB full).
 
 ```jsonc
 {
@@ -216,9 +219,11 @@ Size as sent: 825 B in the standard view (628 B compact, 867 B full).
     "cached": false,
     "replayed": false,
     "unavailable": {
-      "ext.rate_21_60s": "capability",
-      "ext.rate_over_60s": "capability",
-      "ext.expected_views": "capability"
+      "ext.rate_integrated": "capability",
+      "ext.rate_custom": "capability",
+      "ext.expected_views": "capability",
+      "ext.cpm_integrated": "capability",
+      "ext.cpm_custom": "capability"
     },
     "billing": {
       "amount": "0.004",
@@ -235,7 +240,7 @@ The answer to a request with `ids`.
 
 From a response recorded 2026-10-12 21:48 UTC. The request ID and balance are made up.
 
-Size as sent: 513 B in the standard view (513 B compact, 513 B full).
+Size as sent: 547 B in the standard view (547 B compact, 547 B full).
 
 ```jsonc
 {
@@ -258,7 +263,8 @@ Size as sent: 513 B in the standard view (513 B compact, 513 B full).
     "unavailable": {
       "account_id": "capability",
       "username": "capability",
-      "ext.agency": "capability"
+      "ext.agency": "capability",
+      "ext.content_labels": "capability"
     },
     "billing": { "amount": "0", "currency": "USD", "balance_after": "10" }
   }
@@ -300,6 +306,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.004",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -331,8 +340,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "ba21cefc-47c1-4044-b0b2-914b0549257c",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -340,6 +349,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 1,376 tokens as the platform's own JSON, 289 as DataXAPI's JSON, and 151 as an AI reads it through DataXAPI's MCP server: 89% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/douyin/xingtu/creators/get.example.json)
 
@@ -361,11 +372,13 @@ Part of DataXAPI's Creators data. The same key also works for: Social media, Ads
 
 The same thing on other platforms: [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/)
 
-Douyin Xingtu endpoints: [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/), [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search/), [Douyin Xingtu creator profile](https://dataxapi.com/apis/douyin/xingtu/creators/get/), [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/), [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics/), [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/), [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/), [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/), [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/), [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/), [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list/)
+Douyin Xingtu endpoints: [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/), [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search/), [Douyin Xingtu creator profile](https://dataxapi.com/apis/douyin/xingtu/creators/get/), [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/), [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics/), [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/), [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/), [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/), [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/), [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/), [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list/), [Douyin Xingtu video report: plays and completion rate](https://dataxapi.com/apis/douyin/xingtu/videos/get/)
 
-Douyin endpoints: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin creator engagement and follower trends](https://dataxapi.com/apis/douyin/users/history/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending/)
+Douyin endpoints: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin creator engagement and follower trends](https://dataxapi.com/apis/douyin/users/history/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending/), [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related/), [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list/), [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search/)
 
 Douyin trend-index endpoints: [Douyin trend-index brand trends](https://dataxapi.com/apis/douyin/index/brands/history/), [Douyin trend-index brand comparison](https://dataxapi.com/apis/douyin/index/brands/metrics/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index creator follower profile](https://dataxapi.com/apis/douyin/index/creators/audience/get/), [Douyin trend-index creator core metrics](https://dataxapi.com/apis/douyin/index/creators/metrics/), [Douyin trend-index keyword audience](https://dataxapi.com/apis/douyin/index/keywords/audience/get/), [Douyin trend-index keyword trends](https://dataxapi.com/apis/douyin/index/keywords/history/), [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related/), [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/)
+
+How-to guides and answers: [What is sec_uid on Douyin, and how is it different from uid and the Douyin ID?](https://dataxapi.com/answers/douyin-sec-uid/), [What is Douyin Xingtu?](https://dataxapi.com/answers/what-is-douyin-xingtu/), [How do I filter Xingtu creators in bulk and see their rates? (2026)](https://dataxapi.com/answers/douyin-xingtu-creators-bulk-filter/), [Every figure on a Douyin Xingtu creator page: can an API get it? Field by field (2026)](https://dataxapi.com/answers/douyin-xingtu-creator-page-fields/), [Xingtu integrated and custom video rates: the difference, and getting them by API (2026)](https://dataxapi.com/answers/douyin-xingtu-integrated-vs-custom-rate/), [Xiaohongshu PGY or Douyin Xingtu: how they differ, and their creator data side by side (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-vs-douyin-xingtu/), [What does a Douyin creator with 1 million followers charge on Xingtu? Checking rates by follower band (2026)](https://dataxapi.com/answers/douyin-xingtu-rates-by-followers/), [Does Douyin Xingtu have an API? What the official one reads, and how to read any creator (2026)](https://dataxapi.com/answers/douyin-xingtu-api/)
 
 Related: [All Douyin Xingtu endpoints](https://dataxapi.com/apis/douyin/xingtu/), [All Douyin endpoints](https://dataxapi.com/apis/douyin/), [Creators data](https://dataxapi.com/categories/creator/), [The same thing on 2 platforms, side by side](https://dataxapi.com/roles/creators-get/), [The creator object's fields](https://dataxapi.com/docs/objects/creator/)
 
@@ -377,7 +390,7 @@ $0.0040 per call. The most one call can cost is $0.0040.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged; an empty result is free.
+Errors, timeouts and objects that do not exist are not charged.
 
 ### Can I fetch several in one request?
 
@@ -389,4 +402,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/douyin/xingtu/creators/get/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/douyin/xingtu/creators/get/)

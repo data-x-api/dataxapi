@@ -1,6 +1,6 @@
 # YouTube video transcript API
 
-Get the transcript of a YouTube video by ID or link: the whole text and timed segments. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get the transcript of a YouTube video by ID or link: the whole text and timed segments. lang chooses the language of the captions. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/youtube/videos/transcript/get`
 - ID: `youtube.videos.transcript.get`
@@ -29,6 +29,7 @@ The first 2 rows of a response recorded 2026-10-12 03:34 UTC.
 | --- | --- | --- | --- |
 | `id` | text | give exactly one of `id`, `url` | Video ID. Example: `dQw4w9WgXcQ`. |
 | `url` | text | give exactly one of `id`, `url` | Link to the video: a watch, shorts, embed, live or youtu.be link. Example: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`. Full link: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`. Short link: `https://youtu.be/dQw4w9WgXcQ`. |
+| `lang` | text |  | Which language of captions to get, as a language code (en, es, ja, zh-Hans, say); left out, the captions of the video's own language come first. A video without captions in that language is answered as one without captions. Example: `en`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -65,10 +66,10 @@ One object per call: there is nothing to page.
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -100,10 +101,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -125,6 +124,7 @@ curl -G "https://api.dataxapi.com/v1/youtube/videos/transcript/get" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -135,6 +135,7 @@ print(result["data"]["item"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -250,6 +251,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -281,8 +285,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "95a28511-833e-4b48-a370-f3d8e5e2ed56",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -290,6 +294,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 3,239 tokens as the platform's own JSON, 1,991 as DataXAPI's JSON, and 189 as an AI reads it through DataXAPI's MCP server: 94% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/youtube/videos/transcript/get.example.json)
 
@@ -337,4 +343,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/youtube/videos/transcript/get/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/youtube/videos/transcript/get/)

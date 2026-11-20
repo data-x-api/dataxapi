@@ -2,6 +2,8 @@
 
 Ask your AI about X (Twitter) and it answers with live data: 21 endpoints through 5 MCP tools or one skill package, from $0.0003 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 21 (on X (Twitter), one response shape)
 - Price: from $0.0003 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about X (Twitter):
 
 ## What to ask about X (Twitter), and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Find posts on X about our product launch. | [X post search](https://dataxapi.com/apis/x/posts/search/) `x.posts.search` | $0.0020 |
 | How many followers does @NASA have on X? | [X user profile](https://dataxapi.com/apis/x/users/get/) `x.users.get` | $0.0004 per item, at least $0.0004 a call |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about X (Twitter): your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about X (Twitter): your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > What is trending on X (Twitter) in Japan today?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "What is trending on X (Twitter) in Japan today?", platform: "x" })` | Found x.trends.list · $0.0090 a call | Free |
-| `describe({ ids: ["x.trends.list"] })` | Takes board, region · up to 30 a page | Free |
 | `call({ capability: "x.trends.list", max_price: "0.009" })` | Up to 30 trend objects · compact view | $0.0090 |
 
-3 tool calls · 1 charged · $0.0090. Up to 30 trend objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0090. Up to 30 trend objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The X (Twitter) skill package
 
@@ -107,4 +108,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/x/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/x/)

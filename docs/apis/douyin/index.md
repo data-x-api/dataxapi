@@ -101,7 +101,7 @@ The platform publishes each day a day or two late. A call reads the tool at that
 
 ### What if the index does not cover my keyword?
 
-A keyword the index does not cover is left out of the answer. When none of the keywords asked for has figures, the result is empty, not a not-found error, and is charged as an empty result is.
+A keyword the index does not cover is left out of the answer.
 
 ### Do I need a trend-index or Douyin account?
 
@@ -116,6 +116,9 @@ No. You hold one DataXAPI key: no Douyin login, no cookie, no advertiser account
 
 - [How to get Douyin keyword trends in bulk](https://dataxapi.com/guides/douyin-keyword-trends.md)
 - [How do I export Douyin data?](https://dataxapi.com/answers/export-douyin-data.md)
+- [What is sec_uid on Douyin, and how is it different from uid and the Douyin ID?](https://dataxapi.com/answers/douyin-sec-uid.md)
+- [Is the Douyin search index a number of searches?](https://dataxapi.com/answers/douyin-search-index-vs-search-count.md)
+- [What is the Douyin keyword index (Ocean Engine)?](https://dataxapi.com/answers/what-is-douyin-keyword-index-ocean-engine.md)
 
 [Douyin API](https://dataxapi.com/apis/douyin.md)
 
@@ -123,4 +126,4 @@ No. You hold one DataXAPI key: no Douyin login, no cookie, no advertiser account
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/douyin/index/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/douyin/index/)

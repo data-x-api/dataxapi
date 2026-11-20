@@ -4,7 +4,7 @@
 
 > 3 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## google.ads.get
 
@@ -17,7 +17,7 @@ Get one ad of the Google Ads Transparency Center by its ID or link: format, head
 
 ## google.advertisers.ads.list
 
-Get an advertiser's ads from the Google Ads Transparency Center, by the advertiser's ID: format (text, image, video), when each was first and last shown, and a picture of it; can be limited to a country and to one format. 40 ads a page; what an ad says and where it leads come from the Google ad capability. Up to 40 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get an advertiser's ads from the Google Ads Transparency Center, by the advertiser's ID: format (text, image, video), when each was first and last shown, and a picture of it; can be limited to a country and to one format. 40 ads a page; what an ad says and where it leads come from the Google ad capability. Up to 40 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Google advertiser's ads API
 - Request: `GET /v1/google/advertisers/ads/list`
@@ -26,7 +26,7 @@ Get an advertiser's ads from the Google Ads Transparency Center, by the advertis
 
 ## google.advertisers.search
 
-Find advertisers in the Google Ads Transparency Center by name: ID, name, the country or region they are registered in, and the center's estimate of how many ads they have. The ID is what the advertiser's ads are asked for by. Up to 10 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Find advertisers in the Google Ads Transparency Center by name: ID, name, the country or region they are registered in, and the center's estimate of how many ads they have. The ID is what the advertiser's ads are asked for by. Up to 10 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Google advertiser search API
 - Request: `GET /v1/google/advertisers/search`

@@ -2,6 +2,8 @@
 
 Ask your AI about Google Ads and it answers with live data: 3 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 3 (on Google Ads, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about Google Ads:
 
 ## What to ask about Google Ads, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Find the advertiser behind this brand in Google's ads transparency center. | [Google advertiser search](https://dataxapi.com/apis/google/advertisers/search/) `google.advertisers.search` | $0.0020 |
 | Show the details of this Google ad. | [Google ad detail](https://dataxapi.com/apis/google/ads/get/) `google.ads.get` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Google Ads: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Google Ads: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > Which ads is this advertiser running on Google?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "Which ads is this advertiser running on Google?", platform: "google" })` | Found google.advertisers.ads.list · $0.0020 a call | Free |
-| `describe({ ids: ["google.advertisers.ads.list"] })` | Takes id, region, type · up to 40 a page | Free |
 | `call({ capability: "google.advertisers.ads.list", id: "AR16735076323512287233", max_price: "0.002" })` | Up to 40 ad objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 40 ad objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 40 ad objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Google Ads skill package
 
@@ -89,4 +90,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/google/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/google/)

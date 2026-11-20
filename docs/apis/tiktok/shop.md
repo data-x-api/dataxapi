@@ -67,6 +67,7 @@ No. You hold one DataXAPI key: no TikTok login, no cookie, no advertiser account
 ## How-to guides and answers
 
 - [How to search TikTok Shop products and read their reviews](https://dataxapi.com/guides/tiktok-shop-product-reviews.md)
+- [TikTok Shop product data API without seller authorization (2026)](https://dataxapi.com/answers/tiktok-shop-product-data-api.md)
 
 [TikTok API](https://dataxapi.com/apis/tiktok.md)
 
@@ -74,4 +75,4 @@ No. You hold one DataXAPI key: no TikTok login, no cookie, no advertiser account
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/tiktok/shop/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/tiktok/shop/)

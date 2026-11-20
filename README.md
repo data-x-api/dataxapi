@@ -80,6 +80,7 @@ Every endpoint, with its parameters, fields, price and a recorded example answer
 | `docs/docs/objects/` | The shared objects: post, comment, account, creator, ad, product… |
 | `docs/mcp.md`, `docs/mcp/`, `docs/mcp-tools.json` | The MCP server, per platform, and its tool list |
 | `docs/prices.json` | Every endpoint's unit, price and what an empty result is charged |
+| `docs/zh/` | The same documents in Chinese (中文): `docs/zh/apis.md` and `docs/zh/apis/`, one page per endpoint |
 
 ## Ready-to-run projects
 
@@ -102,6 +103,8 @@ Small projects, one task each: one script or one file, no dependencies, with the
 ## 中文
 
 DataXAPI 是给 AI 的市场数据层：抖音、小红书、TikTok、微信公众号和视频号、快手、B站、微博、知乎、X、YouTube 等平台的公开市场数据，你的 AI 和代码用一把 Key、同一种返回结构实时取回，按次付费，一次 $0.0003 起；调用失败不收费。新账户免费试用，最多 333 次，不用绑卡。社媒是最大的品类，另有星图和蒲公英的达人报价、巨量算数的关键词指数、广告库和电商商品。接进 AI：把上面那段提示词（换成你自己的 Key）贴给你的 agent。中文文档：[dataxapi.com/zh/docs](https://dataxapi.com/zh/docs/)。
+
+每个接口的中文文档在这个仓库里也有一份：目录是 [`docs/zh/apis.md`](docs/zh/apis.md)，每个接口一页在 [`docs/zh/apis/`](docs/zh/apis/)，写明参数、返回字段、价格和一段录下来的真实返回。给模型读的索引是 [`docs/zh/llms.txt`](docs/zh/llms.txt)。
 
 ## Licence
 

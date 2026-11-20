@@ -4,11 +4,11 @@
 
 > 10 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## youtube.channels.get
 
-Get a YouTube channel by ID or handle: name, description, subscriber count, video count, total views, verification, the day it was created. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get a YouTube channel by ID or handle: name, description, subscriber count, video count, total views, verification, the day it was created, the links its About section lists (its website, its other social accounts) and its keywords. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: YouTube channel profile API
 - Request: `GET /v1/youtube/channels/get`
@@ -17,7 +17,7 @@ Get a YouTube channel by ID or handle: name, description, subscriber count, vide
 
 ## youtube.channels.search
 
-Find YouTube channels by search terms: name, handle, description, subscriber count, verification. About 20 items a call, 40 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Find YouTube channels by search terms: name, handle, description, subscriber count, verification. About 20 items a call, 40 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: YouTube channel search API
 - Request: `GET /v1/youtube/channels/search`
@@ -26,7 +26,7 @@ Find YouTube channels by search terms: name, handle, description, subscriber cou
 
 ## youtube.channels.videos.list
 
-Get a page of a YouTube channel's videos or Shorts by channel ID or handle, newest or most viewed first: title, description, time published, views, likes, length. About 30 items a call, 60 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of a YouTube channel's videos or Shorts by channel ID or handle, newest or most viewed first: title, description, time published, views, likes, length. About 30 items a call, 60 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: YouTube channel videos API
 - Request: `GET /v1/youtube/channels/videos/list`
@@ -35,7 +35,7 @@ Get a page of a YouTube channel's videos or Shorts by channel ID or handle, newe
 
 ## youtube.comments.replies.list
 
-Get a page of the replies to a YouTube comment, by the replies token the comment list gives: text, replier, likes. About 10 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the replies to a YouTube comment, by the replies token the comment list gives: text, replier, likes. About 10 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: YouTube comment replies API
 - Request: `GET /v1/youtube/comments/replies/list`
@@ -44,7 +44,7 @@ Get a page of the replies to a YouTube comment, by the replies token the comment
 
 ## youtube.videos.comments.list
 
-Get a page of comments on a YouTube video by ID or link, top or newest first: text, commenter, likes, reply count, and the token that gets a comment's replies. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of comments on a YouTube video by ID or link, top or newest first: text, commenter, likes, reply count, and the token that gets a comment's replies. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: YouTube video comments API
 - Request: `GET /v1/youtube/videos/comments/list`
@@ -53,7 +53,7 @@ Get a page of comments on a YouTube video by ID or link, top or newest first: te
 
 ## youtube.videos.get
 
-Get one YouTube video by ID or link: title, description, channel, time published, view, like and comment counts, length. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one YouTube video by ID or link: title, description, channel, time published, view, like and comment counts, length, and the tags its author set, its category and chapters. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: YouTube video detail API
 - Request: `GET /v1/youtube/videos/get`
@@ -62,7 +62,7 @@ Get one YouTube video by ID or link: title, description, channel, time published
 
 ## youtube.videos.search
 
-Find YouTube videos by search terms, by relevance or by views, within a time window: title, channel, views, length. About 20 items a call, 100 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Find YouTube videos by search terms, by relevance or by views, within a time window: title, channel, views, length. About 20 items a call, 100 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: YouTube video search API
 - Request: `GET /v1/youtube/videos/search`
@@ -71,16 +71,16 @@ Find YouTube videos by search terms, by relevance or by views, within a time win
 
 ## youtube.videos.transcript.get
 
-Get the transcript of a YouTube video by ID or link: the whole text and timed segments. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get the transcript of a YouTube video by ID or link: the whole text and timed segments. lang chooses the language of the captions. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: YouTube video transcript API
 - Request: `GET /v1/youtube/videos/transcript/get`
-- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Parameters: `id`, `url`, `lang`, `view`, `fields`; give exactly one of id, url
 - Whole contract: https://dataxapi.com/apis/youtube/videos/transcript/get.md
 
 ## youtube.channels.posts.list
 
-Get a page of the posts on a YouTube channel's Posts tab (once Community) by channel ID or handle, newest first: text, pictures, likes, the video a post carries. About 10 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the posts on a YouTube channel's Posts tab (once Community) by channel ID or handle, newest first: text, pictures, likes, the video a post carries. About 10 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: YouTube channel posts API
 - Request: `GET /v1/youtube/channels/posts/list`

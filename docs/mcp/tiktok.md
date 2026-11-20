@@ -2,6 +2,8 @@
 
 Ask your AI about TikTok and it answers with live data: 18 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 18 (on TikTok, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -22,7 +24,7 @@ Ask about TikTok:
 
 ## What to ask about TikTok, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -31,19 +33,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Which TikTok Shop products come up for “portable blender”? | [TikTok Shop product search](https://dataxapi.com/apis/tiktok/shop/products/search/) `tiktok.shop.products.search` | $0.0020 |
 | Get the transcript of this TikTok video. | [TikTok video transcript](https://dataxapi.com/apis/tiktok/videos/transcript/get/) `tiktok.videos.transcript.get` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about TikTok: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about TikTok: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > Find TikTok videos about camping coffee.
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "Find TikTok videos about camping coffee.", platform: "tiktok" })` | Found tiktok.videos.search · $0.0020 a call | Free |
-| `describe({ ids: ["tiktok.videos.search"] })` | Takes query, sort, published_within · up to 30 a page | Free |
 | `call({ capability: "tiktok.videos.search", query: "space station", max_price: "0.002" })` | Up to 30 post objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 30 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 30 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The TikTok skill package
 
@@ -106,4 +107,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/tiktok/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/tiktok/)

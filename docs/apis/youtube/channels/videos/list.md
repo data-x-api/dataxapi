@@ -1,6 +1,6 @@
 # YouTube channel videos API
 
-Get a page of a YouTube channel's videos or Shorts by channel ID or handle, newest or most viewed first: title, description, time published, views, likes, length. About 30 items a call, 60 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of a YouTube channel's videos or Shorts by channel ID or handle, newest or most viewed first: title, description, time published, views, likes, length. About 30 items a call, 60 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/youtube/channels/videos/list`
 - ID: `youtube.channels.videos.list`
@@ -59,7 +59,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `author.followers` | integer | Author's follower count. | `standard` | Not provided here |
 | `metrics` | object | Engagement counts. | `compact` | Yes |
 | `metrics.likes` | integer | Likes. | `compact` | Yes |
-| `metrics.comments` | integer | Comments. | `compact` | Yes |
+| `metrics.comments` | integer | Comments. | `compact` | Depends on the request |
 | `metrics.shares` | integer | Shares. | `compact` | The platform has none |
 | `metrics.favorites` | integer | Saves. | `compact` | The platform has none |
 | `metrics.views` | integer | Views. | `compact` | Yes |
@@ -81,15 +81,23 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
+With `id`, `type=video`, `sort=latest`: `metrics.comments` not returned.
+
+With `id`, `type=video`, `sort=popular`: `metrics.comments` not returned.
+
 With `id`, `type=short`, `sort=latest`: `author` not returned.
 
 With `id`, `type=short`, `sort=popular`: `author` not returned.
+
+With `username`, `type=video`, `sort=latest`: `metrics.comments` not returned.
+
+With `username`, `type=video`, `sort=popular`: `metrics.comments` not returned.
 
 With `username`, `type=short`, `sort=latest`: `author` not returned.
 
 With `username`, `type=short`, `sort=popular`: `author` not returned.
 
-Typical size of one item: `compact` 817 B, `standard` 1.2 KB, `full` 1.3 KB (measured on the response recorded 2026-10-12 18:50 UTC).
+Typical size of one item: `compact` 801 B, `standard` 1.2 KB, `full` 1.2 KB (measured on the response recorded 2026-10-12 18:50 UTC).
 
 ## Paging
 
@@ -111,15 +119,14 @@ With `username`, `type=short`, `sort=popular`: one page, no cursor.
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-A channel that does not exist cannot be told from a channel without such videos: both return an empty result, not a 404, and are charged as an empty result is.
+A channel that does not exist cannot be told from a channel without such videos: both return an empty result, not a 404.
 
 ## Errors
 
@@ -149,11 +156,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -175,6 +180,7 @@ curl -G "https://api.dataxapi.com/v1/youtube/channels/videos/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -185,6 +191,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -222,7 +229,7 @@ Add this to your MCP client, then ask your agent to call `youtube.channels.video
 
 From a response recorded 2026-10-12 18:50 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 37.8 KB in the standard view (25.8 KB compact, 38.5 KB full).
+Size as sent: 37.4 KB in the standard view (25.3 KB compact, 38.0 KB full).
 
 ```jsonc
 {
@@ -243,7 +250,7 @@ Size as sent: 37.8 KB in the standard view (25.8 KB compact, 38.5 KB full).
           "name": "Northside Coffee",
           "avatar_url": "https://yt3.ggpht.com/lmBPyJ5eGQv9SllCFPKldu6xvY_ZW_0U4qZ5q-Zj=s88-c-k-c0x00ffffff-no-rj"
         },
-        "metrics": { "likes": 1229, "comments": null, "views": 101185 },
+        "metrics": { "likes": 1229, "views": 101185 },
         "images": ["https://i.ytimg.com/vi/Y5mDpDnE9Um/hqdefault.jpg"]
       },
       // … 29 more
@@ -274,7 +281,8 @@ Size as sent: 37.8 KB in the standard view (25.8 KB compact, 38.5 KB full).
       "is_pinned": "platform",
       "post_id": "platform",
       "parent_id": "platform",
-      "root_id": "platform"
+      "root_id": "platform",
+      "metrics.comments": "capability"
     },
     "billing": {
       "amount": "0.002",
@@ -289,7 +297,7 @@ Size as sent: 37.8 KB in the standard view (25.8 KB compact, 38.5 KB full).
 
 From a response recorded 2026-10-12 18:50 UTC. The request ID and balance are made up.
 
-Size as sent: 717 B in the standard view (717 B compact, 717 B full).
+Size as sent: 749 B in the standard view (749 B compact, 749 B full).
 
 ```jsonc
 {
@@ -321,7 +329,8 @@ Size as sent: 717 B in the standard view (717 B compact, 717 B full).
       "is_pinned": "platform",
       "post_id": "platform",
       "parent_id": "platform",
-      "root_id": "platform"
+      "root_id": "platform",
+      "metrics.comments": "capability"
     },
     "billing": {
       "amount": "0.002",
@@ -367,6 +376,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -379,8 +391,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "d46700fb-ea03-4481-b0dd-3523826ce33b",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -388,6 +400,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 16k tokens as the platform's own JSON, 13k as DataXAPI's JSON, and 6,784 as an AI reads it through DataXAPI's MCP server: 58% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/youtube/channels/videos/list.example.json)
 
@@ -407,9 +421,7 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-The same thing on other platforms: [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/), [Threads user posts](https://dataxapi.com/apis/threads/users/posts/list/), [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [X user posts](https://dataxapi.com/apis/x/users/posts/list/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/), [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [Reddit user posts](https://dataxapi.com/apis/reddit/users/posts/list/), [Zhihu user answers](https://dataxapi.com/apis/zhihu/users/answers/list/), [Zhihu user articles](https://dataxapi.com/apis/zhihu/users/articles/list/), [Zhihu user pins](https://dataxapi.com/apis/zhihu/users/pins/list/)
-
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/)
+The same thing on other platforms: [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/), [Threads user posts](https://dataxapi.com/apis/threads/users/posts/list/), [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [X user posts](https://dataxapi.com/apis/x/users/posts/list/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/), [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list/), [Reddit user posts](https://dataxapi.com/apis/reddit/users/posts/list/), [Zhihu user answers](https://dataxapi.com/apis/zhihu/users/answers/list/), [Zhihu user articles](https://dataxapi.com/apis/zhihu/users/articles/list/), [Zhihu user pins](https://dataxapi.com/apis/zhihu/users/pins/list/), [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list/), [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list/)
 
 YouTube endpoints: [YouTube channel profile](https://dataxapi.com/apis/youtube/channels/get/), [YouTube channel search](https://dataxapi.com/apis/youtube/channels/search/), [YouTube channel videos](https://dataxapi.com/apis/youtube/channels/videos/list/), [YouTube comment replies](https://dataxapi.com/apis/youtube/comments/replies/list/), [YouTube video comments](https://dataxapi.com/apis/youtube/videos/comments/list/), [YouTube video detail](https://dataxapi.com/apis/youtube/videos/get/), [YouTube video search](https://dataxapi.com/apis/youtube/videos/search/), [YouTube video transcript](https://dataxapi.com/apis/youtube/videos/transcript/get/), [YouTube channel posts](https://dataxapi.com/apis/youtube/channels/posts/list/), [YouTube post detail](https://dataxapi.com/apis/youtube/posts/get/)
 
@@ -427,7 +439,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -435,8 +447,8 @@ About 30 items a page, 60 at most. The page size is the platform's; limit is not
 
 ### What happens if the object does not exist?
 
-A channel that does not exist cannot be told from a channel without such videos: both return an empty result, not a 404, and are charged as an empty result is.
+A channel that does not exist cannot be told from a channel without such videos: both return an empty result, not a 404.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/youtube/channels/videos/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/youtube/channels/videos/list/)

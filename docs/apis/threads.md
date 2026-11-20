@@ -4,7 +4,7 @@
 
 > 4 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## threads.posts.get
 
@@ -17,7 +17,7 @@ Get one Threads post by its code or link: text, author, time, likes, replies, re
 
 ## threads.posts.search
 
-Find Threads posts by search terms: text, author, time, likes, replies, reposts; can be limited by publication date. One page of results. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Find Threads posts by search terms: text, author, time, likes, replies, reposts; can be limited by publication date. One page of results. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Threads post search API
 - Request: `GET /v1/threads/posts/search`
@@ -35,7 +35,7 @@ Get a Threads user's profile by handle: name, bio, follower count, verification,
 
 ## threads.users.posts.list
 
-Get a Threads user's latest posts by handle: text, time, likes, replies, reposts, images. The most recent page only; there is no older page. About 15 items a call, 30 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a Threads user's latest posts by handle: text, time, likes, replies, reposts, images. The most recent page only; there is no older page. About 15 items a call, 30 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Threads user posts API
 - Request: `GET /v1/threads/users/posts/list`

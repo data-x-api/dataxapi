@@ -1,0 +1,362 @@
+# WeChat Channels account search API
+
+Find WeChat Channels accounts by name: the name has to match exactly, and every account of that name is returned, with its ID, name, signature, avatar, whether it is verified and what the verification says. The ID can be passed to the Channels profile, video list, live replay and other endpoints. About 1 item a call, 20 at most; $0.0600 per call. Errors and timeouts are not charged.
+
+- Endpoint: `GET https://api.dataxapi.com/v1/wechat_channels/users/search`
+- ID: `wechat_channels.users.search`
+- Also known as: search wechat channels accounts, find a wechat channels account by name, wechat channels user search, channels account id lookup
+- Price: $0.0600 / call
+- Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
+- Returns: up to 20 a page, everything in one answer, no paging
+- Returns the standard account object, the same on every platform
+- [Run it in the Playground](https://dataxapi.com/console/playground/?capability=wechat_channels.users.search&params=%7B%22query%22%3A%22%E5%A4%AE%E8%A7%86%E6%96%B0%E9%97%BB%22%7D)
+- In Chinese: [微信视频号账号搜索 API](https://dataxapi.com/zh/apis/wechat_channels/users/search/)
+
+## What you get
+
+The first row of a response recorded 2026-10-29 10:19 UTC.
+
+| Field | Value |
+| --- | --- |
+| verified | false |
+
+## Parameters
+
+| Parameter | Type | required | Description |
+| --- | --- | --- | --- |
+| `query` | text | Yes | The Channels account's name, exactly. Example: `央视新闻`. |
+| `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
+| `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
+
+## Returned fields
+
+`data.items` is a list of account objects. Stable: fields are only ever added.
+
+Three views: `compact` (the most used fields, long text cut short), `standard` (the default: every standard field) and `full` (adds `ext`, the platform's own fields). A field is in the view named and in every larger one.
+
+| Field | Type | Description | From view | This endpoint |
+| --- | --- | --- | --- | --- |
+| `id` | text | ID. | `compact` | Yes |
+| `username` | text | Handle. | `compact` | The platform has none |
+| `name` | text | Display name. | `compact` | Yes |
+| `url` | link | Link to the profile. | `compact` | The platform has none |
+| `bio` | text | Bio. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `compact` | Yes |
+| `avatar_url` | link | Avatar. | `standard` | Yes |
+| `verified` | yes/no | Whether the account is verified. | `standard` | Yes |
+| `created_at` | time | When the account was created. | `standard` | Not provided here |
+| `metrics` | object | Account counts. | `compact` | Not provided here |
+| `metrics.followers` | integer | Followers. | `compact` | Not provided here |
+| `metrics.following` | integer | Following. | `compact` | Not provided here |
+| `metrics.posts` | integer | Posts published. | `compact` | Not provided here |
+| `ext.verification` | text | What the verification says, in the platform's words: the owner's name for a company or body, a role or profession for a person; null when not verified. | `full` | Yes |
+| `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
+| `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
+| `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
+
+A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
+
+Typical size of one item: `compact` 131 B, `standard` 253 B, `full` 281 B (measured on the response recorded 2026-10-29 10:19 UTC).
+
+## Paging
+
+About 1 item a page, 20 at most. The page size is the platform's; `limit` is not accepted.
+
+Everything comes in one page; no cursor is issued.
+
+## When you are charged
+
+| Case | Charged |
+| --- | --- |
+| A result with data | $0.0600, once per call |
+| Invalid parameters, a failure or a timeout | not charged |
+| The most one call can cost | $0.0600 (send `X-Max-Price` to refuse anything above your own limit) |
+
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
+
+## Errors
+
+Every error has the same structure: `code`, `message`, `charged`, `retry`, `retry_after_seconds`, `param`, `docs_url`.
+
+| HTTP | Code | Meaning | Charged | Retry |
+| --- | --- | --- | --- | --- |
+| 400 | `invalid_params` | A parameter is invalid | No | After a fix |
+| 400 | `request_not_served` | This combination of parameters cannot be served at present | No | After a fix |
+| 400 | `max_price_exceeded` | The most this call could cost is above the limit you set | No | After a fix |
+| 401 | `unauthorized` | No credential was sent, or it is invalid, disabled or expired | No | No |
+| 402 | `insufficient_balance` | The balance is too low | No | After a fix |
+| 402 | `key_budget_exceeded` | This key's spending limit does not cover the call | No | After a fix |
+| 402 | `run_budget_exceeded` | This run's amount or call limit does not cover the call | No | No |
+| 403 | `account_suspended` | The account is suspended | No | No |
+| 403 | `forbidden` | This credential may not use that option | No | No |
+| 403 | `key_scope_denied` | This key may not call this endpoint | No | No |
+| 404 | `run_not_found` | No run under this run ID | No | No |
+| 409 | `call_in_progress` | The call under this idempotency key is still running; ask again with the same key shortly | No | With the same idempotency key |
+| 409 | `idempotency_conflict` | This idempotency key was used for a different request | No | After a fix |
+| 410 | `run_expired` | This run has expired and starts no more calls | No | No |
+| 429 | `rate_limited` | Too many requests, or too many calls in progress | No | Yes |
+| 429 | `cost_cap_exceeded` | This account's allowance for today is used up | No | Yes |
+| 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
+| 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
+| 500 | `internal_error` | The service failed | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
+| 503 | `capability_paused` | This endpoint is paused | No | Yes |
+| 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
+| 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
+
+[All error codes](https://dataxapi.com/docs/errors/)
+
+## Request
+
+The key is read from the environment; no key is ever written into a page.
+
+### cURL
+
+```bash
+curl -G "https://api.dataxapi.com/v1/wechat_channels/users/search" \
+  --data-urlencode "query=央视新闻" \
+  -H "Authorization: Bearer $DATAXAPI_API_KEY"
+```
+
+### Python
+
+```python
+# pip install dataxapi
+from dataxapi import DataXAPI
+
+dx = DataXAPI()  # reads DATAXAPI_API_KEY
+result = dx.wechat_channels.users.search(query="央视新闻")
+print(result["data"]["items"])
+```
+
+### TypeScript
+
+```typescript
+// npm i @dataxapi/sdk
+import { DataXAPI } from "@dataxapi/sdk";
+
+const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
+const result = await dx.wechat_channels.users.search({ query: "央视新闻" });
+console.log(result.data.items);
+```
+
+### CLI
+
+```bash
+dataxapi call wechat_channels.users.search 'query=央视新闻'
+```
+
+### MCP
+
+```json
+{
+  "mcpServers": {
+    "dataxapi": {
+      "type": "http",
+      "url": "https://api.dataxapi.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${DATAXAPI_API_KEY}"
+      }
+    }
+  }
+}
+```
+
+Add this to your MCP client, then ask your agent to call `wechat_channels.users.search`.
+
+## Responses
+
+### 200
+
+From a response recorded 2026-10-29 10:19 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+
+Size as sent: 1.0 KB in the standard view (760 B compact, 1.0 KB full).
+
+```jsonc
+{
+  "code": "ok",
+  "request_id": "9b4ae98e-ff1c-4be2-a081-de7a4c417320",
+  "data": {
+    "items": [
+      {
+        "id": "v2_060000231003b20f05a99829d60f183968442cbbd75213164b2ee52fc0a0ade5678bd240c0@finder",
+        "name": "山野咖啡馆",
+        "bio": "记录生活里的小确幸｜合作请私信",
+        "avatar_url": "https://wx.qlogo.cn/mmhead/sYXnQFwJZb0xiPhE5pI7TE9SVTvf0TcvVbc0dzgM/132",
+        "verified": false
+      },
+      // … 1 more
+    ]
+  },
+  "page": {
+    "next_cursor": null,
+    "cursor_expires_at": null,
+    "has_more": false,
+    "returned": 2
+  },
+  "warnings": [],
+  "meta": {
+    "capability": "wechat_channels.users.search",
+    "result_status": "complete",
+    "fetched_at": "2026-10-29T10:19:50.000Z",
+    "cached": false,
+    "replayed": false,
+    "unavailable": {
+      "username": "platform",
+      "url": "platform",
+      "created_at": "capability",
+      "metrics": "capability"
+    },
+    "billing": {
+      "amount": "0.06",
+      "currency": "USD",
+      "balance_after": "9.94"
+    }
+  }
+}
+```
+
+### Empty
+
+From a response recorded 2026-10-29 09:50 UTC. The request ID and balance are made up.
+
+Size as sent: 498 B in the standard view (498 B compact, 498 B full).
+
+```jsonc
+{
+  "code": "ok",
+  "request_id": "ed373f65-f881-4538-8c0d-835d00321267",
+  "data": { "items": [] },
+  "page": {
+    "next_cursor": null,
+    "cursor_expires_at": null,
+    "has_more": false,
+    "returned": 0
+  },
+  "warnings": [],
+  "meta": {
+    "capability": "wechat_channels.users.search",
+    "result_status": "empty",
+    "fetched_at": "2026-10-29T09:50:40.000Z",
+    "cached": false,
+    "replayed": false,
+    "unavailable": {
+      "username": "platform",
+      "url": "platform",
+      "created_at": "capability",
+      "metrics": "capability"
+    },
+    "billing": { "amount": "0", "currency": "USD", "balance_after": "10" }
+  }
+}
+```
+
+### 400
+
+An example written to the specification, not a recorded response.
+
+```json
+{
+  "code": "invalid_params",
+  "request_id": "7699238c-700a-463b-bffd-8c060e082c13",
+  "message": "A parameter is invalid",
+  "message_zh": "参数不合法",
+  "charged": false,
+  "retry": "after_fix",
+  "retry_after_seconds": null,
+  "param": null,
+  "problems": ["query is required"],
+  "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
+}
+```
+
+### 402
+
+An example written to the specification, not a recorded response.
+
+```json
+{
+  "code": "insufficient_balance",
+  "request_id": "a04b8a29-e128-4698-bef6-af6019fb7bc6",
+  "message": "The balance is too low",
+  "message_zh": "余额不足",
+  "charged": false,
+  "retry": "after_fix",
+  "retry_after_seconds": null,
+  "param": null,
+  "required": "0.06",
+  "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
+  "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
+}
+```
+
+### 502
+
+An example written to the specification, not a recorded response.
+
+```json
+{
+  "code": "upstream_failed",
+  "request_id": "e0590fff-b421-4f38-9d62-c97c6e8d4393",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
+  "charged": false,
+  "retry": "yes",
+  "retry_after_seconds": null,
+  "param": null,
+  "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
+}
+```
+
+This recorded response is 593 tokens as the platform's own JSON, 387 as DataXAPI's JSON, and 191 as an AI reads it through DataXAPI's MCP server: 68% fewer (counted 2026-11-06).
+
+[This example as a JSON file](https://dataxapi.com/apis/wechat_channels/users/search.example.json)
+
+## Use it in your AI
+
+`dataxapi setup` gives the agents on your machine (Claude Code, Codex, Cursor) the DataXAPI MCP server and the base skill. The key is read from DATAXAPI_API_KEY; none is written into a file.
+
+MCP server: `https://api.dataxapi.com/mcp`. The entry for your client is under MCP in the request examples of this page; then ask your agent to call `wechat_channels.users.search`.
+
+Or paste this to any AI:
+
+> Read https://dataxapi.com/apis/wechat_channels/users/search.md and help me use the DataXAPI endpoint wechat_channels.users.search (WeChat Channels account search).
+
+[Open in ChatGPT](https://chatgpt.com/?q=Read%20https%3A%2F%2Fdataxapi.com%2Fapis%2Fwechat_channels%2Fusers%2Fsearch.md%20and%20help%20me%20use%20the%20DataXAPI%20endpoint%20wechat_channels.users.search%20%28WeChat%20Channels%20account%20search%29.) · [Open in Claude](https://claude.ai/new?q=Read%20https%3A%2F%2Fdataxapi.com%2Fapis%2Fwechat_channels%2Fusers%2Fsearch.md%20and%20help%20me%20use%20the%20DataXAPI%20endpoint%20wechat_channels.users.search%20%28WeChat%20Channels%20account%20search%29.)
+
+## Related
+
+Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
+
+The same thing on other platforms: [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Kuaishou user search](https://dataxapi.com/apis/kuaishou/users/search/), [Instagram user search](https://dataxapi.com/apis/instagram/users/search/), [TikTok user search](https://dataxapi.com/apis/tiktok/users/search/), [Weibo user search](https://dataxapi.com/apis/weibo/users/search/), [X user search](https://dataxapi.com/apis/x/users/search/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [YouTube channel search](https://dataxapi.com/apis/youtube/channels/search/), [WeChat Official Account live search](https://dataxapi.com/apis/wechat/accounts/search/), [WeChat Official Account name search](https://dataxapi.com/apis/wechat_mp/accounts/search/), [Zhihu user search](https://dataxapi.com/apis/zhihu/users/search/)
+
+More Social media data on other platforms: [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Kuaishou user profile](https://dataxapi.com/apis/kuaishou/users/get/), [Telegram channel profile](https://dataxapi.com/apis/telegram/channels/get/), [Facebook page profile](https://dataxapi.com/apis/facebook/pages/get/)
+
+WeChat Channels endpoints: [WeChat Channels account profile](https://dataxapi.com/apis/wechat_channels/users/get/), [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get/), [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list/), [WeChat Channels video share link](https://dataxapi.com/apis/wechat_channels/videos/share_link/get/), [WeChat Channels account collections](https://dataxapi.com/apis/wechat_channels/users/collections/list/), [WeChat Channels collection videos](https://dataxapi.com/apis/wechat_channels/collections/videos/list/), [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/), [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search/), [WeChat Channels account profile (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/get/), [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list/), [WeChat Channels video search (backup)](https://dataxapi.com/apis/wechat_channels/backup/videos/search/), [WeChat Channels account search](https://dataxapi.com/apis/wechat_channels/users/search/), [WeChat Channels video stats](https://dataxapi.com/apis/wechat_channels/videos/metrics/), [WeChat Channels comment replies](https://dataxapi.com/apis/wechat_channels/comments/replies/list/), [WeChat Channels live replays](https://dataxapi.com/apis/wechat_channels/users/live_replays/list/)
+
+How-to guides and answers: [WeChat Channels API in Python: account videos and comments (2026)](https://dataxapi.com/guides/wechat-channels-api-python/), [What WeChat data APIs are there? Official Accounts, Channels and WeChat Search (2026)](https://dataxapi.com/answers/wechat-data-apis/), [How do I export all of a WeChat Channels account's videos? (2026)](https://dataxapi.com/answers/export-wechat-channels-account-videos/), [How do I export WeChat Channels data? (2026)](https://dataxapi.com/answers/export-wechat-channels-data/), [Can WeChat Channels comments be exported? (2026)](https://dataxapi.com/answers/export-wechat-channels-comments/), [Which WeChat Channels account is linked to an Official Account? Watching both together (2026)](https://dataxapi.com/answers/wechat-official-account-linked-channels/), [How do I collect WeChat Channels data? The Channels assistant, WeChat Search and data APIs (2026)](https://dataxapi.com/answers/how-to-collect-wechat-channels-data/)
+
+Skills that use this endpoint: [Finding accounts and creators](https://dataxapi.com/skills/creators/)
+
+Related: [All WeChat Channels endpoints](https://dataxapi.com/apis/wechat_channels/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 12 platforms, side by side](https://dataxapi.com/roles/accounts-search/), [The account object's fields](https://dataxapi.com/docs/objects/account/)
+
+## Questions
+
+### How much does the WeChat Channels account search API cost?
+
+$0.0600 per call. The most one call can cost is $0.0600.
+
+### When am I not charged?
+
+Errors and timeouts are not charged.
+
+### How many items does one call return, and how do I get the next page?
+
+About 1 item a page, 20 at most. The page size is the platform's; limit is not accepted. Everything comes in one page; no cursor is issued.
+
+---
+
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/wechat_channels/users/search/)

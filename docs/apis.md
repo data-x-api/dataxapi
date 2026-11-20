@@ -1,10 +1,17 @@
 # Data API catalog
 
-Posts, comments, accounts, trends, creator rate cards and ad libraries: 207 endpoints on 21 platforms, one key, one response shape. From $0.0003 a call, each endpoint at its own price, and a failed call is free.
+Posts, comments, accounts, trends, creator rate cards and ad libraries: 237 endpoints on 21 platforms, one key, one response shape. From $0.0003 a call, each endpoint at its own price, and a failed call is free.
 
 ## [Douyin API](https://dataxapi.com/apis/douyin.md)
 
-34 endpoints · from $0.0020
+38 endpoints · from $0.0020
+
+### Backup versions (2)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search.md) | `GET /v1/douyin/backup/videos/search` | Post list | $0.0300 / call |
+| [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list.md) | `GET /v1/douyin/backup/users/videos/list` | Post list | $0.0300 / call |
 
 ### Videos (6)
 
@@ -44,6 +51,12 @@ Posts, comments, accounts, trends, creator rate cards and ad libraries: 207 endp
 | --- | --- | --- | --- |
 | [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list.md) | `GET /v1/douyin/trends/list` | Trend list | $0.0020 / call |
 
+### Keywords (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related.md) | `GET /v1/douyin/keywords/related` | Related keyword list | $0.0200 / call |
+
 ### [trend-index](https://dataxapi.com/apis/douyin/index.md) (10)
 
 Douyin's official index tool (巨量算数, Juliang Suanshu): day-by-day keyword and brand indexes, who searches a keyword, related keywords, live hot topics and creator figures.
@@ -61,7 +74,7 @@ Douyin's official index tool (巨量算数, Juliang Suanshu): day-by-day keyword
 | [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related.md) | `GET /v1/douyin/index/keywords/related` | Related keyword list | $0.0020 / call |
 | [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list.md) | `GET /v1/douyin/index/trends/list` | Trend list | $0.0020 / call |
 
-### [Xingtu](https://dataxapi.com/apis/douyin/xingtu.md) (11)
+### [Xingtu](https://dataxapi.com/apis/douyin/xingtu.md) (12)
 
 Douyin's official creator marketplace (星图): creator search, rate cards, audience profiles, reach and conversion figures.
 
@@ -75,13 +88,20 @@ Douyin's official creator marketplace (星图): creator search, rate cards, audi
 | [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get.md) | `GET /v1/douyin/xingtu/creators/keywords/get` | Xingtu creator content keywords | $0.0020 / call |
 | [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get.md) | `GET /v1/douyin/xingtu/creators/rates/get` | Creator rates | $0.0400 / call |
 | [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get.md) | `GET /v1/douyin/xingtu/creators/scores/get` | Xingtu creator scores | $0.0080 / call |
+| [Douyin Xingtu video report: plays and completion rate](https://dataxapi.com/apis/douyin/xingtu/videos/get.md) | `GET /v1/douyin/xingtu/videos/get` | Post | $0.0040 / call |
 | [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list.md) | `GET /v1/douyin/xingtu/campaigns/list` | Xingtu campaign list | $0.0040 / call |
 | [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics.md) | `GET /v1/douyin/xingtu/creators/metrics` | Xingtu creator metrics | $0.0040 / call |
 | [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list.md) | `GET /v1/douyin/xingtu/creators/videos/list` | Xingtu creator video list | $0.0040 / call |
 
 ## [Bilibili API](https://dataxapi.com/apis/bilibili.md)
 
-8 endpoints · from $0.0020
+9 endpoints · from $0.0020
+
+### Backup versions (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list.md) | `GET /v1/bilibili/backup/users/videos/list` | Post list | $0.0300 / call |
 
 ### Videos (4)
 
@@ -412,7 +432,13 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 
 ## [Weibo API](https://dataxapi.com/apis/weibo.md)
 
-10 endpoints · from $0.0020
+11 endpoints · from $0.0020
+
+### Backup versions (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list.md) | `GET /v1/weibo/backup/trends/list` | Trend list | $0.0300 / call |
 
 ### Posts (4)
 
@@ -446,7 +472,13 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 
 ## [Xiaohongshu (RedNote) API](https://dataxapi.com/apis/xiaohongshu.md)
 
-21 endpoints · from $0.0200
+30 endpoints · from $0.0200
+
+### Videos (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get.md) | `GET /v1/xiaohongshu/videos/get` | Post | $0.0200 / call |
 
 ### Notes (3)
 
@@ -489,7 +521,13 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 | --- | --- | --- | --- |
 | [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list.md) | `GET /v1/xiaohongshu/trends/list` | Trend list | $0.0200 / call |
 
-### [PGY](https://dataxapi.com/apis/xiaohongshu/pgy.md) (7)
+### Keywords (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related.md) | `GET /v1/xiaohongshu/keywords/related` | Related keyword list | $0.0200 / call |
+
+### [PGY](https://dataxapi.com/apis/xiaohongshu/pgy.md) (14)
 
 Xiaohongshu's official creator marketplace (蒲公英, PGY): creator search, rate cards, audience profiles and performance figures, plus keyword search indexes.
 
@@ -498,10 +536,17 @@ Xiaohongshu's official creator marketplace (蒲公英, PGY): creator search, rat
 | [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search.md) | `GET /v1/xiaohongshu/pgy/creators/search` | Creator list | $0.0400 / call |
 | [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get.md) | `GET /v1/xiaohongshu/pgy/creators/audience/get` | Audience | $0.0400 / call |
 | [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get.md) | `GET /v1/xiaohongshu/pgy/creators/get` | Creator | $0.0400 / call |
+| [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get.md) | `GET /v1/xiaohongshu/pgy/notes/get` | PGY note detail | $0.0400 / call |
+| [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history.md) | `GET /v1/xiaohongshu/pgy/creators/costs/history` | PGY creator core figures history | $0.0400 / call |
+| [Xiaohongshu PGY creator costs and data summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/metrics.md) | `GET /v1/xiaohongshu/pgy/creators/costs/metrics` | PGY creator costs and summary | $0.0400 / call |
+| [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history.md) | `GET /v1/xiaohongshu/pgy/creators/followers/history` | Follower history | $0.0400 / call |
+| [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics.md) | `GET /v1/xiaohongshu/pgy/creators/followers/metrics` | PGY creator follower summary | $0.0400 / call |
 | [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics.md) | `GET /v1/xiaohongshu/pgy/creators/metrics` | PGY creator metrics | $0.0400 / call |
 | [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list.md) | `GET /v1/xiaohongshu/pgy/creators/notes/list` | PGY creator note list | $0.0400 / call |
+| [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related.md) | `GET /v1/xiaohongshu/pgy/creators/related` | Creator list | $0.0400 / call |
 | [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history.md) | `GET /v1/xiaohongshu/pgy/keywords/history` | Keyword index history | $0.0400 / call |
 | [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related.md) | `GET /v1/xiaohongshu/pgy/keywords/related` | Related keyword list | $0.0400 / call |
+| [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending.md) | `GET /v1/xiaohongshu/pgy/notes/trending` | Post list | $0.0400 / call |
 
 ### [Xiaohongshu Shop](https://dataxapi.com/apis/xiaohongshu/shop.md) (3)
 
@@ -549,22 +594,34 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 
 ## [WeChat Channels API](https://dataxapi.com/apis/wechat_channels.md)
 
-7 endpoints · from $0.0200
+15 endpoints · from $0.0150
 
-### Videos (3)
+### Backup versions (3)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Channels video search (backup)](https://dataxapi.com/apis/wechat_channels/backup/videos/search.md) | `GET /v1/wechat_channels/backup/videos/search` | Post list | $0.1 / call |
+| [WeChat Channels account profile (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/get.md) | `GET /v1/wechat_channels/backup/users/get` | Account | $0.0300 / call |
+| [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list.md) | `GET /v1/wechat_channels/backup/users/videos/list` | Post list | $0.0600 / call |
+
+### Videos (5)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search.md) | `GET /v1/wechat_channels/videos/search` | Post list | $0.0200 / call |
 | [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get.md) | `GET /v1/wechat_channels/videos/get` | Post | $0.0200 / call |
+| [WeChat Channels video share link](https://dataxapi.com/apis/wechat_channels/videos/share_link/get.md) | `GET /v1/wechat_channels/videos/share_link/get` | Channels share link | $0.0200 / call |
 | [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list.md) | `GET /v1/wechat_channels/videos/comments/list` | Comment list | $0.0200 / call |
+| [WeChat Channels video stats](https://dataxapi.com/apis/wechat_channels/videos/metrics.md) | `GET /v1/wechat_channels/videos/metrics` | Post | $0.0150 / call |
 
-### Users (3)
+### Users (5)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
+| [WeChat Channels account search](https://dataxapi.com/apis/wechat_channels/users/search.md) | `GET /v1/wechat_channels/users/search` | Account list | $0.0600 / call |
 | [WeChat Channels account profile](https://dataxapi.com/apis/wechat_channels/users/get.md) | `GET /v1/wechat_channels/users/get` | Account | $0.0200 / call |
 | [WeChat Channels account collections](https://dataxapi.com/apis/wechat_channels/users/collections/list.md) | `GET /v1/wechat_channels/users/collections/list` | Channels collection list | $0.0200 / call |
+| [WeChat Channels live replays](https://dataxapi.com/apis/wechat_channels/users/live_replays/list.md) | `GET /v1/wechat_channels/users/live_replays/list` | Post list | $0.0200 / call |
 | [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list.md) | `GET /v1/wechat_channels/users/videos/list` | Post list | $0.0200 / call |
 
 ### Collections (1)
@@ -573,9 +630,21 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 | --- | --- | --- | --- |
 | [WeChat Channels collection videos](https://dataxapi.com/apis/wechat_channels/collections/videos/list.md) | `GET /v1/wechat_channels/collections/videos/list` | Post list | $0.0200 / call |
 
+### Comments (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Channels comment replies](https://dataxapi.com/apis/wechat_channels/comments/replies/list.md) | `GET /v1/wechat_channels/comments/replies/list` | Comment list | $0.0150 / call |
+
 ## [WeChat Search API](https://dataxapi.com/apis/wechat.md)
 
-1 endpoint · from $0.0200
+6 endpoints · from $0.0200
+
+### Backup versions (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Search articles and videos (backup)](https://dataxapi.com/apis/wechat/backup/posts/search.md) | `GET /v1/wechat/backup/posts/search` | Post list | $0.1 / call |
 
 ### Posts (1)
 
@@ -583,9 +652,33 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 | --- | --- | --- | --- |
 | [WeChat Search articles and videos](https://dataxapi.com/apis/wechat/posts/search.md) | `GET /v1/wechat/posts/search` | Post list | $0.0200 / call |
 
+### Accounts (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Official Account live search](https://dataxapi.com/apis/wechat/accounts/search.md) | `GET /v1/wechat/accounts/search` | Account list | $0.0200 / call |
+
+### Keywords (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Search suggestions](https://dataxapi.com/apis/wechat/keywords/related.md) | `GET /v1/wechat/keywords/related` | Related keyword list | $0.1 / call |
+
+### Index (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Index](https://dataxapi.com/apis/wechat/index/keywords/history.md) | `GET /v1/wechat/index/keywords/history` | Keyword index history list | $0.1 / call |
+
+### Miniprograms (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat mini program search](https://dataxapi.com/apis/wechat/miniprograms/search.md) | `GET /v1/wechat/miniprograms/search` | Mini program list | $0.1 / call |
+
 ## [WeChat Official Accounts API](https://dataxapi.com/apis/wechat_mp.md)
 
-6 endpoints · from $0.0200
+8 endpoints · from $0.0200
 
 ### Articles (3)
 
@@ -595,11 +688,13 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 | [WeChat Official Account article comments](https://dataxapi.com/apis/wechat_mp/articles/comments/list.md) | `GET /v1/wechat_mp/articles/comments/list` | Comment list | $0.0200 / call |
 | [WeChat Official Account article stats](https://dataxapi.com/apis/wechat_mp/articles/metrics.md) | `GET /v1/wechat_mp/articles/metrics` | Post | $0.0200 / call |
 
-### Accounts (2)
+### Accounts (4)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
+| [WeChat Official Account name search](https://dataxapi.com/apis/wechat_mp/accounts/search.md) | `GET /v1/wechat_mp/accounts/search` | Account list | $0.05635 / item |
 | [WeChat Official Account profile](https://dataxapi.com/apis/wechat_mp/accounts/get.md) | `GET /v1/wechat_mp/accounts/get` | Account | $0.0200 / call |
+| [WeChat Official Account owner](https://dataxapi.com/apis/wechat_mp/accounts/owner/get.md) | `GET /v1/wechat_mp/accounts/owner/get` | Account owner | $0.1 / call |
 | [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list.md) | `GET /v1/wechat_mp/accounts/articles/list` | Post list | $0.0200 / call |
 
 ### Comments (1)
@@ -723,4 +818,4 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/)

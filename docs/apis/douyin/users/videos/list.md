@@ -1,6 +1,6 @@
 # Douyin user videos API
 
-Get a page of the videos a Douyin account has posted, newest first: caption, engagement counts, time posted. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the videos a Douyin account has posted, newest first: caption, engagement counts, time posted. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/douyin/users/videos/list`
 - ID: `douyin.users.videos.list`
@@ -9,30 +9,31 @@ Get a page of the videos a Douyin account has posted, newest first: caption, eng
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: 20 a page, a page, with a cursor for the next
 - Returns the standard post object, the same on every platform
-- `id` is in the link: `douyin.com/user/<id>`.
+- `id` is in the link: `douyin.com/user/<id>`. Or pass the whole link as `url`.
 - [Run it in the Playground](https://dataxapi.com/console/playground/?capability=douyin.users.videos.list&params=%7B%22id%22%3A%22MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8%22%7D)
 - In Chinese: [抖音用户视频 API](https://dataxapi.com/zh/apis/douyin/users/videos/list/)
 
 ## What you get
 
-The first 8 rows of a response recorded 2026-10-12 19:01 UTC.
+The first 8 rows of a response recorded 2026-10-29 11:25 UTC.
 
 | Field | Value |
 | --- | --- |
 | type | video |
 | lang | zh |
-| published_at | 2026-10-12 06:04 UTC |
-| metrics.likes | 2 |
-| metrics.comments | 0 |
-| metrics.shares | 0 |
-| metrics.favorites | 1 |
+| published_at | 2026-10-28 13:00 UTC |
+| metrics.likes | 9,137 |
+| metrics.comments | 822 |
+| metrics.shares | 2,501 |
+| metrics.favorites | 1,252 |
 | is_pinned | false |
 
 ## Parameters
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `id` | text | Yes | Account ID (the sec_uid, the string that starts with MS4w). Example: `MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8`. |
+| `id` | text | give exactly one of `id`, `url` | Account ID (the sec_uid, the string that starts with MS4w). With only a profile link or a share text, give it as url. Example: `MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8`. |
+| `url` | text | give exactly one of `id`, `url` | Link to the profile, pasted as it is: the https://www.douyin.com/user/… web link, the page a share opens on a phone, the v.douyin.com short link the app copies, or a whole share text with one of these in it. A short link is opened once to see which account it leads to. Example: `https://www.douyin.com/user/MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8`. Full link: `https://www.douyin.com/user/MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8`. Share text with a link inside: `长按复制此条消息，打开抖音搜索，查看TA的更多作品。 https://www.douyin.com/user/MS4wLjABAAAAZ0aPDJzFhBrs0q3wVsp2a9WWrBuAUMsVyygoaO0bCw8`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
@@ -76,13 +77,17 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `post_id` | text | ID of the thread's root post when this is a reply; otherwise null. | `compact` | The platform has none |
 | `parent_id` | text | ID of the item it replies to directly; otherwise null. | `compact` | The platform has none |
 | `root_id` | text | ID of the first-level reply its thread hangs under. | `compact` | The platform has none |
+| `ext.duration` | number | Length of the video, in seconds; an image post has none. | `full` | Yes |
+| `ext.cover_url` | link | Address of the cover image. | `full` | Yes |
+| `ext.video_url` | link | Address the video plays from: a signed address of the platform's that expires, so use it soon; an image post has none. | `full` | Yes |
+| `ext.categories` | list of text | What the platform files the post under, from the first level to the third, in its words (such as 美食 › 美食教程 › 饮品教程, food › food tutorials › drink tutorials); null where it filed it under none. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 496 B, `standard` 716 B, `full` 716 B (measured on the response recorded 2026-10-12 19:01 UTC).
+Typical size of one item: `compact` 593 B, `standard` 867 B, `full` 1.9 KB (measured on the response recorded 2026-10-29 11:25 UTC).
 
 ## Paging
 
@@ -96,19 +101,20 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-An account that does not exist cannot be told from an account without videos: both return an empty result, not a 404, and are charged as an empty result is.
+An account that does not exist cannot be told from an account without videos: both return an empty result, not a 404.
 
 ## Errors
 
 Every error has the same structure: `code`, `message`, `charged`, `retry`, `retry_after_seconds`, `param`, `docs_url`.
+
+When this endpoint cannot serve (it fails or times out, or it is paused), its backup version can be called instead: the same parameters and fields, $0.0300 per call; the error names it in `alternative`. Call it with a new idempotency key: [Douyin user videos (backup) API](https://dataxapi.com/apis/douyin/backup/users/videos/list/)
 
 | HTTP | Code | Meaning | Charged | Retry |
 | --- | --- | --- | --- | --- |
@@ -134,11 +140,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -160,6 +164,7 @@ curl -G "https://api.dataxapi.com/v1/douyin/users/videos/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -170,6 +175,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -205,9 +211,9 @@ Add this to your MCP client, then ask your agent to call `douyin.users.videos.li
 
 ### 200
 
-From a response recorded 2026-10-12 19:01 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+From a response recorded 2026-10-29 11:25 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 14.6 KB in the standard view (10.3 KB compact, 14.6 KB full).
+Size as sent: 17.6 KB in the standard view (12.2 KB compact, 38.5 KB full).
 
 ```jsonc
 {
@@ -219,10 +225,10 @@ Size as sent: 14.6 KB in the standard view (10.3 KB compact, 14.6 KB full).
         "id": "7302312618550095845",
         "url": "https://www.douyin.com/video/7302312618550095845",
         "type": "video",
-        "title": null,
+        "title": "关于周末露营，我踩过的五个坑",
         "text": "把周末露营从头到尾讲清楚，看完少走弯路",
         "lang": "zh",
-        "published_at": "2026-10-12T06:04:06.000Z",
+        "published_at": "2026-10-28T13:00:00.000Z",
         "author": {
           "id": "MS4wLjABAAAAISQZJVj44x7UmGOrbYT9MYgZqmQZXyVYh0J_KeP0bY6",
           "username": "orange_soda22",
@@ -230,13 +236,17 @@ Size as sent: 14.6 KB in the standard view (10.3 KB compact, 14.6 KB full).
           "avatar_url": "https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_edc4afa9b9ce65d8c81c.jpeg"
         },
         "metrics": {
-          "likes": 2,
-          "comments": 0,
-          "shares": 0,
-          "favorites": 1
+          "likes": 9137,
+          "comments": 822,
+          "shares": 2501,
+          "favorites": 1252
         },
         "images": null,
-        "hashtags": [],
+        "hashtags": [
+          "户外生活",
+          "好物分享",
+          // … 3 more
+        ],
         "is_pinned": false
       },
       // … 19 more
@@ -244,7 +254,7 @@ Size as sent: 14.6 KB in the standard view (10.3 KB compact, 14.6 KB full).
   },
   "page": {
     "next_cursor": "c1.WtpNZgnDx-u92cDS4sHsDBAjGm-hJOPNKEKmB3hJ",
-    "cursor_expires_at": "2026-10-12T20:01:25.000Z",
+    "cursor_expires_at": "2026-10-29T12:25:19.000Z",
     "has_more": true,
     "returned": 20
   },
@@ -252,7 +262,7 @@ Size as sent: 14.6 KB in the standard view (10.3 KB compact, 14.6 KB full).
   "meta": {
     "capability": "douyin.users.videos.list",
     "result_status": "complete",
-    "fetched_at": "2026-10-12T19:01:25.000Z",
+    "fetched_at": "2026-10-29T11:25:19.000Z",
     "cached": false,
     "replayed": false,
     "unavailable": {
@@ -331,7 +341,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["id is required"],
+  "problems": ["give exactly one of id, url"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -352,6 +362,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -364,8 +377,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "ad73caa2-79c7-4006-a585-a716a49622e1",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -373,6 +386,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 584k tokens as the platform's own JSON, 6,740 as DataXAPI's JSON, and 4,597 as an AI reads it through DataXAPI's MCP server: 99% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/douyin/users/videos/list.example.json)
 
@@ -392,15 +407,15 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-The same thing on other platforms: [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/), [Threads user posts](https://dataxapi.com/apis/threads/users/posts/list/), [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [X user posts](https://dataxapi.com/apis/x/users/posts/list/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [YouTube channel videos](https://dataxapi.com/apis/youtube/channels/videos/list/), [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/), [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [Reddit user posts](https://dataxapi.com/apis/reddit/users/posts/list/), [Zhihu user answers](https://dataxapi.com/apis/zhihu/users/answers/list/), [Zhihu user articles](https://dataxapi.com/apis/zhihu/users/articles/list/), [Zhihu user pins](https://dataxapi.com/apis/zhihu/users/pins/list/)
+The same thing on other platforms: [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/), [Telegram channel messages](https://dataxapi.com/apis/telegram/channels/messages/list/), [Facebook page posts](https://dataxapi.com/apis/facebook/pages/posts/list/), [LinkedIn company posts](https://dataxapi.com/apis/linkedin/companies/posts/list/), [Threads user posts](https://dataxapi.com/apis/threads/users/posts/list/), [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [X user posts](https://dataxapi.com/apis/x/users/posts/list/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [YouTube channel videos](https://dataxapi.com/apis/youtube/channels/videos/list/), [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list/), [WeChat Official Account articles](https://dataxapi.com/apis/wechat_mp/accounts/articles/list/), [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list/), [Reddit user posts](https://dataxapi.com/apis/reddit/users/posts/list/), [Zhihu user answers](https://dataxapi.com/apis/zhihu/users/answers/list/), [Zhihu user articles](https://dataxapi.com/apis/zhihu/users/articles/list/), [Zhihu user pins](https://dataxapi.com/apis/zhihu/users/pins/list/), [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list/), [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list/)
 
-Douyin endpoints: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin creator engagement and follower trends](https://dataxapi.com/apis/douyin/users/history/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending/)
+Douyin endpoints: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin creator engagement and follower trends](https://dataxapi.com/apis/douyin/users/history/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/), [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related/), [Douyin video search](https://dataxapi.com/apis/douyin/videos/search/), [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending/), [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related/), [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list/), [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search/)
 
 Douyin trend-index endpoints: [Douyin trend-index brand trends](https://dataxapi.com/apis/douyin/index/brands/history/), [Douyin trend-index brand comparison](https://dataxapi.com/apis/douyin/index/brands/metrics/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index creator follower profile](https://dataxapi.com/apis/douyin/index/creators/audience/get/), [Douyin trend-index creator core metrics](https://dataxapi.com/apis/douyin/index/creators/metrics/), [Douyin trend-index keyword audience](https://dataxapi.com/apis/douyin/index/keywords/audience/get/), [Douyin trend-index keyword trends](https://dataxapi.com/apis/douyin/index/keywords/history/), [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related/), [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/)
 
-Douyin Xingtu endpoints: [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/), [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search/), [Douyin Xingtu creator profile](https://dataxapi.com/apis/douyin/xingtu/creators/get/), [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/), [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics/), [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/), [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/), [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/), [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/), [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/), [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list/)
+Douyin Xingtu endpoints: [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/), [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search/), [Douyin Xingtu creator profile](https://dataxapi.com/apis/douyin/xingtu/creators/get/), [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/), [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics/), [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/), [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/), [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/), [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/), [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/), [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list/), [Douyin Xingtu video report: plays and completion rate](https://dataxapi.com/apis/douyin/xingtu/videos/get/)
 
-How-to guides and answers: [How do I export Douyin data?](https://dataxapi.com/answers/export-douyin-data/)
+How-to guides and answers: [How do I export Douyin data?](https://dataxapi.com/answers/export-douyin-data/), [What is sec_uid on Douyin, and how is it different from uid and the Douyin ID?](https://dataxapi.com/answers/douyin-sec-uid/), [How can my AI watch competitors each week without an annual plan? (2026)](https://dataxapi.com/answers/track-competitors-with-ai-pay-per-lookup/), [How do I add a Xiaohongshu or Douyin Skill to my AI? (2026)](https://dataxapi.com/answers/xiaohongshu-douyin-skill/), [How do I export all of a Douyin creator's video data? (2026)](https://dataxapi.com/answers/export-douyin-creator-videos/), [How do I export Douyin comments in bulk to find what users want? (2026)](https://dataxapi.com/answers/export-douyin-comments-user-needs/), [What are a_bogus and X-Bogus on Douyin? (2026)](https://dataxapi.com/answers/douyin-a-bogus-x-bogus/), [Which Douyin API should I use for search, accounts and comments? (2026)](https://dataxapi.com/answers/which-douyin-api-to-use/), [How do I use AI to audit and review an account? (2026)](https://dataxapi.com/answers/ai-account-audit-and-review/), [What are verifyFp and s_v_web_id on Douyin? (2026)](https://dataxapi.com/answers/douyin-verifyfp-s-v-web-id/), [Douyin API for developers: third-party Douyin data APIs and what they return (2026)](https://dataxapi.com/answers/douyin-third-party-data-apis/), [Douyin MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/douyin-mcp/), [Douyin, WeChat and Xiaohongshu data in Claude Code and Codex (2026)](https://dataxapi.com/answers/claude-code-codex-china-social-data/), [Douyin API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/douyin-api-for-ai-agents/), [Douyin video download URL: getting a video's play address by API (2026)](https://dataxapi.com/answers/douyin-video-play-url-api/), [How do I collect Douyin data? The creator center, the open platform, scrapers and data APIs (2026)](https://dataxapi.com/answers/how-to-collect-douyin-data/)
 
 Skills that use this endpoint: [Competitor account monitoring](https://dataxapi.com/skills/competitors/), [Account check-up](https://dataxapi.com/skills/account-audit/)
 
@@ -414,7 +429,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -422,8 +437,8 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ### What happens if the object does not exist?
 
-An account that does not exist cannot be told from an account without videos: both return an empty result, not a 404, and are charged as an empty result is.
+An account that does not exist cannot be told from an account without videos: both return an empty result, not a 404.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/douyin/users/videos/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/douyin/users/videos/list/)

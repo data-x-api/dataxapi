@@ -4,7 +4,7 @@ The Douyin trend-index creator metrics object has 17 fields and is returned by 1
 
 For machines: [index_creator_metrics schema](https://dataxapi.com/openapi.json#/components/schemas/index_creator_metrics), [openapi.json](https://dataxapi.com/openapi.json), [Object table (JSON)](https://api.dataxapi.com/v1/catalog/objects), [llms.txt](https://dataxapi.com/llms.txt)
 
-Douyin trend-index creator metrics is how much a Douyin account gained a day, on average, over the last week and the last month, as Douyin's trend-index (巨量算数) sums it up: new likes, followers, shares and comments. `change_7d` and `change_30d` set each against the period before, as a ratio.
+Douyin trend-index creator metrics is how much a Douyin account gained a day, on average, over the last week and the last month, as Douyin's trend-index (巨量算数) sums it up: new likes, shares and comments, and the tool's own count of follows, which is not the net gain in followers. `change_7d` and `change_30d` set each against the period before, as a ratio.
 
 `creator_id` is the account's numeric Douyin ID (uid): not a Xingtu creator ID and not the token the profile endpoint takes. The same uid reads the account's Audience and its top videos from the trend-index.
 
@@ -17,22 +17,22 @@ A field the platform cannot give is left out of the item and named in `meta.unav
 | `creator_id` | text | `compact` | The account's numeric ID (Douyin's uid): the one the request gave |
 | `average_7d` | object | `compact` | Daily averages over the last week |
 | `average_7d.likes` | number | `compact` | New likes a day, on average over the last week |
-| `average_7d.followers` | number | `compact` | New followers a day, on average over the last week |
+| `average_7d.follows` | number | `compact` | Follows a day, on average over the last week, as the platform counts them: not the net gain in followers: the same platform's like figure comes to 2 to 10 times the net daily gain, and is above 0 for an account that lost followers. The platform does not say how it is counted: use it for trends and to compare accounts, not as a net gain |
 | `average_7d.shares` | number | `compact` | New shares a day, on average over the last week |
 | `average_7d.comments` | number | `compact` | New comments a day, on average over the last week |
 | `average_30d` | object | `compact` | Daily averages over the last month |
 | `average_30d.likes` | number | `compact` | New likes a day, on average over the last month |
-| `average_30d.followers` | number | `compact` | New followers a day, on average over the last month |
+| `average_30d.follows` | number | `compact` | Follows a day, on average over the last month, as the platform counts them; as above, not the net gain in followers |
 | `average_30d.shares` | number | `compact` | New shares a day, on average over the last month |
 | `average_30d.comments` | number | `compact` | New comments a day, on average over the last month |
 | `change_7d` | object | `compact` | The last week's daily averages against the week before, as a ratio: 0.3 is 30% more, -0.5 is half as much |
 | `change_7d.likes` | number | `compact` | Change in new likes a day |
-| `change_7d.followers` | number | `compact` | Change in new followers a day |
+| `change_7d.follows` | number | `compact` | Change in follows a day (as the platform counts them, not the net gain) |
 | `change_7d.shares` | number | `compact` | Change in new shares a day |
 | `change_7d.comments` | number | `compact` | Change in new comments a day |
 | `change_30d` | object | `compact` | The last month's daily averages against the month before, written the same way |
 | `change_30d.likes` | number | `compact` | Change in new likes a day |
-| `change_30d.followers` | number | `compact` | Change in new followers a day |
+| `change_30d.follows` | number | `compact` | Change in follows a day (as the platform counts them, not the net gain) |
 | `change_30d.shares` | number | `compact` | Change in new shares a day |
 | `change_30d.comments` | number | `compact` | Change in new comments a day |
 
@@ -53,25 +53,25 @@ One item from `douyin.index.creators.metrics`, as recorded 2026-10-13 03:24 UTC.
   "creator_id": "62430445852",
   "average_7d": {
     "likes": 157100.7142857143,
-    "followers": 3588,
+    "follows": 3588,
     "shares": 14715.42857142857,
     "comments": 3879.8571428571427
   },
   "average_30d": {
     "likes": 300077.7,
-    "followers": 6233.6,
+    "follows": 6233.6,
     "shares": 17969.833333333332,
     "comments": 7351.466666666666
   },
   "change_7d": {
     "likes": -0.20028666505711482,
-    "followers": -0.1607298001737619,
+    "follows": -0.1607298001737619,
     "shares": 0.8577740905729795,
     "comments": -0.28813692598028945
   },
   "change_30d": {
     "likes": -0.12000717497205526,
-    "followers": -0.1316211058123174,
+    "follows": -0.1316211058123174,
     "shares": -0.1697698557902584,
     "comments": -0.23841359186421957
   }
@@ -86,8 +86,8 @@ One item from `douyin.index.creators.metrics`, as recorded 2026-10-13 03:24 UTC.
 
 ## Other objects
 
-[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Topic object](https://dataxapi.com/docs/objects/topic/)
+[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [PGY note detail object](https://dataxapi.com/docs/objects/pgy_note/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Channels share link object](https://dataxapi.com/docs/objects/channels_share_link/), [Topic object](https://dataxapi.com/docs/objects/topic/), [Account owner object](https://dataxapi.com/docs/objects/account_owner/), [Mini program object](https://dataxapi.com/docs/objects/miniprogram/), [Follower history object](https://dataxapi.com/docs/objects/follower_history/), [PGY creator costs and summary object](https://dataxapi.com/docs/objects/pgy_creator_costs/), [PGY creator follower summary object](https://dataxapi.com/docs/objects/pgy_creator_followers/), [PGY creator core figures history object](https://dataxapi.com/docs/objects/pgy_creator_cost_history/)
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/docs/objects/index_creator_metrics/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/index_creator_metrics/)

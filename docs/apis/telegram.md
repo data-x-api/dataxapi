@@ -4,7 +4,7 @@
 
 > 3 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## telegram.channels.get
 
@@ -17,7 +17,7 @@ Get a public Telegram channel by its handle: name, description, subscriber count
 
 ## telegram.channels.messages.list
 
-Get a page of a public Telegram channel's messages by its handle, newest first: text, time posted, views, images. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of a public Telegram channel's messages by its handle, newest first: text, time posted, views, images. Up to 20 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Telegram channel messages API
 - Request: `GET /v1/telegram/channels/messages/list`

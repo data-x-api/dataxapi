@@ -1,8 +1,10 @@
 # Douyin data in your AI
 
-Ask your AI about Douyin and it answers with live data: 34 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Douyin and it answers with live data: 38 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-- Endpoints: 34 (on Douyin, one response shape)
+Updated 2026-11-10
+
+- Endpoints: 38 (on Douyin, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-douyin](https://dataxapi.com/skills/dataxapi-douyin.zip)
@@ -22,7 +24,7 @@ Ask about Douyin:
 
 ## What to ask about Douyin, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -31,27 +33,26 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | What does this creator charge on 星图 (Xingtu) for one video? | [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/) `douyin.xingtu.creators.rates.get` | $0.0400 |
 | What are people saying in the comments of this Douyin video? | [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list/) `douyin.videos.comments.list` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Douyin: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Douyin: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > What is on Douyin's hot search board right now?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "What is on Douyin's hot search board right now?", platform: "douyin" })` | Found douyin.trends.list · $0.0020 a call | Free |
-| `describe({ ids: ["douyin.trends.list"] })` | Takes board · up to 50 a page | Free |
 | `call({ capability: "douyin.trends.list", max_price: "0.002" })` | Up to 50 trend objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 50 trend objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 50 trend objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Douyin skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 34 Douyin endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 38 Douyin endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-douyin from https://dataxapi.com/skills/dataxapi-douyin.zip.
 
-## All 34 Douyin endpoints your AI can call
+## All 38 Douyin endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -91,6 +92,10 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get/) | `douyin.xingtu.creators.content_mix.get` | $0.0040 |
 | [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get/) | `douyin.xingtu.creators.conversion.get` | $0.0040 |
 | [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list/) | `douyin.xingtu.campaigns.list` | $0.0040 |
+| [Douyin Xingtu video report: plays and completion rate](https://dataxapi.com/apis/douyin/xingtu/videos/get/) | `douyin.xingtu.videos.get` | $0.0040 |
+| [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related/) | `douyin.keywords.related` | $0.0200 |
+| [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list/) | `douyin.backup.users.videos.list` | $0.0300 |
+| [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search/) | `douyin.backup.videos.search` | $0.0300 |
 
 [Every Douyin price, and what is charged →](https://dataxapi.com/pricing/douyin/) · [Douyin API](https://dataxapi.com/apis/douyin/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -122,4 +127,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/douyin/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/douyin/)

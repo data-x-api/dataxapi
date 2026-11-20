@@ -4,7 +4,7 @@
 
 > 2 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## pinterest.pins.get
 
@@ -17,7 +17,7 @@ Get one Pinterest pin by ID or link: title, description, picture, who pinned it 
 
 ## pinterest.pins.search
 
-Find Pinterest pins by search terms: title, description, picture, who pinned it and when, the page it points to. No counts, which the pin capability gives. About 20 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Find Pinterest pins by search terms: title, description, picture, who pinned it and when, the page it points to. No counts, which the pin capability gives. About 20 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Pinterest pin search API
 - Request: `GET /v1/pinterest/pins/search`

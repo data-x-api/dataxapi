@@ -1,6 +1,6 @@
 # Account object
 
-36 endpoints on 17 platforms return the Account object with the same 11 fields, so code written for one platform reads the others unchanged. A call costs $0.0004 to $0.0400.
+40 endpoints on 18 platforms return the Account object with the same 11 fields, so code written for one platform reads the others unchanged. A call costs $0.0004 to $0.84525.
 
 For machines: [account schema](https://dataxapi.com/openapi.json#/components/schemas/account), [openapi.json](https://dataxapi.com/openapi.json), [Object table (JSON)](https://api.dataxapi.com/v1/catalog/objects), [llms.txt](https://dataxapi.com/llms.txt)
 
@@ -33,6 +33,9 @@ The same field name does not always mean the same act on every platform. This ta
 
 | Field | What it holds there | On |
 | --- | --- | --- |
+| `id` | The account's original ID, mostly starting with gh_ but not always; it can be passed as it is to wechat_mp.accounts.articles.list and wechat_mp.accounts.get | WeChat Search |
+| `username` | The WeChat ID people type to find the account; null where none is set | WeChat Official Accounts, WeChat Search |
+| `verified` | Whether it carries a badge of any colour: the blue one of a paid subscription, the gold one of a business and the grey one of a government or official body are all true, so it does not mean a paid subscription | X (Twitter) |
 | `created_at` | The day the page was created; no time of day | Facebook |
 | `metrics.followers` | Subscribers | Telegram |
 | `metrics.followers` | People who follow the page; from a thousand up the platform gives a rounded figure | Facebook |
@@ -47,15 +50,14 @@ A platform stands against a field when none of its endpoints gives it.
 | Field | Not available on |
 | --- | --- |
 | `id` | Telegram |
-| `username` | Weibo, WeChat Channels, WeChat Official Accounts |
-| `url` | Kuaishou, WeChat Channels, WeChat Official Accounts |
+| `username` | Weibo, WeChat Channels |
+| `url` | Kuaishou, WeChat Channels, WeChat Official Accounts, WeChat Search |
 | `bio` | WeChat Official Accounts |
-| `avatar_url` | WeChat Official Accounts |
-| `verified` | Facebook, LinkedIn, WeChat Channels, WeChat Official Accounts, Zhihu |
-| `created_at` | Bilibili, Douyin, Kuaishou, Telegram, LinkedIn, Threads, Instagram, Xiaohongshu (RedNote), WeChat Channels, WeChat Official Accounts, Zhihu |
-| `metrics.followers` | LinkedIn, WeChat Channels, WeChat Official Accounts, Reddit |
-| `metrics.following` | Telegram, Facebook, LinkedIn, Threads, YouTube, WeChat Channels, WeChat Official Accounts, Reddit, Zhihu |
-| `metrics.posts` | Telegram, Facebook, LinkedIn, Threads, Instagram, WeChat Official Accounts, Zhihu |
+| `verified` | Facebook, LinkedIn, WeChat Official Accounts |
+| `created_at` | Bilibili, Douyin, Kuaishou, Telegram, LinkedIn, Threads, Instagram, Xiaohongshu (RedNote), WeChat Channels, WeChat Official Accounts, WeChat Search, Zhihu |
+| `metrics.followers` | LinkedIn, WeChat Channels, WeChat Official Accounts, WeChat Search, Reddit |
+| `metrics.following` | Telegram, Facebook, LinkedIn, Threads, YouTube, WeChat Channels, WeChat Official Accounts, WeChat Search, Reddit, Zhihu |
+| `metrics.posts` | Telegram, Facebook, LinkedIn, Threads, Instagram, WeChat Official Accounts, WeChat Search, Zhihu |
 
 One endpoint may still leave out a field another gives: each endpoint's page lists what it cannot give, and every answer says so in `meta.unavailable`.
 
@@ -161,12 +163,21 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | Endpoint | Path | Returns | Price |
 | --- | --- | --- | --- |
 | [WeChat Channels account profile](https://dataxapi.com/apis/wechat_channels/users/get.md) | `GET /v1/wechat_channels/users/get` | Account | $0.0200 / call |
+| [WeChat Channels account profile (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/get.md) | `GET /v1/wechat_channels/backup/users/get` | Account | $0.0300 / call |
+| [WeChat Channels account search](https://dataxapi.com/apis/wechat_channels/users/search.md) | `GET /v1/wechat_channels/users/search` | Account list | $0.0600 / call |
 
 ### WeChat Official Accounts
 
 | Endpoint | Path | Returns | Price |
 | --- | --- | --- | --- |
 | [WeChat Official Account profile](https://dataxapi.com/apis/wechat_mp/accounts/get.md) | `GET /v1/wechat_mp/accounts/get` | Account | $0.0200 / call |
+| [WeChat Official Account name search](https://dataxapi.com/apis/wechat_mp/accounts/search.md) | `GET /v1/wechat_mp/accounts/search` | Account list | $0.05635 / item |
+
+### WeChat Search
+
+| Endpoint | Path | Returns | Price |
+| --- | --- | --- | --- |
+| [WeChat Official Account live search](https://dataxapi.com/apis/wechat/accounts/search.md) | `GET /v1/wechat/accounts/search` | Account list | $0.0200 / call |
 
 ### Reddit
 
@@ -204,14 +215,14 @@ One item from `bilibili.users.get`, as recorded 2026-10-12 18:43 UTC. Names, tex
 ## Related
 
 - [Account profile API](https://dataxapi.com/roles/accounts-get/): The same action on 17 platforms, with a per-platform field table.
-- [Account search API](https://dataxapi.com/roles/accounts-search/): The same action on 9 platforms, with a per-platform field table.
+- [Account search API](https://dataxapi.com/roles/accounts-search/): The same action on 12 platforms, with a per-platform field table.
 - [Followers API](https://dataxapi.com/roles/accounts-followers-list/): The same action on 4 platforms, with a per-platform field table.
 - [All endpoints](https://dataxapi.com/apis/): The directory lists what every endpoint returns, with its price.
 
 ## Other objects
 
-[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Topic object](https://dataxapi.com/docs/objects/topic/)
+[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [PGY note detail object](https://dataxapi.com/docs/objects/pgy_note/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Channels share link object](https://dataxapi.com/docs/objects/channels_share_link/), [Topic object](https://dataxapi.com/docs/objects/topic/), [Account owner object](https://dataxapi.com/docs/objects/account_owner/), [Mini program object](https://dataxapi.com/docs/objects/miniprogram/), [Follower history object](https://dataxapi.com/docs/objects/follower_history/), [PGY creator costs and summary object](https://dataxapi.com/docs/objects/pgy_creator_costs/), [PGY creator follower summary object](https://dataxapi.com/docs/objects/pgy_creator_followers/), [PGY creator core figures history object](https://dataxapi.com/docs/objects/pgy_creator_cost_history/)
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/docs/objects/account/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/account/)

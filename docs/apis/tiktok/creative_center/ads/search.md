@@ -1,10 +1,10 @@
 # TikTok Creative Center Top Ads search API
 
-Search the Top Ads of TikTok's Creative Center by keyword: the ad's video, caption, brand name, likes, length and campaign objective; one country at a time, over a chosen period, in the Creative Center's own order or by likes. 20 ads a page. This is a showcase of ads that did well, not an ad library: it has no dates. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Search the Top Ads of TikTok's Creative Center by keyword: the ad's video, caption, brand name, likes, length and campaign objective; one country at a time, over a chosen period, in the Creative Center's own order or by likes. 20 ads a page. This is a showcase of ads that did well, not an ad library: it has no dates. Up to 20 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/tiktok/creative_center/ads/search`
 - ID: `tiktok.creative_center.ads.search`
-- Also known as: tiktok top ads, tiktok best performing ads, tiktok creative center ads, TikTok ad library search
+- Also known as: tiktok top ads, tiktok best performing ads, tiktok creative center ads
 - Price: $0.0020 / call
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: 20 a page, a page, with a cursor for the next
@@ -59,6 +59,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `ext.duration` | number | Length of the video, in seconds. | `full` | Yes |
 | `ext.cover_url` | link | Cover of the video. | `full` | Yes |
 | `ext.objective` | text | Campaign objective, as the platform's own code. | `full` | Yes |
+| `ext.industry` | text | The industry the Creative Center files the material under, as the platform's own code (label_ and a string of digits); null where there is none. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
@@ -79,11 +80,10 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -113,11 +113,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -139,6 +137,7 @@ curl -G "https://api.dataxapi.com/v1/tiktok/creative_center/ads/search" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -149,6 +148,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -186,7 +186,7 @@ Add this to your MCP client, then ask your agent to call `tiktok.creative_center
 
 From a response recorded 2026-10-12 22:19 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 7.3 KB in the standard view (7.3 KB compact, 23.0 KB full).
+Size as sent: 7.3 KB in the standard view (7.3 KB compact, 23.6 KB full).
 
 ```jsonc
 {
@@ -314,6 +314,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -326,8 +329,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "64cdd6fe-8ea7-44c6-9788-9d40e66f9d63",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -335,6 +338,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 17k tokens as the platform's own JSON, 2,148 as DataXAPI's JSON, and 2,104 as an AI reads it through DataXAPI's MCP server: 88% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/tiktok/creative_center/ads/search.example.json)
 
@@ -364,6 +369,8 @@ TikTok endpoints: [TikTok Ads Library search](https://dataxapi.com/apis/tiktok/a
 
 TikTok Shop endpoints: [TikTok Shop product detail](https://dataxapi.com/apis/tiktok/shop/products/get/), [TikTok Shop product reviews](https://dataxapi.com/apis/tiktok/shop/products/reviews/list/), [TikTok Shop product search](https://dataxapi.com/apis/tiktok/shop/products/search/), [TikTok Shop seller products](https://dataxapi.com/apis/tiktok/shop/sellers/products/list/)
 
+How-to guides and answers: [How do I search TikTok's Ad Library in bulk? (2026)](https://dataxapi.com/answers/tiktok-ad-library-bulk-search/)
+
 Related: [All TikTok Creative Center endpoints](https://dataxapi.com/apis/tiktok/creative_center/), [All TikTok endpoints](https://dataxapi.com/apis/tiktok/), [Ads data](https://dataxapi.com/categories/ads/), [The same thing on 3 platforms, side by side](https://dataxapi.com/roles/ads-search/), [The ad object's fields](https://dataxapi.com/docs/objects/ad/)
 
 ## Questions
@@ -374,7 +381,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -382,4 +389,4 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/tiktok/creative_center/ads/search/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/tiktok/creative_center/ads/search/)

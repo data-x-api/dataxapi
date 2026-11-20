@@ -1,6 +1,6 @@
 # Post object
 
-81 endpoints on 19 platforms return the Post object with the same 28 fields, so code written for one platform reads the others unchanged. A call costs $0.0003 to $0.0200.
+92 endpoints on 19 platforms return the Post object with the same 28 fields, so code written for one platform reads the others unchanged. A call costs $0.0003 to $0.1.
 
 For machines: [post schema](https://dataxapi.com/openapi.json#/components/schemas/post), [openapi.json](https://dataxapi.com/openapi.json), [Object table (JSON)](https://api.dataxapi.com/v1/catalog/objects), [llms.txt](https://dataxapi.com/llms.txt)
 
@@ -74,13 +74,14 @@ The same field name does not always mean the same act on every platform. This ta
 | `author.name` | The account's name; WeChat Search gives no account ID | WeChat Channels |
 | `author.name` | The name of the Official Account or Channels account; WeChat Search gives no account ID | WeChat Search |
 | `author.avatar_url` | The Channels account's avatar; an article's result has none, so null | WeChat Search |
+| `author.verified` | Whether it carries a badge of any colour: the blue one of a paid subscription, the gold one of a business and the grey one of a government or official body are all true, so it does not mean a paid subscription | X (Twitter) |
 | `author.verified` | Whether whoever pinned it carries the platform's verified mark; null when it does not | Pinterest |
 | `author.followers` | The author's follower count | LinkedIn |
 | `metrics.likes` | All reactions together (like, love, haha and the rest) | Facebook |
 | `metrics.likes` | All reactions together (like, celebrate, support and the rest) | LinkedIn |
 | `metrics.likes` | Likes; from a thousand up the platform shows a rounded number | YouTube |
 | `metrics.likes` | The likes the card shows; one written like 1.4万 is approximate and 10万+ a lower bound; null when the card shows no count | WeChat Channels |
-| `metrics.likes` | The likes a video's card shows, one written like 1.4万 approximate and 10万+ a lower bound, null when the card shows no count; an article's result has no counts, so null | WeChat Search |
+| `metrics.likes` | The likes a video's card shows, one written like 1.4万 approximate and 10万+ a lower bound, null when the card shows no count; an article's result has no likes, so null (some article cards show a band of reads: ext.reads_label) | WeChat Search |
 | `metrics.likes` | Upvotes | Zhihu |
 | `metrics.likes` | All reactions together | Pinterest |
 | `metrics.comments` | Replies | X (Twitter) |
@@ -89,12 +90,14 @@ The same field name does not always mean the same act on every platform. This ta
 | `metrics.shares` | Times it was shared (sent on) | Threads |
 | `metrics.favorites` | Bookmarks | X (Twitter) |
 | `metrics.favorites` | The card's other count, the same count as the saves of the Channels video lists; approximate, lower bound and null as for likes | WeChat Channels |
+| `metrics.favorites` | Saves; above 100,000 the platform says only "100k+", and this is a lower bound | WeChat Channels |
 | `metrics.favorites` | A video card's other count, the same count as the saves of the Channels video lists, approximate, lower bound and null as for likes; null for an article | WeChat Search |
 | `metrics.favorites` | Times this pin was saved on; the total for the same content is in ext.saves | Pinterest |
-| `metrics.views` | Views; the popular order sorts by it | Bilibili |
+| `metrics.views` | Views; the popular order sorts by it. A search result's count may lag, below the video detail's | Bilibili |
 | `metrics.views` | Views; from a thousand up the platform shows a rounded number | Telegram |
 | `metrics.views` | Views of the video; null on a post that is not a video | Facebook |
-| `metrics.views` | Reads; null on a post that shows no read count | Weibo |
+| `metrics.views` | Reads; on a video post of the author's own, its plays (views). Null on a post that shows no reads and on a repost of a video | Weibo |
+| `metrics.views` | On a video post, its plays (views); null on any other post, whose reads only the post detail gives, and on a repost of a video (whose count is the original's) | Weibo |
 | `metrics.views` | Reads; above 100,000 the platform says only "100k+", and this is a lower bound | WeChat Official Accounts |
 | `metrics.reposts` | Retweets; quotes are counted apart, in ext.quotes | X (Twitter) |
 | `metrics.reposts` | Reposts; quotes are counted apart, in ext.quotes | Threads |
@@ -102,9 +105,10 @@ The same field name does not always mean the same act on every platform. This ta
 | `images` | The one picture the search matched, at its full size; the address expires. The note's other pictures come with the note itself | Xiaohongshu (RedNote) |
 | `images` | The video's cover | YouTube |
 | `images` | The pin's picture at full size | Pinterest |
+| `hashtags` | The tags shown under the video on its page | Bilibili |
 | `hashtags` | The post's topic tag; a post has at most one | Threads |
-| `is_pinned` | Whether it is pinned on the profile asked for | Instagram |
 | `post_id` | ID of the conversation's root post | X (Twitter) |
+| `ext.video_url` | WeChat Channels video files are encrypted, only their first 131072 bytes. Seed ISAAC64 with ext.decode_key, take each 64-bit output as 8 big-endian bytes for a key stream of 131072 bytes, and XOR it over the start of the file; the rest is left as it is, and the result is a playable MP4. Address and key change with every answer: use the pair from one answer | WeChat Channels |
 
 ## What a platform cannot give
 
@@ -113,27 +117,27 @@ A platform stands against a field when none of its endpoints gives it.
 | Field | Not available on |
 | --- | --- |
 | `url` | WeChat Channels |
-| `type` | Kuaishou, LinkedIn |
+| `type` | LinkedIn |
 | `title` | Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, WeChat Channels |
 | `lang` | Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Instagram, Weibo, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Zhihu, Pinterest |
 | `author.id` | Telegram, LinkedIn, WeChat Search |
 | `author.username` | Bilibili, Weibo, WeChat Channels, WeChat Search |
 | `author.name` | Reddit |
 | `author.avatar_url` | Telegram |
-| `author.verified` | Douyin, Telegram, LinkedIn, TikTok, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu |
-| `author.followers` | Kuaishou, Telegram, Facebook, Threads, Instagram, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit |
+| `author.verified` | Douyin, Telegram, LinkedIn, TikTok, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu |
+| `author.followers` | Kuaishou, Telegram, Facebook, Threads, Instagram, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit |
 | `metrics.likes` | Telegram, Reddit |
 | `metrics.comments` | Telegram, WeChat Search |
 | `metrics.shares` | Telegram, X (Twitter), LinkedIn, Instagram, Weibo, YouTube, WeChat Search, Zhihu |
 | `metrics.favorites` | Telegram, Facebook, LinkedIn, Threads, Instagram, Weibo, YouTube, Reddit |
-| `metrics.views` | LinkedIn, Xiaohongshu (RedNote), WeChat Channels, WeChat Search, Reddit, Pinterest |
+| `metrics.views` | LinkedIn, WeChat Channels, WeChat Search, Reddit, Pinterest |
 | `metrics.reposts` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Instagram, TikTok, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Pinterest |
 | `images` | Bilibili, Kuaishou, TikTok, WeChat Channels, WeChat Search, WeChat Official Accounts |
-| `hashtags` | Kuaishou, Telegram, Facebook, LinkedIn, Instagram, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu, Pinterest |
+| `hashtags` | Kuaishou, Telegram, Facebook, LinkedIn, Instagram, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Pinterest |
 | `mentions[].id` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, Weibo, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu, Pinterest |
 | `mentions[].username` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu, Pinterest |
 | `mentions[].name` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu, Pinterest |
-| `is_pinned` | Bilibili, Kuaishou, Telegram, X (Twitter), Facebook, LinkedIn, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Pinterest |
+| `is_pinned` | Bilibili, Kuaishou, Telegram, X (Twitter), Facebook, LinkedIn, Instagram, YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Pinterest |
 | `post_id` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Pinterest |
 | `parent_id` | Douyin, Bilibili, Kuaishou, Telegram, Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Pinterest |
 | `root_id` | Douyin, Bilibili, Kuaishou, Telegram, X (Twitter), Facebook, LinkedIn, Threads, Instagram, TikTok, Weibo, Xiaohongshu (RedNote), YouTube, WeChat Channels, WeChat Search, WeChat Official Accounts, Reddit, Zhihu, Pinterest |
@@ -155,6 +159,9 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related.md) | `GET /v1/douyin/videos/related` | Post list | $0.0020 / call |
 | [Douyin video search](https://dataxapi.com/apis/douyin/videos/search.md) | `GET /v1/douyin/videos/search` | Post list | $0.0200 / call |
 | [Douyin trending videos](https://dataxapi.com/apis/douyin/videos/trending.md) | `GET /v1/douyin/videos/trending` | Post list | $0.0020 / call |
+| [Douyin Xingtu video report: plays and completion rate](https://dataxapi.com/apis/douyin/xingtu/videos/get.md) | `GET /v1/douyin/xingtu/videos/get` | Post | $0.0040 / call |
+| [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list.md) | `GET /v1/douyin/backup/users/videos/list` | Post list | $0.0300 / call |
+| [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search.md) | `GET /v1/douyin/backup/videos/search` | Post list | $0.0300 / call |
 
 ### Bilibili
 
@@ -164,6 +171,7 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get.md) | `GET /v1/bilibili/videos/get` | Post | $0.0020 / call |
 | [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search.md) | `GET /v1/bilibili/videos/search` | Post list | $0.0020 / call |
 | [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending.md) | `GET /v1/bilibili/videos/trending` | Post list | $0.0020 / call |
+| [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list.md) | `GET /v1/bilibili/backup/users/videos/list` | Post list | $0.0300 / call |
 
 ### Kuaishou
 
@@ -252,6 +260,8 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search.md) | `GET /v1/xiaohongshu/notes/search` | Post list | $0.0200 / call |
 | [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list.md) | `GET /v1/xiaohongshu/topics/notes/list` | Post list | $0.0200 / call |
 | [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list.md) | `GET /v1/xiaohongshu/users/notes/list` | Post list | $0.0200 / call |
+| [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get.md) | `GET /v1/xiaohongshu/videos/get` | Post | $0.0200 / call |
+| [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending.md) | `GET /v1/xiaohongshu/pgy/notes/trending` | Post list | $0.0400 / call |
 
 ### YouTube
 
@@ -271,12 +281,17 @@ One endpoint may still leave out a field another gives: each endpoint's page lis
 | [WeChat Channels collection videos](https://dataxapi.com/apis/wechat_channels/collections/videos/list.md) | `GET /v1/wechat_channels/collections/videos/list` | Post list | $0.0200 / call |
 | [WeChat Channels account videos](https://dataxapi.com/apis/wechat_channels/users/videos/list.md) | `GET /v1/wechat_channels/users/videos/list` | Post list | $0.0200 / call |
 | [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search.md) | `GET /v1/wechat_channels/videos/search` | Post list | $0.0200 / call |
+| [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list.md) | `GET /v1/wechat_channels/backup/users/videos/list` | Post list | $0.0600 / call |
+| [WeChat Channels video search (backup)](https://dataxapi.com/apis/wechat_channels/backup/videos/search.md) | `GET /v1/wechat_channels/backup/videos/search` | Post list | $0.1 / call |
+| [WeChat Channels video stats](https://dataxapi.com/apis/wechat_channels/videos/metrics.md) | `GET /v1/wechat_channels/videos/metrics` | Post | $0.0150 / call |
+| [WeChat Channels live replays](https://dataxapi.com/apis/wechat_channels/users/live_replays/list.md) | `GET /v1/wechat_channels/users/live_replays/list` | Post list | $0.0200 / call |
 
 ### WeChat Search
 
 | Endpoint | Path | Returns | Price |
 | --- | --- | --- | --- |
 | [WeChat Search articles and videos](https://dataxapi.com/apis/wechat/posts/search.md) | `GET /v1/wechat/posts/search` | Post list | $0.0200 / call |
+| [WeChat Search articles and videos (backup)](https://dataxapi.com/apis/wechat/backup/posts/search.md) | `GET /v1/wechat/backup/posts/search` | Post list | $0.1 / call |
 
 ### WeChat Official Accounts
 
@@ -362,14 +377,14 @@ One item from `douyin.hashtags.videos.list`, as recorded 2026-10-12 18:42 UTC. N
 - [Comments API](https://dataxapi.com/roles/posts-comments-list/): The same action on 13 platforms, with a per-platform field table.
 - [Hashtag posts API](https://dataxapi.com/roles/topics-posts-list/): The same action on 4 platforms, with a per-platform field table.
 - [Trending posts API](https://dataxapi.com/roles/posts-trending/): The same action on 3 platforms, with a per-platform field table.
-- [Post metrics API](https://dataxapi.com/roles/posts-metrics/): The same action on 2 platforms, with a per-platform field table.
+- [Post metrics API](https://dataxapi.com/roles/posts-metrics/): The same action on 3 platforms, with a per-platform field table.
 - [Community posts API](https://dataxapi.com/roles/communities-posts-list/): The same action on 2 platforms, with a per-platform field table.
 - [All endpoints](https://dataxapi.com/apis/): The directory lists what every endpoint returns, with its price.
 
 ## Other objects
 
-[Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Topic object](https://dataxapi.com/docs/objects/topic/)
+[Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [PGY note detail object](https://dataxapi.com/docs/objects/pgy_note/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator scores object](https://dataxapi.com/docs/objects/xingtu_creator_scores/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Channels share link object](https://dataxapi.com/docs/objects/channels_share_link/), [Topic object](https://dataxapi.com/docs/objects/topic/), [Account owner object](https://dataxapi.com/docs/objects/account_owner/), [Mini program object](https://dataxapi.com/docs/objects/miniprogram/), [Follower history object](https://dataxapi.com/docs/objects/follower_history/), [PGY creator costs and summary object](https://dataxapi.com/docs/objects/pgy_creator_costs/), [PGY creator follower summary object](https://dataxapi.com/docs/objects/pgy_creator_followers/), [PGY creator core figures history object](https://dataxapi.com/docs/objects/pgy_creator_cost_history/)
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/docs/objects/post/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/post/)

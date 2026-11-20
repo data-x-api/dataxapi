@@ -1,6 +1,6 @@
 # Xiaohongshu (RedNote) image search API
 
-Search Xiaohongshu pictures by terms, a page at a time; each result is one picture with the note it belongs to: the picture's address, the note's title, text, author, likes, comments, saves and shares. Up to 20 items a call; $0.0200 per call. Errors and timeouts are not charged; an empty result is charged $0.0200.
+Search Xiaohongshu pictures by terms, a page at a time; each result is one picture with the note it belongs to: the picture's address, the note's title, text, author, likes, comments, saves and shares. Shares are not given here (they always read 0, so they are left out); xiaohongshu.notes.get gives a note's shares. Up to 20 items a call; $0.0200 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/xiaohongshu/images/search`
 - ID: `xiaohongshu.images.search`
@@ -14,16 +14,14 @@ Search Xiaohongshu pictures by terms, a page at a time; each result is one pictu
 
 ## What you get
 
-The first 6 rows of a response recorded 2026-10-12 22:06 UTC.
+The first 4 rows of a response recorded 2026-11-11 04:23 UTC.
 
 | Field | Value |
 | --- | --- |
 | type | image |
-| author.verified | false |
-| metrics.likes | 240 |
-| metrics.comments | 37 |
-| metrics.shares | 0 |
-| metrics.favorites | 113 |
+| metrics.likes | 51 |
+| metrics.comments | 7 |
+| metrics.favorites | 25 |
 
 ## Parameters
 
@@ -54,12 +52,12 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `author.username` | text | Author's handle. | `compact` | Yes |
 | `author.name` | text | Author's display name. | `compact` | Yes |
 | `author.avatar_url` | link | Author's avatar. | `standard` | Yes |
-| `author.verified` | yes/no | Whether the author is verified. | `standard` | Yes |
+| `author.verified` | yes/no | Whether the author is verified. | `standard` | Not provided here |
 | `author.followers` | integer | Author's follower count. | `standard` | Not provided here |
 | `metrics` | object | Engagement counts. | `compact` | Yes |
 | `metrics.likes` | integer | Likes. | `compact` | Yes |
 | `metrics.comments` | integer | Comments. | `compact` | Yes |
-| `metrics.shares` | integer | Shares. | `compact` | Yes |
+| `metrics.shares` | integer | Shares. | `compact` | Not provided here |
 | `metrics.favorites` | integer | Saves. | `compact` | Yes |
 | `metrics.views` | integer | Views. | `compact` | The platform has none |
 | `metrics.reposts` | integer | Reposts. | `compact` | The platform has none |
@@ -79,7 +77,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 1.0 KB, `standard` 1.4 KB, `full` 1.4 KB (measured on the response recorded 2026-10-12 22:06 UTC).
+Typical size of one item: `compact` 548 B, `standard` 877 B, `full` 877 B (measured on the response recorded 2026-11-11 04:23 UTC).
 
 ## Paging
 
@@ -93,11 +91,10 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0200, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0200 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0200 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -127,11 +124,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -153,6 +148,7 @@ curl -G "https://api.dataxapi.com/v1/xiaohongshu/images/search" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -163,6 +159,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -198,9 +195,9 @@ Add this to your MCP client, then ask your agent to call `xiaohongshu.images.sea
 
 ### 200
 
-From a response recorded 2026-10-12 22:06 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+From a response recorded 2026-11-11 04:23 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
+Size as sent: 17.9 KB in the standard view (11.5 KB compact, 17.9 KB full).
 
 ```jsonc
 {
@@ -217,15 +214,9 @@ Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
           "id": "65e1f73500000000815efad1",
           "username": "weekend_lin",
           "name": "小林的周末",
-          "avatar_url": "https://sns-avatar-qc.xhscdn.com/avatar/6d3d89f0000000000ec4bf4f.jpg",
-          "verified": false
+          "avatar_url": "https://sns-avatar-qc.xhscdn.com/avatar/6d3d89f0000000000ec4bf4f.jpg"
         },
-        "metrics": {
-          "likes": 240,
-          "comments": 37,
-          "shares": 0,
-          "favorites": 113
-        },
+        "metrics": { "likes": 51, "comments": 7, "favorites": 25 },
         "images": [
           "https://sns-webpic-qc.xhscdn.com/20261011/15bc30ef2c4863c87ec6!nd_dft_wlteh_webp_3"
         ]
@@ -235,7 +226,7 @@ Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
   },
   "page": {
     "next_cursor": "c1.LvFrdEKUZCgtAuF_lKAc_x1LXU-saMlgvvE8V6Vf",
-    "cursor_expires_at": "2026-10-12T23:06:28.000Z",
+    "cursor_expires_at": "2026-11-11T05:23:13.000Z",
     "has_more": true,
     "returned": 20
   },
@@ -243,7 +234,7 @@ Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
   "meta": {
     "capability": "xiaohongshu.images.search",
     "result_status": "complete",
-    "fetched_at": "2026-10-12T22:06:28.000Z",
+    "fetched_at": "2026-11-11T04:23:13.000Z",
     "cached": false,
     "replayed": false,
     "unavailable": {
@@ -252,6 +243,8 @@ Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
       "published_at": "capability",
       "metrics.views": "platform",
       "metrics.reposts": "platform",
+      "metrics.shares": "capability",
+      "author.verified": "capability",
       "author.followers": "capability",
       "hashtags": "capability",
       "mentions": "capability",
@@ -273,7 +266,7 @@ Size as sent: 29.0 KB in the standard view (21.6 KB compact, 29.0 KB full).
 
 From a recording of 2026-10-12 22:06 UTC, edited by hand to show this case. The request ID and balance are made up.
 
-Size as sent: 700 B in the standard view (700 B compact, 700 B full).
+Size as sent: 761 B in the standard view (761 B compact, 761 B full).
 
 ```jsonc
 {
@@ -299,6 +292,8 @@ Size as sent: 700 B in the standard view (700 B compact, 700 B full).
       "published_at": "capability",
       "metrics.views": "platform",
       "metrics.reposts": "platform",
+      "metrics.shares": "capability",
+      "author.verified": "capability",
       "author.followers": "capability",
       "hashtags": "capability",
       "mentions": "capability",
@@ -351,6 +346,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.02",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -363,8 +361,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "c8d11343-2c09-42a0-8770-e2815e4da141",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -372,6 +370,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 28k tokens as the platform's own JSON, 11k as DataXAPI's JSON, and 7,413 as an AI reads it through DataXAPI's MCP server: 73% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/xiaohongshu/images/search.example.json)
 
@@ -391,11 +391,11 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/), [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/), [Douyin trend-index creator top videos](https://dataxapi.com/apis/douyin/index/creators/videos/list/), [Douyin trend-index keyword hot videos](https://dataxapi.com/apis/douyin/index/videos/search/), [Douyin user videos](https://dataxapi.com/apis/douyin/users/videos/list/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics/)
+More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/)
 
-Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/)
+Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related/), [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get/)
 
-Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/)
+Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/), [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history/), [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related/), [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending/), [Xiaohongshu PGY creator costs and data summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/metrics/), [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics/), [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history/), [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/)
 
 Xiaohongshu Shop endpoints: [Xiaohongshu product detail](https://dataxapi.com/apis/xiaohongshu/shop/products/get/), [Xiaohongshu product reviews](https://dataxapi.com/apis/xiaohongshu/shop/products/reviews/list/), [Xiaohongshu product search](https://dataxapi.com/apis/xiaohongshu/shop/products/search/)
 
@@ -409,7 +409,7 @@ $0.0200 per call. The most one call can cost is $0.0200.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0200.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -417,4 +417,4 @@ Errors and timeouts are not charged; an empty result is charged $0.0200.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/xiaohongshu/images/search/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/xiaohongshu/images/search/)

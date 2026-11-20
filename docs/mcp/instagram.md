@@ -2,6 +2,8 @@
 
 Ask your AI about Instagram and it answers with live data: 8 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 8 (on Instagram, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about Instagram:
 
 ## What to ask about Instagram, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | What has this brand posted on Instagram lately? | [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/) `instagram.users.posts.list` | $0.0020 |
 | Which posts are under #matcha on Instagram? | [Instagram hashtag posts](https://dataxapi.com/apis/instagram/hashtags/posts/list/) `instagram.hashtags.posts.list` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Instagram: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Instagram: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > How many followers does this Instagram account have?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "How many followers does this Instagram account have?", platform: "instagram" })` | Found instagram.users.get · $0.0020 a call | Free |
-| `describe({ ids: ["instagram.users.get"] })` | Takes username · returns one object | Free |
 | `call({ capability: "instagram.users.get", username: "nasa", max_price: "0.002" })` | One account object · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. One account object came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. One account object came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Instagram skill package
 
@@ -94,4 +95,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/instagram/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/instagram/)

@@ -2,6 +2,8 @@
 
 Ask your AI about Meta Ad Library and it answers with live data: 5 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
+Updated 2026-11-06
+
 - Endpoints: 5 (on Meta Ad Library, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
@@ -21,7 +23,7 @@ Ask about Meta Ad Library:
 
 ## What to ask about Meta Ad Library, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,19 +31,18 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | Search the Meta Ad Library for protein powder ads. | [Meta Ad Library search](https://dataxapi.com/apis/meta/ads/search/) `meta.ads.search` | $0.0020 |
 | Transcribe the video of this Meta ad. | [Meta ad video transcript](https://dataxapi.com/apis/meta/ads/transcript/get/) `meta.ads.transcript.get` | $0.0020 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about Meta Ad Library: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about Meta Ad Library: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > Which ads is this brand running on Facebook and Instagram?
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "Which ads is this brand running on Facebook and Instagram?", platform: "meta" })` | Found meta.advertisers.ads.list · $0.0020 a call | Free |
-| `describe({ ids: ["meta.advertisers.ads.list"] })` | Takes id, region, sort, type · up to 30 a page | Free |
 | `call({ capability: "meta.advertisers.ads.list", id: "182162001806727", max_price: "0.002" })` | Up to 30 ad objects · compact view | $0.0020 |
 
-3 tool calls · 1 charged · $0.0020. Up to 30 ad objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0020. Up to 30 ad objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The Meta Ad Library skill package
 
@@ -91,4 +92,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/meta/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/meta/)

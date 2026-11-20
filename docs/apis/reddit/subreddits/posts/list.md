@@ -1,6 +1,6 @@
 # Reddit community posts API
 
-Get a page of the posts of a Reddit community by its name, hot, newest or top score first. Up to 25 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the posts of a Reddit community by its name, hot, newest or top score first. Top score is of the last day unless window asks for the last week, month or year, or all time. Up to 25 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/reddit/subreddits/posts/list`
 - ID: `reddit.subreddits.posts.list`
@@ -27,10 +27,15 @@ The first 2 rows of a response recorded 2026-10-12 18:46 UTC.
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
 | `id` | text | Yes | Community name, without the r/. Example: `nasa`. |
-| `sort` | text |  | Hot, newest first, or top score first. Values: `hot` (default), `latest`, `popular`. Example: `hot`. |
+| `sort` | text |  | Hot, newest first, or top score first; top score ranks the posts of the last day unless window asks for another period. Values: `hot` (default), `latest`, `popular`. Example: `hot`. |
+| `window` | text |  | Which period top score first (sort=popular) ranks the posts of: the last 24 hours, 7, 30 or 365 days, or all time; the last 24 hours when left out. Only with sort=popular. Values: `24h`, `7d`, `30d`, `365d`, `all`. Example: `all`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
+
+`sort=hot` and `window` cannot be given together.
+
+`sort=latest` and `window` cannot be given together.
 
 ## Returned fields
 
@@ -96,15 +101,14 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-A community that does not exist cannot be told from a community without posts: both return an empty result, not a 404, and are charged as an empty result is.
+A community that does not exist cannot be told from a community without posts: both return an empty result, not a 404.
 
 ## Errors
 
@@ -134,11 +138,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -160,6 +162,7 @@ curl -G "https://api.dataxapi.com/v1/reddit/subreddits/posts/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -170,6 +173,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -357,6 +361,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -369,8 +376,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "b7217dd4-506b-48b5-8888-ac2a66fad055",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -378,6 +385,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 7,134 tokens as the platform's own JSON, 3,365 as DataXAPI's JSON, and 3,194 as an AI reads it through DataXAPI's MCP server: 55% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/reddit/subreddits/posts/list.example.json)
 
@@ -403,6 +412,8 @@ More Social media data on other platforms: [Douyin hashtag videos](https://datax
 
 Reddit endpoints: [Reddit post comments](https://dataxapi.com/apis/reddit/posts/comments/list/), [Reddit post detail](https://dataxapi.com/apis/reddit/posts/get/), [Reddit post search](https://dataxapi.com/apis/reddit/posts/search/), [Reddit popular posts](https://dataxapi.com/apis/reddit/posts/trending/), [Reddit community posts](https://dataxapi.com/apis/reddit/subreddits/posts/list/), [Reddit trending searches](https://dataxapi.com/apis/reddit/trends/list/), [Reddit user profile](https://dataxapi.com/apis/reddit/users/get/), [Reddit user posts](https://dataxapi.com/apis/reddit/users/posts/list/), [Reddit community profile](https://dataxapi.com/apis/reddit/subreddits/get/), [Reddit user active communities](https://dataxapi.com/apis/reddit/users/subreddits/list/), [Reddit video transcript](https://dataxapi.com/apis/reddit/posts/transcript/get/)
 
+How-to guides and answers: [GummySearch shuts down on December 1: what do I use for Reddit research? (2026)](https://dataxapi.com/answers/gummysearch-alternative-reddit/), [How to get a subreddit's top posts of all time or this year via API (2026)](https://dataxapi.com/answers/reddit-top-posts-all-time/)
+
 Related: [All Reddit endpoints](https://dataxapi.com/apis/reddit/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 2 platforms, side by side](https://dataxapi.com/roles/communities-posts-list/), [The post object's fields](https://dataxapi.com/docs/objects/post/)
 
 ## Questions
@@ -413,7 +424,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -421,8 +432,8 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ### What happens if the object does not exist?
 
-A community that does not exist cannot be told from a community without posts: both return an empty result, not a 404, and are charged as an empty result is.
+A community that does not exist cannot be told from a community without posts: both return an empty result, not a 404.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/reddit/subreddits/posts/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/reddit/subreddits/posts/list/)

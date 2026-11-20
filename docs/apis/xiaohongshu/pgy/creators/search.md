@@ -1,30 +1,50 @@
 # Xiaohongshu (RedNote) PGY creator search API
 
-Search Xiaohongshu creators on PGY by terms, matched against what they write about: creator ID, name, handle, location, content categories, followers, and in the full view what an image note and a video note cost and median reads and interactions. The creator ID the other PGY endpoints take comes from here. Up to 20 items a call; $0.0400 per call. Errors and timeouts are not charged; an empty result is charged $0.0400.
+Find Xiaohongshu creators on PGY by search terms, by the filters of PGY's creator square, or both: followers, the price of a sponsored note, estimated CPM, median reads and interactions of everyday and sponsored notes, image or video creators, content category, content feature, persona, where they are, gender, followers' gender and age, industry worked with lately; leaving out the inactive and those losing followers; ordered by followers, price, reads, interactions, shop visits, cost per read, invitations answered, growth, completion and more. Each with creator ID, name, handle, location, content categories and followers, and in the full view prices and medians. A search goes as far as its first 5,000 creators. The creator ID the other PGY endpoints take comes from here. Up to 20 items a call; $0.0400 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/xiaohongshu/pgy/creators/search`
 - ID: `xiaohongshu.pgy.creators.search`
-- Also known as: find xiaohongshu influencers, rednote creator search
+- Also known as: find xiaohongshu influencers, rednote creator search, filter xiaohongshu creators by followers and price
 - Price: $0.0400 / call
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: 20 a page, a page, with a cursor for the next
 - Returns creator, a preview structure that may still change
-- [Run it in the Playground](https://dataxapi.com/console/playground/?capability=xiaohongshu.pgy.creators.search&params=%7B%22query%22%3A%22%E5%92%96%E5%95%A1%22%7D)
+- [Run it in the Playground](https://dataxapi.com/console/playground/?capability=xiaohongshu.pgy.creators.search)
 - In Chinese: [小红书蒲公英博主搜索 API](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/search/)
 
 ## What you get
 
-The first row of a response recorded 2026-10-12 21:55 UTC.
+The first row of a response recorded 2026-11-10 22:14 UTC.
 
 | Field | Value |
 | --- | --- |
-| metrics.followers | 30,634 |
+| metrics.followers | 340,715 |
 
 ## Parameters
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `query` | text | Yes | Search terms, matched against what creators' notes are about; for terms no creator matches the platform still returns loosely related creators, not an empty result. Example: `咖啡`. |
+| `query` | text |  | Search terms, matched against what creators' notes are about; for terms no creator matches the platform still returns loosely related creators, not an empty result. Leave out to find by the filters alone. Example: `咖啡`. |
+| `sort` | text |  | Order: relevance (the default); most_followers; lowest_rate, highest_rate; most_reads, most_engagements, most_impressions (medians of everyday notes); most_sponsored_reads, most_sponsored_engagements, most_sponsored_impressions; most_shop_visits; lowest_read_cost_image, lowest_read_cost_video (estimated cost per read); highest_reply_rate; fastest_growth; most_active_followers; most_thousand_like_notes; highest_completion_rate (of videos). Values: `relevance` (default), `most_followers`, `lowest_rate`, `highest_rate`, `most_reads`, `most_engagements`, `most_impressions`, `most_sponsored_reads`, `most_sponsored_engagements`, `most_sponsored_impressions`, `most_shop_visits`, `lowest_read_cost_image`, `lowest_read_cost_video`, `highest_reply_rate`, `fastest_growth`, `most_active_followers`, `most_thousand_like_notes`, `highest_completion_rate`. Example: `lowest_rate`. |
+| `followers_min` | integer |  | At least this many followers. Example: `10000`. |
+| `followers_max` | integer |  | At most this many followers. Example: `50000`. |
+| `rate_min` | integer |  | Rate at least this, in yuan: of an image note, or of a video note with type=video. Example: `3000`. |
+| `rate_max` | integer |  | Rate at most this, in yuan: of an image note, or of a video note with type=video. Example: `8000`. |
+| `cpm_min` | integer |  | Estimated CPM at least this, in yuan: of an image note, or of a video note with type=video. Example: `20`. |
+| `cpm_max` | integer |  | Estimated CPM at most this, in yuan: of an image note, or of a video note with type=video. Example: `150`. |
+| `median_reads_min` | integer |  | Median reads of everyday notes at least this. Example: `5000`. |
+| `median_engagements_min` | integer |  | Median interactions of everyday notes at least this. Example: `300`. |
+| `sponsored_median_reads_min` | integer |  | Median reads of sponsored notes at least this. Example: `8000`. |
+| `type` | text |  | Creators mostly of image notes (image) or of video notes (video); both when left out. Values: `image`, `video`. Example: `video`. |
+| `category` | text |  | Content category, top or second level (such as 护肤 or 面部保养), in PGY's own words; only a value of its dictionary is taken, anything else is a 400. Example: `护肤`. |
+| `feature_tag` | text |  | Content feature, top or second level (such as vlog or 探店), in PGY's own words; only a value of its dictionary is taken, anything else is a 400. Example: `探店`. |
+| `persona` | text |  | Persona, any level (such as 妈妈 or 职业身份), in PGY's own words; only a value of its dictionary is taken, anything else is a 400. Example: `妈妈`. |
+| `location` | text |  | Where the creator is, a province or a city (such as 上海 or 杭州), in PGY's own words; only a value of its dictionary is taken, anything else is a 400. Example: `杭州`. |
+| `gender` | text |  | The creator's gender: female or male. Values: `female`, `male`. Example: `female`. |
+| `audience_gender` | text |  | Creators whose followers are mostly women (female) or men (male). Values: `female`, `male`. Example: `female`. |
+| `audience_age` | text |  | The age band most of the followers are in: under_18, 18_24, 25_34, 35_44, over_44. Values: `under_18`, `18_24`, `25_34`, `35_44`, `over_44`. Example: `25_34`. |
+| `industry` | text |  | Creators who worked with this industry lately: beauty, food_drink, mother_baby, electronics, household, fashion, internet, local_services, home_building, auto. Values: `beauty`, `food_drink`, `mother_baby`, `electronics`, `household`, `fashion`, `internet`, `local_services`, `home_building`, `auto`. Example: `beauty`. |
+| `exclude` | text |  | Creators to leave out: low_active, the inactive; follower_drop, those losing followers; both. Values: `low_active`, `follower_drop`, `both`. Example: `both`. |
 | `cursor` | text |  | Cursor returned by the previous page. Pass `page.next_cursor` of the page before, unchanged. Each page is charged as a call of its own. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
@@ -58,7 +78,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 186 B, `standard` 379 B, `full` 502 B (measured on the response recorded 2026-10-12 21:55 UTC).
+Typical size of one item: `compact` 182 B, `standard` 381 B, `full` 511 B (measured on the response recorded 2026-11-10 22:14 UTC).
 
 ## Paging
 
@@ -66,17 +86,18 @@ Typical size of one item: `compact` 186 B, `standard` 379 B, `full` 502 B (measu
 
 For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 hour. `page.has_more` is false on the last page.
 
+A search goes as far as its first 5,000 creators (250 pages): the platform gives no more, whatever the total says.
+
 ## When you are charged
 
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0400, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0400 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0400 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -106,11 +127,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -124,35 +143,36 @@ The key is read from the environment; no key is ever written into a page.
 ### cURL
 
 ```bash
-curl -G "https://api.dataxapi.com/v1/xiaohongshu/pgy/creators/search" \
-  --data-urlencode "query=咖啡" \
+curl "https://api.dataxapi.com/v1/xiaohongshu/pgy/creators/search" \
   -H "Authorization: Bearer $DATAXAPI_API_KEY"
 ```
 
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
-result = dx.xiaohongshu.pgy.creators.search(query="咖啡")
+result = dx.xiaohongshu.pgy.creators.search()
 print(result["data"]["items"])
 ```
 
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
-const result = await dx.xiaohongshu.pgy.creators.search({ query: "咖啡" });
+const result = await dx.xiaohongshu.pgy.creators.search();
 console.log(result.data.items);
 ```
 
 ### CLI
 
 ```bash
-dataxapi call xiaohongshu.pgy.creators.search 'query=咖啡'
+dataxapi call xiaohongshu.pgy.creators.search
 ```
 
 ### MCP
@@ -177,9 +197,9 @@ Add this to your MCP client, then ask your agent to call `xiaohongshu.pgy.creato
 
 ### 200
 
-From a response recorded 2026-10-12 21:55 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
+From a response recorded 2026-11-10 22:14 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 7.8 KB in the standard view (4.1 KB compact, 10.2 KB full).
+Size as sent: 7.9 KB in the standard view (4.0 KB compact, 10.4 KB full).
 
 ```jsonc
 {
@@ -195,15 +215,15 @@ Size as sent: 7.8 KB in the standard view (4.1 KB compact, 10.2 KB full).
         "avatar_url": "https://sns-avatar-qc.xhscdn.com/avatar/68d7218800000000a4989fa3.jpg",
         "location": "北京",
         "categories": ["生活"],
-        "subcategories": ["咖啡", "家居好物"],
-        "metrics": { "followers": 30634 }
+        "subcategories": ["咖啡"],
+        "metrics": { "followers": 340715 }
       },
       // … 19 more
     ]
   },
   "page": {
     "next_cursor": "c1.tanuG8dT9ozo4D_Rnm44jKf3-2o-wxDT8ESWtMQB",
-    "cursor_expires_at": "2026-10-12T22:55:09.000Z",
+    "cursor_expires_at": "2026-11-10T23:14:22.000Z",
     "has_more": true,
     "returned": 20
   },
@@ -211,7 +231,7 @@ Size as sent: 7.8 KB in the standard view (4.1 KB compact, 10.2 KB full).
   "meta": {
     "capability": "xiaohongshu.pgy.creators.search",
     "result_status": "complete",
-    "fetched_at": "2026-10-12T21:55:09.000Z",
+    "fetched_at": "2026-11-10T22:14:22.000Z",
     "cached": false,
     "replayed": false,
     "unavailable": {},
@@ -272,7 +292,9 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["query is required"],
+  "problems": [
+    "sort must be one of relevance, most_followers, lowest_rate, highest_rate, most_reads, most_engagements, most_impressions, most_sponsored_reads, most_sponsored_engagements, most_sponsored_impressions, most_shop_visits, lowest_read_cost_image, lowest_read_cost_video, highest_reply_rate, fastest_growth, most_active_followers, most_thousand_like_notes, highest_completion_rate"
+  ],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -293,6 +315,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.04",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -305,8 +330,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "018a554c-5ba8-41d5-8262-4d617e550f3c",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -314,6 +339,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 27k tokens as the platform's own JSON, 2,830 as DataXAPI's JSON, and 1,416 as an AI reads it through DataXAPI's MCP server: 95% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search.example.json)
 
@@ -335,15 +362,13 @@ Part of DataXAPI's Creators data. The same key also works for: Social media, Ads
 
 The same thing on other platforms: [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search/)
 
-More Creators data on other platforms: [Douyin Xingtu creator profile](https://dataxapi.com/apis/douyin/xingtu/creators/get/), [Douyin trend-index creator follower profile](https://dataxapi.com/apis/douyin/index/creators/audience/get/), [Douyin trend-index creator core metrics](https://dataxapi.com/apis/douyin/index/creators/metrics/), [Douyin Xingtu creator rate card](https://dataxapi.com/apis/douyin/xingtu/creators/rates/get/), [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get/), [Douyin Xingtu creator metrics](https://dataxapi.com/apis/douyin/xingtu/creators/metrics/), [Douyin Xingtu creator video performance](https://dataxapi.com/apis/douyin/xingtu/creators/videos/list/), [Douyin Xingtu creator content keywords](https://dataxapi.com/apis/douyin/xingtu/creators/keywords/get/), [Douyin Xingtu creator index scores](https://dataxapi.com/apis/douyin/xingtu/creators/scores/get/)
+Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/), [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history/), [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related/), [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending/), [Xiaohongshu PGY creator costs and data summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/metrics/), [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics/), [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history/), [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/)
 
-Xiaohongshu PGY endpoints: [Xiaohongshu PGY keyword search index](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/history/), [Xiaohongshu PGY related keywords](https://dataxapi.com/apis/xiaohongshu/pgy/keywords/related/), [Xiaohongshu PGY creator search](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/), [Xiaohongshu PGY creator detail](https://dataxapi.com/apis/xiaohongshu/pgy/creators/get/), [Xiaohongshu PGY creator audience profile](https://dataxapi.com/apis/xiaohongshu/pgy/creators/audience/get/), [Xiaohongshu PGY creator metrics](https://dataxapi.com/apis/xiaohongshu/pgy/creators/metrics/), [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/)
-
-Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/)
+Xiaohongshu (RedNote) endpoints: [Xiaohongshu image search](https://dataxapi.com/apis/xiaohongshu/images/search/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [Xiaohongshu comment replies](https://dataxapi.com/apis/xiaohongshu/comments/replies/list/), [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list/), [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search/), [Xiaohongshu topic notes](https://dataxapi.com/apis/xiaohongshu/topics/notes/list/), [Xiaohongshu topic detail](https://dataxapi.com/apis/xiaohongshu/topics/get/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user notes](https://dataxapi.com/apis/xiaohongshu/users/notes/list/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related/), [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get/)
 
 Xiaohongshu Shop endpoints: [Xiaohongshu product detail](https://dataxapi.com/apis/xiaohongshu/shop/products/get/), [Xiaohongshu product reviews](https://dataxapi.com/apis/xiaohongshu/shop/products/reviews/list/), [Xiaohongshu product search](https://dataxapi.com/apis/xiaohongshu/shop/products/search/)
 
-How-to guides and answers: [How to look up Xiaohongshu (RedNote) PGY creator rates and audience](https://dataxapi.com/guides/xiaohongshu-pgy-creator-rates/), [How do I export Xiaohongshu (RedNote) data?](https://dataxapi.com/answers/export-xiaohongshu-data/), [Can ChatGPT read Xiaohongshu (RedNote)?](https://dataxapi.com/answers/can-chatgpt-read-xiaohongshu/)
+How-to guides and answers: [How to look up Xiaohongshu (RedNote) PGY creator rates and audience](https://dataxapi.com/guides/xiaohongshu-pgy-creator-rates/), [How do I export Xiaohongshu (RedNote) data?](https://dataxapi.com/answers/export-xiaohongshu-data/), [Can ChatGPT read Xiaohongshu (RedNote)?](https://dataxapi.com/answers/can-chatgpt-read-xiaohongshu/), [What is CPE on Xiaohongshu PGY and on Douyin Xingtu?](https://dataxapi.com/answers/xiaohongshu-pgy-cpe-vs-xingtu-cpe/), [What is Xiaohongshu PGY?](https://dataxapi.com/answers/what-is-xiaohongshu-pgy/), [How do I export all of a Xiaohongshu creator's notes to Excel? (2026)](https://dataxapi.com/answers/export-xiaohongshu-creator-notes-excel/), [How do I collect the numbers of many Xiaohongshu notes after a campaign? (2026)](https://dataxapi.com/answers/collect-xiaohongshu-note-metrics-after-campaign/), [Do Chanmama, Qiangua and Newrank have APIs? What if I want the raw data? (2026)](https://dataxapi.com/answers/chanmama-qiangua-newrank-api/), [How do I export Xiaohongshu PGY creators in bulk? (2026)](https://dataxapi.com/answers/export-xiaohongshu-pgy-creators/), [Creator (KOL) data from Douyin and Xiaohongshu: profiles, posts and rates (2026)](https://dataxapi.com/answers/douyin-xiaohongshu-creator-data/), [Xiaohongshu creator follower growth: followers day by day (2026)](https://dataxapi.com/answers/xiaohongshu-creator-follower-growth/), [How to find Xiaohongshu creators similar to one you like (2026)](https://dataxapi.com/answers/find-similar-xiaohongshu-creators/), [Xiaohongshu creator CPM, cost per engagement and cost per read: how to look them up (2026)](https://dataxapi.com/answers/xiaohongshu-creator-cpm-cost/), [Xiaohongshu cost per spillover store visit: what it is and how to get it (2026)](https://dataxapi.com/answers/xiaohongshu-spillover-store-visit-cost/), [Choosing Xiaohongshu creators in bulk: building a creator list by API (2026)](https://dataxapi.com/answers/xiaohongshu-kol-selection-api/), [Every figure on a Xiaohongshu PGY creator page: can an API get it? Field by field (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-creator-page-fields/), [Organic and promoted traffic on PGY notes: how to read organic reads alone (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-organic-vs-promoted-reads/), [Is a Xiaohongshu creator easy to reach and active? How to check (2026)](https://dataxapi.com/answers/xiaohongshu-creator-easy-to-reach-active/), [Where a Xiaohongshu creator's notes get their traffic: explore, search, following (2026)](https://dataxapi.com/answers/xiaohongshu-note-traffic-sources/), [Can PGY's find-creator filters be used through an API? (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-find-creator-filters-api/), [Can you see the reads and impressions of someone else's Xiaohongshu note? (2026)](https://dataxapi.com/answers/xiaohongshu-note-reads-impressions/), [Which values do PGY's creator filters take for category, feature, persona and location? The full list (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-filter-values/), [Shortlisting Xiaohongshu beauty and skincare creators in bulk by category, followers, rate and CPM (2026)](https://dataxapi.com/answers/xiaohongshu-beauty-skincare-creators/), [How to shortlist Xiaohongshu tech and gadget creators in bulk (2026)](https://dataxapi.com/answers/xiaohongshu-tech-creators/), [Xiaohongshu PGY or Douyin Xingtu: how they differ, and their creator data side by side (2026)](https://dataxapi.com/answers/xiaohongshu-pgy-vs-douyin-xingtu/), [How do I collect Xiaohongshu data? The official back ends, plugins, scrapers and data APIs (2026)](https://dataxapi.com/answers/how-to-collect-xiaohongshu-data/)
 
 Related: [All Xiaohongshu PGY endpoints](https://dataxapi.com/apis/xiaohongshu/pgy/), [All Xiaohongshu (RedNote) endpoints](https://dataxapi.com/apis/xiaohongshu/), [Creators data](https://dataxapi.com/categories/creator/), [The same thing on 2 platforms, side by side](https://dataxapi.com/roles/creators-search/), [The creator object's fields](https://dataxapi.com/docs/objects/creator/)
 
@@ -355,7 +380,7 @@ $0.0400 per call. The most one call can cost is $0.0400.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0400.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -363,4 +388,4 @@ Errors and timeouts are not charged; an empty result is charged $0.0400.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/xiaohongshu/pgy/creators/search/)

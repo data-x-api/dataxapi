@@ -4,11 +4,11 @@
 
 > 11 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## reddit.posts.comments.list
 
-Get a page of comments on a Reddit post by ID or link: text, commenter, score, reply count, time posted, with the first levels of replies. About 8 items a call, 200 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of comments on a Reddit post by ID or link: text, commenter, score, reply count, time posted, with the first levels of replies. About 8 items a call, 200 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Reddit post comments API
 - Request: `GET /v1/reddit/posts/comments/list`
@@ -17,7 +17,7 @@ Get a page of comments on a Reddit post by ID or link: text, commenter, score, r
 
 ## reddit.posts.get
 
-Get one Reddit post by ID or link: title, text, author, community, score, comment count. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Reddit post by ID or link: title, text, author, community, score, comment count. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit post detail API
 - Request: `GET /v1/reddit/posts/get`
@@ -26,7 +26,7 @@ Get one Reddit post by ID or link: title, text, author, community, score, commen
 
 ## reddit.posts.search
 
-Get a page of Reddit posts matching a search, by relevance, newest or top score, optionally within a period. About 7 items a call, 25 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of Reddit posts matching a search, by relevance, newest or top score, optionally within a period. About 7 items a call, 25 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit post search API
 - Request: `GET /v1/reddit/posts/search`
@@ -35,7 +35,7 @@ Get a page of Reddit posts matching a search, by relevance, newest or top score,
 
 ## reddit.posts.trending
 
-Get a page of the posts on Reddit's Popular feed: title, text, author, community, score, comment count. About 7 items a call, 25 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the posts on Reddit's Popular feed: title, text, author, community, score, comment count. About 7 items a call, 25 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit popular posts API
 - Request: `GET /v1/reddit/posts/trending`
@@ -44,16 +44,16 @@ Get a page of the posts on Reddit's Popular feed: title, text, author, community
 
 ## reddit.subreddits.posts.list
 
-Get a page of the posts of a Reddit community by its name, hot, newest or top score first. Up to 25 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the posts of a Reddit community by its name, hot, newest or top score first. Top score is of the last day unless window asks for the last week, month or year, or all time. Up to 25 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit community posts API
 - Request: `GET /v1/reddit/subreddits/posts/list`
-- Parameters: `id` (required), `sort`, `cursor`, `view`, `fields`
+- Parameters: `id` (required), `sort`, `window`, `cursor`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/reddit/subreddits/posts/list.md
 
 ## reddit.trends.list
 
-Get the searches trending on Reddit today, ranked in the order the platform lists them. About 6 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get the searches trending on Reddit today, ranked in the order the platform lists them. About 6 items a call, 20 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit trending searches API
 - Request: `GET /v1/reddit/trends/list`
@@ -62,7 +62,7 @@ Get the searches trending on Reddit today, ranked in the order the platform list
 
 ## reddit.users.get
 
-Get a Reddit user's public profile by username: display name, bio, when it was created, karma, post and comment counts. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get a Reddit user's public profile by username: display name, bio, when it was created, karma, post and comment counts. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit user profile API
 - Request: `GET /v1/reddit/users/get`
@@ -71,7 +71,7 @@ Get a Reddit user's public profile by username: display name, bio, when it was c
 
 ## reddit.users.posts.list
 
-Get a page of the posts a Reddit user has made, newest first. Up to 25 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the posts a Reddit user has made, newest first. Up to 25 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Reddit user posts API
 - Request: `GET /v1/reddit/users/posts/list`
@@ -80,7 +80,7 @@ Get a page of the posts a Reddit user has made, newest first. Up to 25 items a c
 
 ## reddit.subreddits.get
 
-Get a Reddit community by its name: description, members, users active and contributions made in the last week, when it was created. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get a Reddit community by its name: description, members, users active and contributions made in the last week, when it was created. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit community profile API
 - Request: `GET /v1/reddit/subreddits/get`
@@ -89,7 +89,7 @@ Get a Reddit community by its name: description, members, users active and contr
 
 ## reddit.users.subreddits.list
 
-Get the communities a Reddit user is active in by username: each one's name, members and icon, all in one page (215 of them were recorded for one account). About 40 items a call, 500 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get the communities a Reddit user is active in by username: each one's name, members and icon, all in one page (215 of them were recorded for one account). About 40 items a call, 500 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Reddit user active communities API
 - Request: `GET /v1/reddit/users/subreddits/list`

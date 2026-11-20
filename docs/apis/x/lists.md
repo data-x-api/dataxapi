@@ -48,7 +48,7 @@ No, the first 20 only. When it was recorded, the next page the platform offered 
 
 ### What if the list does not exist?
 
-The timeline does not answer with a 404: the source only says the request failed, so it comes back as an upstream error that may be retried once, and is not charged. The members and followers lists come back empty and are charged as an empty result.
+The timeline does not answer with a 404: it comes back as an error that may be retried once, and is not charged. The members and followers lists return an empty result.
 
 ### Do I need a X Lists or X account?
 
@@ -64,4 +64,4 @@ No. You hold one DataXAPI key: no X login, no cookie, no advertiser account.
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/x/lists/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/x/lists/)

@@ -1,6 +1,6 @@
 # Weibo post likers API
 
-Get the accounts that most recently liked a Weibo post by post ID, about 50 at a time: name, bio, avatar, verification, follower and following counts, number of posts. About 50 items a call, 100 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get the accounts that most recently liked a Weibo post by post ID, about 50 at a time: name, bio, avatar, verification and its kind, follower and following counts, number of posts, the gender and region their profiles give. About 50 items a call, 100 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/weibo/posts/likers/list`
 - ID: `weibo.posts.likers.list`
@@ -9,6 +9,7 @@ Get the accounts that most recently liked a Weibo post by post ID, about 50 at a
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: up to 100 a page, everything in one answer, no paging
 - Returns the standard account object, the same on every platform
+- `id` is in the link: `m.weibo.cn/detail/<id>`. Or pass the whole link as `url`.
 - [Run it in the Playground](https://dataxapi.com/console/playground/?capability=weibo.posts.likers.list&params=%7B%22id%22%3A%225352434046339577%22%7D)
 - In Chinese: [微博点赞用户 API](https://dataxapi.com/zh/apis/weibo/posts/likers/list/)
 
@@ -28,7 +29,8 @@ The first 5 rows of a response recorded 2026-10-13 03:27 UTC.
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `id` | text | Yes | Post ID, a string of digits. Example: `5352434046339577`. |
+| `id` | text | give exactly one of `id`, `url` | Post ID, a string of digits. With only a link or a share text, give it as url. Example: `5352434046339577`. |
+| `url` | text | give exactly one of `id`, `url` | Link to the post, pasted as it is: the site's https://weibo.com/<user>/… (digits or letters after it), the phone site's https://m.weibo.cn/detail/… or /status/…, or a whole share text with one of these in it. Example: `https://m.weibo.cn/detail/5352434046339577`. Full link: `https://m.weibo.cn/detail/5352434046339577`. Share text with a link inside: `看看这条微博 https://m.weibo.cn/detail/5352434046339577 来自微博`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -52,13 +54,17 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `metrics.followers` | integer | Followers. | `compact` | Yes |
 | `metrics.following` | integer | Following. | `compact` | Yes |
 | `metrics.posts` | integer | Posts published. | `compact` | Yes |
+| `ext.verified_type` | text | Kind of verification: person (an individual, the orange or gold V) or organization (the blue V of a company, a media outlet, a government body and the like); null when not verified. Values: `person`, `organization`. | `full` | Yes |
+| `ext.verified_reason` | text | What the verification says, in the platform's words (a brand's 官方微博 or a person's 数码博主, say); null where there is none. | `full` | Yes |
+| `ext.gender` | text | Gender as given on the profile: female or male. Values: `female`, `male`. | `full` | Yes |
+| `ext.location` | text | The region given on the profile (北京, 广东 深圳, say; 其他 where none was given), not the IP location. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 174 B, `standard` 381 B, `full` 381 B (measured on the response recorded 2026-10-13 03:27 UTC).
+Typical size of one item: `compact` 174 B, `standard` 381 B, `full` 474 B (measured on the response recorded 2026-10-13 03:27 UTC).
 
 ## Paging
 
@@ -71,12 +77,11 @@ Everything comes in one page; no cursor is issued.
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0020, once per call |
-| An empty result | $0.0020 |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -108,10 +113,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -133,6 +136,7 @@ curl -G "https://api.dataxapi.com/v1/weibo/posts/likers/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -143,6 +147,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -180,7 +185,7 @@ Add this to your MCP client, then ask your agent to call `weibo.posts.likers.lis
 
 From a response recorded 2026-10-13 03:27 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 19.0 KB in the standard view (8.9 KB compact, 19.0 KB full).
+Size as sent: 19.0 KB in the standard view (8.9 KB compact, 23.6 KB full).
 
 ```jsonc
 {
@@ -272,7 +277,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["id is required"],
+  "problems": ["give exactly one of id, url"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -293,6 +298,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -324,8 +332,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "b4ea746a-9fd0-4734-bb81-01dae7933930",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -333,6 +341,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 46k tokens as the platform's own JSON, 7,657 as DataXAPI's JSON, and 2,784 as an AI reads it through DataXAPI's MCP server: 94% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/weibo/posts/likers/list.example.json)
 
@@ -352,9 +362,11 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-More Social media data on other platforms: [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Kuaishou user profile](https://dataxapi.com/apis/kuaishou/users/get/), [Kuaishou user search](https://dataxapi.com/apis/kuaishou/users/search/), [Telegram channel profile](https://dataxapi.com/apis/telegram/channels/get/), [Facebook page profile](https://dataxapi.com/apis/facebook/pages/get/), [LinkedIn company page](https://dataxapi.com/apis/linkedin/companies/get/), [Threads user profile](https://dataxapi.com/apis/threads/users/get/), [Instagram user profile](https://dataxapi.com/apis/instagram/users/get/), [Instagram user search](https://dataxapi.com/apis/instagram/users/search/), [TikTok user profile](https://dataxapi.com/apis/tiktok/users/get/), [TikTok user search](https://dataxapi.com/apis/tiktok/users/search/), [X post retweeters](https://dataxapi.com/apis/x/posts/retweeters/list/), [X user followers](https://dataxapi.com/apis/x/users/followers/list/), [X user following](https://dataxapi.com/apis/x/users/following/list/), [X user profile](https://dataxapi.com/apis/x/users/get/), [X user search](https://dataxapi.com/apis/x/users/search/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/), [YouTube channel profile](https://dataxapi.com/apis/youtube/channels/get/)
+More Social media data on other platforms: [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Douyin user profile](https://dataxapi.com/apis/douyin/users/get/), [Douyin user search](https://dataxapi.com/apis/douyin/users/search/), [Kuaishou user profile](https://dataxapi.com/apis/kuaishou/users/get/), [Kuaishou user search](https://dataxapi.com/apis/kuaishou/users/search/), [Telegram channel profile](https://dataxapi.com/apis/telegram/channels/get/), [Facebook page profile](https://dataxapi.com/apis/facebook/pages/get/), [LinkedIn company page](https://dataxapi.com/apis/linkedin/companies/get/), [Threads user profile](https://dataxapi.com/apis/threads/users/get/), [Instagram user profile](https://dataxapi.com/apis/instagram/users/get/), [Instagram user search](https://dataxapi.com/apis/instagram/users/search/), [TikTok user profile](https://dataxapi.com/apis/tiktok/users/get/), [TikTok user search](https://dataxapi.com/apis/tiktok/users/search/), [X post retweeters](https://dataxapi.com/apis/x/posts/retweeters/list/), [X user followers](https://dataxapi.com/apis/x/users/followers/list/), [X user following](https://dataxapi.com/apis/x/users/following/list/), [X user profile](https://dataxapi.com/apis/x/users/get/), [X user search](https://dataxapi.com/apis/x/users/search/), [Xiaohongshu user profile](https://dataxapi.com/apis/xiaohongshu/users/get/), [Xiaohongshu user search](https://dataxapi.com/apis/xiaohongshu/users/search/)
 
-Weibo endpoints: [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/), [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [Weibo user followers](https://dataxapi.com/apis/weibo/users/followers/list/), [Weibo user profile](https://dataxapi.com/apis/weibo/users/get/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [Weibo user search](https://dataxapi.com/apis/weibo/users/search/)
+Weibo endpoints: [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/), [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [Weibo user followers](https://dataxapi.com/apis/weibo/users/followers/list/), [Weibo user profile](https://dataxapi.com/apis/weibo/users/get/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [Weibo user search](https://dataxapi.com/apis/weibo/users/search/), [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list/)
+
+How-to guides and answers: [Weibo data API: posts, comments and trending (2026)](https://dataxapi.com/answers/weibo-data-apis/)
 
 Related: [All Weibo endpoints](https://dataxapi.com/apis/weibo/), [Social media data](https://dataxapi.com/categories/social/), [The account object's fields](https://dataxapi.com/docs/objects/account/)
 
@@ -366,7 +378,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Errors, timeouts and objects that do not exist are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -378,4 +390,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/weibo/posts/likers/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/weibo/posts/likers/list/)

@@ -52,11 +52,15 @@ No. The Creative Center gives no dates, so `first_shown_at` and `last_shown_at` 
 
 ### Where does an ad's ID come from?
 
-From the search: each result's `id` is a string of digits that goes unchanged to the ad detail. An ID nobody has is answered `not_found`, which is not charged.
+From the search: each result's `id` is a string of digits that goes unchanged to the ad detail. An ID nobody has is answered `not_found`, charged at the endpoint's price.
 
 ### Do I need a Creative Center or TikTok account?
 
 No. You hold one DataXAPI key: no TikTok login, no cookie, no advertiser account.
+
+## How-to guides and answers
+
+- [How do I search TikTok's Ad Library in bulk? (2026)](https://dataxapi.com/answers/tiktok-ad-library-bulk-search.md)
 
 [TikTok API](https://dataxapi.com/apis/tiktok.md)
 
@@ -64,4 +68,4 @@ No. You hold one DataXAPI key: no TikTok login, no cookie, no advertiser account
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/tiktok/creative_center/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/tiktok/creative_center/)

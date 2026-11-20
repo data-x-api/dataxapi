@@ -1,6 +1,6 @@
 # Weibo post detail API
 
-Get one Weibo post by ID: the whole text (of a long post too), author, likes, comments, reposts, reads, pictures, topics. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Weibo post by ID: the whole text (of a long post too), author, likes, comments, reposts, reads (plays on a video post), pictures, topics, IP location. One object a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/weibo/posts/get`
 - ID: `weibo.posts.get`
@@ -9,6 +9,7 @@ Get one Weibo post by ID: the whole text (of a long post too), author, likes, co
 - Live status is not on this page, which is a snapshot. Read it with `GET https://api.dataxapi.com/v1/catalog/status`
 - Returns: 1 object, one post object
 - Returns the standard post object, the same on every platform
+- `id` is in the link: `m.weibo.cn/detail/<id>`. Or pass the whole link as `url`.
 - [Run it in the Playground](https://dataxapi.com/console/playground/?capability=weibo.posts.get&params=%7B%22id%22%3A%225352571897120856%22%7D)
 - In Chinese: [微博详情 API](https://dataxapi.com/zh/apis/weibo/posts/get/)
 
@@ -29,7 +30,8 @@ The first 6 rows of a response recorded 2026-10-12 19:01 UTC.
 
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
-| `id` | text | Yes | Post ID, a string of digits (the id the post lists return). Example: `5352571897120856`. |
+| `id` | text | give exactly one of `id`, `url` | Post ID, a string of digits. With only a link or a share text, give it as url. Example: `5352571897120856`. |
+| `url` | text | give exactly one of `id`, `url` | Link to the post, pasted as it is: the site's https://weibo.com/<user>/… (digits or letters after it), the phone site's https://m.weibo.cn/detail/… or /status/…, or a whole share text with one of these in it. Example: `https://m.weibo.cn/detail/5352571897120856`. Full link: `https://m.weibo.cn/detail/5352571897120856`. Share text with a link inside: `看看这条微博 https://m.weibo.cn/detail/5352571897120856 来自微博`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -60,7 +62,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `metrics.comments` | integer | Comments. | `compact` | Yes |
 | `metrics.shares` | integer | Shares. | `compact` | The platform has none |
 | `metrics.favorites` | integer | Saves. | `compact` | Not provided here |
-| `metrics.views` | integer | Views. On this platform: Reads; null on a post that shows no read count. | `compact` | Yes |
+| `metrics.views` | integer | Views. On this platform: Reads; on a video post of the author's own, its plays (views). Null on a post that shows no reads and on a repost of a video. | `compact` | Yes |
 | `metrics.reposts` | integer | Reposts. On this platform: Reposts. | `compact` | Yes |
 | `images` | list of link | Image addresses. | `standard` | Yes |
 | `hashtags` | list of text | Hashtags, without the #. | `standard` | Yes |
@@ -73,6 +75,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `parent_id` | text | ID of the item it replies to directly; otherwise null. | `compact` | The platform has none |
 | `root_id` | text | ID of the first-level reply its thread hangs under. | `compact` | The platform has none |
 | `ext.text_truncated` | yes/no | Whether the text is cut short: a long post comes with its beginning only in lists and search; get the post for the whole. | `full` | Yes |
+| `ext.ip_location` | text | IP location as the platform shows it. | `full` | Yes |
 | `ext.reposted_id` | text | ID of the post it reposts; null when it is not a repost. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
@@ -80,7 +83,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 736 B, `standard` 1.0 KB, `full` 1.0 KB (measured on the response recorded 2026-10-12 19:01 UTC).
+Typical size of one item: `compact` 736 B, `standard` 1.0 KB, `full` 1.1 KB (measured on the response recorded 2026-10-12 19:01 UTC).
 
 ## Paging
 
@@ -91,15 +94,14 @@ One object per call: there is nothing to page.
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0020, once per call |
-| The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-The answer is 404 `not_found` and nothing is charged. `reason` says which: `not_found` (it does not exist) or `private_or_deleted`.
+The answer is 404 `not_found`. `charged` and `amount` in the body say what this one cost. `reason` says which: `not_found` (it does not exist) or `private_or_deleted`.
 
 ## Errors
 
@@ -107,7 +109,7 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 
 | HTTP | Code | Meaning | Charged | Retry |
 | --- | --- | --- | --- | --- |
-| 400 | `invalid_params` | A parameter is invalid | No | After a fix |
+| 400 | `invalid_params` | A parameter is invalid | As the answer's charged field says | After a fix |
 | 400 | `request_not_served` | This combination of parameters cannot be served at present | No | After a fix |
 | 400 | `max_price_exceeded` | The most this call could cost is above the limit you set | No | After a fix |
 | 401 | `unauthorized` | No credential was sent, or it is invalid, disabled or expired | No | No |
@@ -117,7 +119,7 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 403 | `account_suspended` | The account is suspended | No | No |
 | 403 | `forbidden` | This credential may not use that option | No | No |
 | 403 | `key_scope_denied` | This key may not call this endpoint | No | No |
-| 404 | `not_found` | The object does not exist, is private or was deleted | No | No |
+| 404 | `not_found` | The object does not exist, is private or was deleted | As the answer's charged field says | No |
 | 404 | `run_not_found` | No run under this run ID | No | No |
 | 409 | `call_in_progress` | The call under this idempotency key is still running; ask again with the same key shortly | No | With the same idempotency key |
 | 409 | `idempotency_conflict` | This idempotency key was used for a different request | No | After a fix |
@@ -127,10 +129,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -152,6 +152,7 @@ curl -G "https://api.dataxapi.com/v1/weibo/posts/get" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -162,6 +163,7 @@ print(result["data"]["item"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -273,7 +275,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": ["id is required"],
+  "problems": ["give exactly one of id, url"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -294,6 +296,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -308,7 +313,8 @@ An example written to the specification, not a recorded response.
   "request_id": "b57e8324-df68-429b-b019-abb800393956",
   "message": "The object does not exist, is private or was deleted",
   "message_zh": "对象不存在、私密或已删除",
-  "charged": false,
+  "charged": true,
+  "amount": "0.002",
   "retry": "no",
   "retry_after_seconds": null,
   "param": null,
@@ -325,8 +331,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "d495319d-ea5f-4d1a-9d8f-a20b473880fc",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -334,6 +340,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 7,330 tokens as the platform's own JSON, 529 as DataXAPI's JSON, and 327 as an AI reads it through DataXAPI's MCP server: 96% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/weibo/posts/get.example.json)
 
@@ -355,9 +363,9 @@ Part of DataXAPI's Social media data. The same key also works for: Creators, Ads
 
 The same thing on other platforms: [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/), [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get/), [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/), [Telegram message detail](https://dataxapi.com/apis/telegram/messages/get/), [X post detail](https://dataxapi.com/apis/x/posts/get/), [Facebook post detail](https://dataxapi.com/apis/facebook/posts/get/), [LinkedIn post detail](https://dataxapi.com/apis/linkedin/posts/get/), [Threads post detail](https://dataxapi.com/apis/threads/posts/get/), [Instagram post detail](https://dataxapi.com/apis/instagram/posts/get/), [TikTok video detail](https://dataxapi.com/apis/tiktok/videos/get/), [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get/), [YouTube video detail](https://dataxapi.com/apis/youtube/videos/get/), [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get/), [WeChat Official Account article detail](https://dataxapi.com/apis/wechat_mp/articles/get/), [Reddit post detail](https://dataxapi.com/apis/reddit/posts/get/), [Zhihu answer detail](https://dataxapi.com/apis/zhihu/answers/get/), [Zhihu article detail](https://dataxapi.com/apis/zhihu/articles/get/), [Zhihu pin detail](https://dataxapi.com/apis/zhihu/pins/get/), [Zhihu question detail](https://dataxapi.com/apis/zhihu/questions/get/), [Pinterest pin detail](https://dataxapi.com/apis/pinterest/pins/get/)
 
-More Social media data on other platforms: [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/)
+Weibo endpoints: [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/), [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [Weibo user followers](https://dataxapi.com/apis/weibo/users/followers/list/), [Weibo user profile](https://dataxapi.com/apis/weibo/users/get/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [Weibo user search](https://dataxapi.com/apis/weibo/users/search/), [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list/)
 
-Weibo endpoints: [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/), [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/), [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/), [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list/), [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [Weibo user followers](https://dataxapi.com/apis/weibo/users/followers/list/), [Weibo user profile](https://dataxapi.com/apis/weibo/users/get/), [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/), [Weibo user search](https://dataxapi.com/apis/weibo/users/search/)
+How-to guides and answers: [My Weibo scraper got blocked: what now? (2026)](https://dataxapi.com/answers/weibo-scraper-blocked/), [How do I let my AI read Zhihu, Bilibili and Weibo? (2026)](https://dataxapi.com/answers/ai-read-zhihu-bilibili-weibo/), [What does status 432 mean on Weibo? (2026)](https://dataxapi.com/answers/weibo-432-client-error/), [Weibo data API: posts, comments and trending (2026)](https://dataxapi.com/answers/weibo-data-apis/), [Weibo MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/weibo-mcp/), [What are Weibo mid, uid and bid? (2026)](https://dataxapi.com/answers/weibo-mid-uid-bid/), [Chinese social media data API FAQ, platform by platform (2026)](https://dataxapi.com/answers/social-media-data-api-faq/), [Weibo API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/weibo-api-for-ai-agents/), [Weibo video plays by API (2026)](https://dataxapi.com/answers/weibo-video-play-count/)
 
 Skills that use this endpoint: [Breaking down a hit](https://dataxapi.com/skills/viral/)
 
@@ -371,12 +379,12 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged.
+Errors and timeouts are not charged.
 
 ### What happens if the object does not exist?
 
-The answer is 404 not_found and nothing is charged. reason says which: not_found (it does not exist) or private_or_deleted.
+The answer is 404 not_found. charged and amount in the body say what this one cost. reason says which: not_found (it does not exist) or private_or_deleted.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/weibo/posts/get/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/weibo/posts/get/)

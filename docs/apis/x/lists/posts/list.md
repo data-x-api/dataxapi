@@ -1,6 +1,6 @@
 # X list posts API
 
-Get a page of the posts on an X list's timeline by the list's ID, newest first, about 100 a page. Up to 100 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of the posts on an X list's timeline by the list's ID, newest first, about 100 a page. Up to 100 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/x/lists/posts/list`
 - ID: `x.lists.posts.list`
@@ -56,7 +56,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `author.username` | text | Author's handle. | `compact` | Yes |
 | `author.name` | text | Author's display name. | `compact` | Yes |
 | `author.avatar_url` | link | Author's avatar. | `standard` | Yes |
-| `author.verified` | yes/no | Whether the author is verified. | `standard` | Yes |
+| `author.verified` | yes/no | Whether the author is verified. On this platform: Whether it carries a badge of any colour: the blue one of a paid subscription, the gold one of a business and the grey one of a government or official body are all true, so it does not mean a paid subscription. | `standard` | Yes |
 | `author.followers` | integer | Author's follower count. | `standard` | Yes |
 | `metrics` | object | Engagement counts. | `compact` | Yes |
 | `metrics.likes` | integer | Likes. | `compact` | Yes |
@@ -82,7 +82,7 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 383 B, `standard` 543 B, `full` 563 B (measured on the response recorded 2026-10-12 19:10 UTC).
+Typical size of one item: `compact` 383 B, `standard` 543 B, `full` 562 B (measured on the response recorded 2026-10-12 19:10 UTC).
 
 ## Paging
 
@@ -96,15 +96,14 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
-A list that does not exist is not answered with a 404: the source only says the request failed, without saying why, so it is reported as an upstream error that may be retried once and is not charged.
+A list that does not exist is not answered with a 404: it is reported as an error that may be retried once and is not charged.
 
 ## Errors
 
@@ -134,11 +133,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -160,6 +157,7 @@ curl -G "https://api.dataxapi.com/v1/x/lists/posts/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -170,6 +168,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -207,7 +206,7 @@ Add this to your MCP client, then ask your agent to call `x.lists.posts.list`.
 
 From a response recorded 2026-10-12 19:10 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 53.2 KB in the standard view (37.6 KB compact, 55.0 KB full).
+Size as sent: 53.1 KB in the standard view (37.6 KB compact, 55.0 KB full).
 
 ```jsonc
 {
@@ -352,6 +351,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -364,8 +366,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "b5e25db0-b77d-4b03-a689-4d4f4db2ecc4",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -373,6 +375,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 44k tokens as the platform's own JSON, 17k as DataXAPI's JSON, and 13k as an AI reads it through DataXAPI's MCP server: 71% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/x/lists/posts/list.example.json)
 
@@ -410,7 +414,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -418,8 +422,8 @@ Errors and timeouts are not charged; an empty result is charged $0.0020.
 
 ### What happens if the object does not exist?
 
-A list that does not exist is not answered with a 404: the source only says the request failed, without saying why, so it is reported as an upstream error that may be retried once and is not charged.
+A list that does not exist is not answered with a 404: it is reported as an error that may be retried once and is not charged.
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/x/lists/posts/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/x/lists/posts/list/)

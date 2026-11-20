@@ -1,6 +1,6 @@
 # Zhihu hot list API
 
-Get Zhihu's hot list: the questions on it, their rank, heat (approximate) and answer count; an entry's ID is its question's. About 30 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get Zhihu's hot list: the questions on it, their rank, heat (approximate), answer and follower counts, when each was asked, its summary and picture; an entry's ID is its question's. About 30 items a call, 50 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/zhihu/trends/list`
 - ID: `zhihu.trends.list`
@@ -42,13 +42,17 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `rank` | integer | Position on the board, from 1; a pinned entry has none. | `compact` | Yes |
 | `heat` | integer | The platform's heat score. | `compact` | Yes |
 | `ext.answers` | integer | Answers the listed question has. | `full` | Yes |
+| `ext.followers` | integer | People following the listed question. | `full` | Yes |
+| `ext.excerpt` | text | The listed question's summary: the words the list gives under it. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `full` | Yes |
+| `ext.created_at` | time | When the question was asked. | `full` | Yes |
+| `ext.cover_url` | link | Address of the picture the list shows with the entry; null where it shows none. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 206 B, `standard` 206 B, `full` 228 B (measured on the response recorded 2026-10-12 18:53 UTC).
+Typical size of one item: `compact` 206 B, `standard` 206 B, `full` 1.0 KB (measured on the response recorded 2026-10-12 18:53 UTC).
 
 ## Paging
 
@@ -63,11 +67,10 @@ Answers come from a shared snapshot refreshed every 10 minutes; `meta.cached` sa
 | Case | Charged |
 | --- | --- |
 | A result with data | $0.0020, once per call |
-| An empty result | $0.0020 |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -94,10 +97,8 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -118,6 +119,7 @@ curl "https://api.dataxapi.com/v1/zhihu/trends/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -128,6 +130,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -165,7 +168,7 @@ Add this to your MCP client, then ask your agent to call `zhihu.trends.list`.
 
 From a response recorded 2026-10-12 18:53 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 6.4 KB in the standard view (6.4 KB compact, 7.1 KB full).
+Size as sent: 6.4 KB in the standard view (6.4 KB compact, 30.7 KB full).
 
 ```jsonc
 {
@@ -277,6 +280,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -289,8 +295,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "89ba6f7b-9cae-4605-b78c-408065388441",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -298,6 +304,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 16k tokens as the platform's own JSON, 1,992 as DataXAPI's JSON, and 1,919 as an AI reads it through DataXAPI's MCP server: 88% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/zhihu/trends/list.example.json)
 
@@ -317,11 +325,13 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-The same thing on other platforms: [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Kuaishou hot list](https://dataxapi.com/apis/kuaishou/trends/list/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [X trends](https://dataxapi.com/apis/x/trends/list/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Reddit trending searches](https://dataxapi.com/apis/reddit/trends/list/)
+The same thing on other platforms: [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Douyin hot search board](https://dataxapi.com/apis/douyin/trends/list/), [Kuaishou hot list](https://dataxapi.com/apis/kuaishou/trends/list/), [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/), [X trends](https://dataxapi.com/apis/x/trends/list/), [Xiaohongshu trends](https://dataxapi.com/apis/xiaohongshu/trends/list/), [Reddit trending searches](https://dataxapi.com/apis/reddit/trends/list/), [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list/)
 
-More Social media data on other platforms: [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list/), [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/), [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/)
+More Social media data on other platforms: [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list/), [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/)
 
 Zhihu endpoints: [Zhihu answer comments](https://dataxapi.com/apis/zhihu/answers/comments/list/), [Zhihu answer detail](https://dataxapi.com/apis/zhihu/answers/get/), [Zhihu article detail](https://dataxapi.com/apis/zhihu/articles/get/), [Zhihu column articles](https://dataxapi.com/apis/zhihu/columns/articles/list/), [Zhihu comment replies](https://dataxapi.com/apis/zhihu/comments/replies/list/), [Zhihu pin detail](https://dataxapi.com/apis/zhihu/pins/get/), [Zhihu content search](https://dataxapi.com/apis/zhihu/posts/search/), [Zhihu question answers](https://dataxapi.com/apis/zhihu/questions/answers/list/), [Zhihu question detail](https://dataxapi.com/apis/zhihu/questions/get/), [Zhihu hot list](https://dataxapi.com/apis/zhihu/trends/list/), [Zhihu user answers](https://dataxapi.com/apis/zhihu/users/answers/list/), [Zhihu user articles](https://dataxapi.com/apis/zhihu/users/articles/list/), [Zhihu user followers](https://dataxapi.com/apis/zhihu/users/followers/list/), [Zhihu user profile](https://dataxapi.com/apis/zhihu/users/get/), [Zhihu user pins](https://dataxapi.com/apis/zhihu/users/pins/list/), [Zhihu user search](https://dataxapi.com/apis/zhihu/users/search/)
+
+How-to guides and answers: [My Zhihu scraper stopped working: what now? (2026)](https://dataxapi.com/answers/zhihu-scraper-not-working/), [Zhihu API: questions, answers and comments (2026)](https://dataxapi.com/answers/zhihu-data-apis/), [China social data MCP for Claude and Cursor: Xiaohongshu, Douyin, WeChat (2026)](https://dataxapi.com/answers/china-social-data-mcp/), [Zhihu MCP server for Claude and Cursor (2026)](https://dataxapi.com/answers/zhihu-mcp/), [China trending API: Douyin, Weibo, Zhihu and Bilibili hot lists (2026)](https://dataxapi.com/answers/china-trending-api/), [How to find Zhihu question and answer ids (2026)](https://dataxapi.com/answers/zhihu-question-answer-id/), [Zhihu API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/zhihu-api-for-ai-agents/)
 
 Skills that use this endpoint: [Trends and topics](https://dataxapi.com/skills/trends/)
 
@@ -337,7 +347,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors and timeouts are not charged; an empty result is charged $0.0020.
+Errors and timeouts are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -345,4 +355,4 @@ About 30 items a page, 50 at most. The page size is the platform's; limit is not
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/zhihu/trends/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/zhihu/trends/list/)

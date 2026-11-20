@@ -1,6 +1,6 @@
 # TikTok user followers API
 
-Get a page of the accounts following a TikTok user, by handle, 50 a page, newest followers first: handle, name, bio, follower, following and video counts, likes received. Up to 50 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the accounts following a TikTok user, by handle, 50 a page, newest followers first: handle, name, bio, follower, following and video counts, likes received, and each account's country or region and language, for where the followers are. Up to 50 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Endpoint: `GET https://api.dataxapi.com/v1/tiktok/users/followers/list`
 - ID: `tiktok.users.followers.list`
@@ -55,13 +55,15 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `metrics.posts` | integer | Posts published. | `compact` | Yes |
 | `ext.sec_uid` | text | The platform's other account ID (secUid). | `full` | Yes |
 | `ext.likes` | integer | Likes received across the account's posts. | `full` | Yes |
+| `ext.region` | text | The country or region the platform keeps for the account, as a two-letter code. | `full` | Yes |
+| `ext.language` | text | The language the account uses, as a code (en, vi, say). | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 212 B, `standard` 576 B, `full` 684 B (measured on the response recorded 2026-10-12 22:05 UTC).
+Typical size of one item: `compact` 212 B, `standard` 576 B, `full` 714 B (measured on the response recorded 2026-10-12 22:05 UTC).
 
 ## Paging
 
@@ -75,12 +77,11 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | --- | --- |
 | A result with data | $0.0020, once per call |
 | Each further page | charged as a call of its own |
-| An empty result | $0.0020 |
 | The object does not exist (404) | not charged |
-| Invalid parameters, a failure of ours or of the data source, a timeout | not charged |
+| Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-10-18 19:59 UTC, under price book 2, in effect since 2026-10-17 11:00 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-20 07:17 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -115,11 +116,9 @@ Every error has the same structure: `code`, `message`, `charged`, `retry`, `retr
 | 429 | `uncharged_cost_limit` | Too many of this account's calls today returned nothing and were not charged; endpoints of this kind can be called again tomorrow (UTC) | No | Yes |
 | 500 | `settlement_unknown` | Whether this call settled is not known; ask again with the same idempotency key, or look it up by request ID | Unknown: look the call up | With the same idempotency key |
 | 500 | `internal_error` | The service failed | No | Yes |
-| 502 | `upstream_failed` | The data source failed | No | Yes |
-| 502 | `upstream_changed` | The data source returned an unexpected structure | No | Yes |
-| 502 | `upstream_unclear` | The data source's answer could not be interpreted; retry at most once | No | Once |
-| 502 | `cursor_unavailable` | The data source this cursor belongs to is unavailable; retry later or start again from the first page | No | Yes |
-| 503 | `upstream_busy` | The data source is busy; retry shortly | No | Yes |
+| 502 | `upstream_failed` | No result came back this time and nothing was charged; retry shortly | No | Yes |
+| 502 | `cursor_unavailable` | This cursor is unavailable just now; retry later or start again from the first page | No | Yes |
+| 503 | `upstream_busy` | Busy just now; retry shortly | No | Yes |
 | 503 | `capability_paused` | This endpoint is paused | No | Yes |
 | 503 | `overloaded` | The service is busy; retry shortly | No | Yes |
 | 504 | `timeout` | The data did not arrive in time; retry with the same idempotency key | No | Yes |
@@ -141,6 +140,7 @@ curl -G "https://api.dataxapi.com/v1/tiktok/users/followers/list" \
 ### Python
 
 ```python
+# pip install dataxapi
 from dataxapi import DataXAPI
 
 dx = DataXAPI()  # reads DATAXAPI_API_KEY
@@ -151,6 +151,7 @@ print(result["data"]["items"])
 ### TypeScript
 
 ```typescript
+// npm i @dataxapi/sdk
 import { DataXAPI } from "@dataxapi/sdk";
 
 const dx = new DataXAPI(); // reads DATAXAPI_API_KEY
@@ -188,7 +189,7 @@ Add this to your MCP client, then ask your agent to call `tiktok.users.followers
 
 From a response recorded 2026-10-12 22:05 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 28.6 KB in the standard view (10.8 KB compact, 33.9 KB full).
+Size as sent: 28.6 KB in the standard view (10.8 KB compact, 35.3 KB full).
 
 ```jsonc
 {
@@ -301,6 +302,9 @@ An example written to the specification, not a recorded response.
   "param": null,
   "required": "0.002",
   "available": "0",
+  "top_up_url": "https://dataxapi.com/console/billing/?amount=10",
+  "next_step": "Top up at top_up_url, then send the same request again, unchanged. Nothing was charged for this one.",
+  "next_step_zh": "到 top_up_url 充值，到账后把同一个请求原样再发一次。这次没有扣钱。",
   "docs_url": "https://dataxapi.com/docs/errors#insufficient_balance"
 }
 ```
@@ -332,8 +336,8 @@ An example written to the specification, not a recorded response.
 {
   "code": "upstream_failed",
   "request_id": "bb746edb-ce55-406d-914c-a9c4809a2823",
-  "message": "The data source failed",
-  "message_zh": "数据来源出错",
+  "message": "No result came back this time and nothing was charged; retry shortly",
+  "message_zh": "这次没有取到结果，没有扣费，可以稍后重试",
   "charged": false,
   "retry": "yes",
   "retry_after_seconds": null,
@@ -341,6 +345,8 @@ An example written to the specification, not a recorded response.
   "docs_url": "https://dataxapi.com/docs/errors#upstream_failed"
 }
 ```
+
+This recorded response is 162k tokens as the platform's own JSON, 12k as DataXAPI's JSON, and 3,595 as an AI reads it through DataXAPI's MCP server: 98% fewer (counted 2026-11-06).
 
 [This example as a JSON file](https://dataxapi.com/apis/tiktok/users/followers/list.example.json)
 
@@ -370,6 +376,8 @@ TikTok Creative Center endpoints: [TikTok Creative Center Top Ad detail](https:/
 
 TikTok Shop endpoints: [TikTok Shop product detail](https://dataxapi.com/apis/tiktok/shop/products/get/), [TikTok Shop product reviews](https://dataxapi.com/apis/tiktok/shop/products/reviews/list/), [TikTok Shop product search](https://dataxapi.com/apis/tiktok/shop/products/search/), [TikTok Shop seller products](https://dataxapi.com/apis/tiktok/shop/sellers/products/list/)
 
+How-to guides and answers: [Which countries are a TikTok account's followers from? Followers by country and language (2026)](https://dataxapi.com/answers/tiktok-follower-countries/)
+
 Related: [All TikTok endpoints](https://dataxapi.com/apis/tiktok/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 4 platforms, side by side](https://dataxapi.com/roles/accounts-followers-list/), [The account object's fields](https://dataxapi.com/docs/objects/account/)
 
 ## Questions
@@ -380,7 +388,7 @@ $0.0020 per call. The most one call can cost is $0.0020.
 
 ### When am I not charged?
 
-Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Errors, timeouts and objects that do not exist are not charged.
 
 ### How many items does one call return, and how do I get the next page?
 
@@ -392,4 +400,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/apis/tiktok/users/followers/list/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/tiktok/users/followers/list/)

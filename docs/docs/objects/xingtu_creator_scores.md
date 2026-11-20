@@ -19,32 +19,32 @@ A field the platform cannot give is left out of the item and named in `meta.unav
 | `overall.score` | number | `compact` | The score, 0 to 100 |
 | `overall.average` | number | `compact` | Average of comparable creators on this score |
 | `overall.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `overall.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `overall.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 | `reach` | object | `compact` | Reach score |
 | `reach.score` | number | `compact` | The score, 0 to 100 |
 | `reach.average` | number | `compact` | Average of comparable creators on this score |
 | `reach.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `reach.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `reach.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 | `seeding` | object | `compact` | Seeding score: how well the creator's videos raise interest in products |
 | `seeding.score` | number | `compact` | The score, 0 to 100 |
 | `seeding.average` | number | `compact` | Average of comparable creators on this score |
 | `seeding.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `seeding.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `seeding.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 | `conversion` | object | `compact` | Conversion score |
 | `conversion.score` | number | `compact` | The score, 0 to 100 |
 | `conversion.average` | number | `compact` | Average of comparable creators on this score |
 | `conversion.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `conversion.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `conversion.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 | `cooperation` | object | `compact` | Cooperation score |
 | `cooperation.score` | number | `compact` | The score, 0 to 100 |
 | `cooperation.average` | number | `compact` | Average of comparable creators on this score |
 | `cooperation.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `cooperation.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `cooperation.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 | `value_for_money` | object | `compact` | Value-for-money score |
 | `value_for_money.score` | number | `compact` | The score, 0 to 100 |
 | `value_for_money.average` | number | `compact` | Average of comparable creators on this score |
 | `value_for_money.rank` | integer | `compact` | Rank on this score, 1 being the highest |
-| `value_for_money.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5% |
+| `value_for_money.rank_share` | number | `compact` | How far from the top the rank is, 0 to 1: 0.05 is the top 5%. Given to four decimals, so a rank in about the top hundred reads 0 |
 
 ## Endpoints that return Xingtu creator scores
 
@@ -103,8 +103,8 @@ One item from `douyin.xingtu.creators.scores.get`, as recorded 2026-10-13 03:26 
 
 ## Other objects
 
-[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Topic object](https://dataxapi.com/docs/objects/topic/)
+[Post object](https://dataxapi.com/docs/objects/post/), [Comment object](https://dataxapi.com/docs/objects/comment/), [Account object](https://dataxapi.com/docs/objects/account/), [Trend object](https://dataxapi.com/docs/objects/trend/), [Transcript object](https://dataxapi.com/docs/objects/transcript/), [Creator rates object](https://dataxapi.com/docs/objects/creator_rates/), [Community object](https://dataxapi.com/docs/objects/community/), [Product object](https://dataxapi.com/docs/objects/product/), [Review object](https://dataxapi.com/docs/objects/review/), [Keyword index history object](https://dataxapi.com/docs/objects/keyword_history/), [Related keyword object](https://dataxapi.com/docs/objects/keyword_related/), [Keyword audience object](https://dataxapi.com/docs/objects/keyword_audience/), [Account recent change object](https://dataxapi.com/docs/objects/account_history/), [Brand index history object](https://dataxapi.com/docs/objects/brand_history/), [Brand index averages object](https://dataxapi.com/docs/objects/brand_metrics/), [Creator object](https://dataxapi.com/docs/objects/creator/), [Audience object](https://dataxapi.com/docs/objects/audience/), [Xingtu creator metrics object](https://dataxapi.com/docs/objects/xingtu_creator_metrics/), [Xingtu creator video object](https://dataxapi.com/docs/objects/xingtu_creator_post/), [PGY creator metrics object](https://dataxapi.com/docs/objects/pgy_creator_metrics/), [PGY creator note object](https://dataxapi.com/docs/objects/pgy_creator_post/), [PGY note detail object](https://dataxapi.com/docs/objects/pgy_note/), [Ad object](https://dataxapi.com/docs/objects/ad/), [Advertiser object](https://dataxapi.com/docs/objects/advertiser/), [Douyin trend-index creator metrics object](https://dataxapi.com/docs/objects/index_creator_metrics/), [Xingtu creator content keywords object](https://dataxapi.com/docs/objects/xingtu_creator_keywords/), [Xingtu creator content mix object](https://dataxapi.com/docs/objects/xingtu_creator_content_mix/), [Xingtu creator conversion object](https://dataxapi.com/docs/objects/xingtu_creator_conversion/), [Xingtu campaign object](https://dataxapi.com/docs/objects/xingtu_campaign/), [Channels collection object](https://dataxapi.com/docs/objects/channels_collection/), [Channels share link object](https://dataxapi.com/docs/objects/channels_share_link/), [Topic object](https://dataxapi.com/docs/objects/topic/), [Account owner object](https://dataxapi.com/docs/objects/account_owner/), [Mini program object](https://dataxapi.com/docs/objects/miniprogram/), [Follower history object](https://dataxapi.com/docs/objects/follower_history/), [PGY creator costs and summary object](https://dataxapi.com/docs/objects/pgy_creator_costs/), [PGY creator follower summary object](https://dataxapi.com/docs/objects/pgy_creator_followers/), [PGY creator core figures history object](https://dataxapi.com/docs/objects/pgy_creator_cost_history/)
 
 ---
 
-Last checked 2026-10-18 19:59 UTC. Catalog revision c48ce454ae6c4c65. [HTML version](https://dataxapi.com/docs/objects/xingtu_creator_scores/)
+Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/xingtu_creator_scores/)

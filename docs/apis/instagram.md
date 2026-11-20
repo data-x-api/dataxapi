@@ -4,11 +4,11 @@
 
 > 8 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2.
+Generated from catalog revision 720fc3ea8dadb865, price book 19.
 
 ## instagram.comments.replies.list
 
-Get a page of the replies to an Instagram comment, by the comment's ID and its post's shortcode: text, replier, time posted. Up to 15 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the replies to an Instagram comment, by the comment's ID and its post's shortcode: text, replier, time posted. Up to 15 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Instagram comment replies API
 - Request: `GET /v1/instagram/comments/replies/list`
@@ -17,7 +17,7 @@ Get a page of the replies to an Instagram comment, by the comment's ID and its p
 
 ## instagram.hashtags.posts.list
 
-Get a page of the newest Instagram posts under a hashtag, by its name, about 33 a page: caption, author's ID, like and comment counts, time posted, image. About 33 items a call, 35 at most; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of the newest Instagram posts under a hashtag, by its name, about 33 a page: caption, author's ID, like and comment counts, time posted, image. About 33 items a call, 35 at most; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Instagram hashtag posts API
 - Request: `GET /v1/instagram/hashtags/posts/list`
@@ -26,7 +26,7 @@ Get a page of the newest Instagram posts under a hashtag, by its name, about 33 
 
 ## instagram.posts.comments.list
 
-Get a page of comments on an Instagram post or reel by shortcode or link, about 15 a page, newest first: text, commenter, likes, time posted. Up to 15 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged; an empty result is charged $0.0020.
+Get a page of comments on an Instagram post or reel by shortcode or link, about 15 a page, newest first: text, commenter, likes, time posted. Up to 15 items a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Instagram post comments API
 - Request: `GET /v1/instagram/posts/comments/list`
@@ -35,7 +35,7 @@ Get a page of comments on an Instagram post or reel by shortcode or link, about 
 
 ## instagram.posts.get
 
-Get one Instagram post or reel by shortcode or link: caption, author, like, comment and play counts, image and video addresses. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get one Instagram post or reel by shortcode or link: caption, author, like, comment and play counts, image and video addresses, and the other authors of a collab post. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Instagram post detail API
 - Request: `GET /v1/instagram/posts/get`
@@ -53,7 +53,7 @@ Get what is said in an Instagram reel or video post by shortcode or link, as one
 
 ## instagram.users.get
 
-Get an Instagram user's profile by handle: name, bio, follower and following counts, verification, whether it is private. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+Get an Instagram user's profile by handle: name, bio, follower and following counts, verification, whether it is private, and the website and links the profile gives. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
 
 - Name: Instagram user profile API
 - Request: `GET /v1/instagram/users/get`
@@ -62,7 +62,7 @@ Get an Instagram user's profile by handle: name, bio, follower and following cou
 
 ## instagram.users.posts.list
 
-Get a page of what an Instagram user posted, by handle, 12 a page, or its reels only: caption, like, comment and play counts, time posted, image and video addresses. Up to 12 items a call; $0.0020 per call. Errors and timeouts are not charged; an empty result is charged $0.0020.
+Get a page of what an Instagram user posted, by handle, 12 a page, or its reels only: caption, like, comment and play counts, time posted, image and video addresses, and the other authors of a collab post. Up to 12 items a call; $0.0020 per call. Errors and timeouts are not charged.
 
 - Name: Instagram user posts API
 - Request: `GET /v1/instagram/users/posts/list`
@@ -71,7 +71,7 @@ Get a page of what an Instagram user posted, by handle, 12 a page, or its reels 
 
 ## instagram.users.search
 
-Search Instagram accounts by keyword, about 50 in one answer and no further pages: handle, name, avatar, verification, whether it is private. Up to 50 items a call; $0.0040 per call. Errors and timeouts are not charged; an empty result is charged $0.0040.
+Search Instagram accounts by keyword, about 50 in one answer and no further pages: handle, name, avatar, verification, whether it is private. Up to 50 items a call; $0.0040 per call. Errors and timeouts are not charged.
 
 - Name: Instagram user search API
 - Request: `GET /v1/instagram/users/search`

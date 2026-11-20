@@ -1,8 +1,10 @@
 # WeChat Official Accounts data in your AI
 
-Ask your AI about WeChat Official Accounts and it answers with live data: 6 endpoints through 5 MCP tools or one skill package, from $0.0200 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about WeChat Official Accounts and it answers with live data: 8 endpoints through 5 MCP tools or one skill package, from $0.0200 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-- Endpoints: 6 (on WeChat Official Accounts, one response shape)
+Updated 2026-11-06
+
+- Endpoints: 8 (on WeChat Official Accounts, one response shape)
 - Price: from $0.0200 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-wechat-mp](https://dataxapi.com/skills/dataxapi-wechat-mp.zip)
@@ -21,7 +23,7 @@ Ask about WeChat Official Accounts:
 
 ## What to ask about WeChat Official Accounts, and the endpoint that answers
 
-Your AI picks the endpoint itself with `find`. These are the ones it lands on, with what each call costs.
+Your AI picks the endpoint itself, looking it up with `find` when it is not sure. These are the ones it lands on, with what each call costs.
 
 | You ask | Endpoint | Price |
 | --- | --- | --- |
@@ -29,27 +31,26 @@ Your AI picks the endpoint itself with `find`. These are the ones it lands on, w
 | How many reads and likes did this Official Account article get? | [WeChat Official Account article stats](https://dataxapi.com/apis/wechat_mp/articles/metrics/) `wechat_mp.articles.metrics` | $0.0200 |
 | Get the full text of this Official Account article. | [WeChat Official Account article detail](https://dataxapi.com/apis/wechat_mp/articles/get/) `wechat_mp.articles.get` | $0.0200 |
 
-## One question, three tool calls
+## One question, two tool calls
 
-What happens when you ask about WeChat Official Accounts: your AI looks the endpoint up for free, reads its parameters for free, and pays for one call.
+What happens when you ask about WeChat Official Accounts: your AI looks the endpoint up for free, then pays for one call. When the endpoint is plain from the list, it skips the lookup.
 
 > List the latest articles of this WeChat Official Account.
 
 |  |  |  |
 | --- | --- | --- |
 | `find({ query: "List the latest articles of this WeChat Official Account.", platform: "wechat_mp" })` | Found wechat_mp.accounts.articles.list · $0.0200 a call | Free |
-| `describe({ ids: ["wechat_mp.accounts.articles.list"] })` | Takes id · up to 10 a page | Free |
 | `call({ capability: "wechat_mp.accounts.articles.list", id: "gh_13c97ab93ce8", max_price: "0.02" })` | Up to 10 post objects · compact view | $0.0200 |
 
-3 tool calls · 1 charged · $0.0200. Up to 10 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
+2 tool calls · 1 charged · $0.0200. Up to 10 post objects came back in the standard shape. Your AI answers from it and says what the call cost.
 
 ## The WeChat Official Accounts skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 6 WeChat Official Accounts endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 8 WeChat Official Accounts endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-wechat-mp from https://dataxapi.com/skills/dataxapi-wechat-mp.zip.
 
-## All 6 WeChat Official Accounts endpoints your AI can call
+## All 8 WeChat Official Accounts endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -61,6 +62,8 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [WeChat Official Account article detail](https://dataxapi.com/apis/wechat_mp/articles/get/) | `wechat_mp.articles.get` | $0.0200 |
 | [WeChat Official Account article stats](https://dataxapi.com/apis/wechat_mp/articles/metrics/) | `wechat_mp.articles.metrics` | $0.0200 |
 | [WeChat Official Account comment replies](https://dataxapi.com/apis/wechat_mp/comments/replies/list/) | `wechat_mp.comments.replies.list` | $0.0200 |
+| [WeChat Official Account name search](https://dataxapi.com/apis/wechat_mp/accounts/search/) | `wechat_mp.accounts.search` | $0.05635 per item, at least $0.0600 a call |
+| [WeChat Official Account owner](https://dataxapi.com/apis/wechat_mp/accounts/owner/get/) | `wechat_mp.accounts.owner.get` | $0.1 |
 
 [Every WeChat Official Accounts price, and what is charged →](https://dataxapi.com/pricing/wechat_mp/) · [WeChat Official Accounts API](https://dataxapi.com/apis/wechat_mp/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -68,7 +71,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 
 ### What does it cost to ask about WeChat Official Accounts?
 
-Finding endpoints, reading their parameters and reading on in a result are free. A call costs $0.0200, each WeChat Official Accounts endpoint at its own price. A call that fails is never charged.
+Finding endpoints, reading their parameters and reading on in a result are free. A call costs from $0.0200 to $0.84525, each WeChat Official Accounts endpoint at its own price. A call that fails is never charged.
 
 ### Do I need a WeChat Official Accounts account?
 
@@ -92,4 +95,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision c48ce454ae6c4c65, price book 2. [Page](https://dataxapi.com/mcp/wechat_mp/)
+Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/wechat_mp/)
