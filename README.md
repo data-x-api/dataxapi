@@ -15,6 +15,7 @@ our main repository at every release. Questions and bugs: open an issue.
 | Python SDK | `pip install dataxapi` | `python/` |
 | Command line | `npx dataxapi --help` | published on npm as one file |
 | MCP server | `https://api.dataxapi.com/mcp` | hosted |
+| MCP server on stdio | `npx -y @dataxapi/mcp` · `uvx dataxapi-mcp` | [data-x-api/dataxapi-mcp](https://github.com/data-x-api/dataxapi-mcp) |
 | Agent Skills | `npx skills add data-x-api/skills` | [data-x-api/skills](https://github.com/data-x-api/skills) |
 | Dify plugin | Dify Marketplace | [data-x-api/dify-plugin-dataxapi](https://github.com/data-x-api/dify-plugin-dataxapi) |
 | n8n node | `n8n-nodes-dataxapi` | [data-x-api/n8n-nodes-dataxapi](https://github.com/data-x-api/n8n-nodes-dataxapi) |
@@ -90,6 +91,17 @@ Every endpoint, with its parameters, fields, price and a recorded example answer
 |---|---|
 | 抖音（视频、评论、播放量、巨量算数、星图）/ Douyin | [data-x-api/douyin-api](https://github.com/data-x-api/douyin-api) |
 | 微信（公众号、视频号、搜一搜、微信指数）/ WeChat | [data-x-api/wechat-api](https://github.com/data-x-api/wechat-api) |
+| 小红书（笔记、评论、博主、蒲公英）/ Xiaohongshu (RedNote) | [data-x-api/xiaohongshu-api](https://github.com/data-x-api/xiaohongshu-api) |
+| 知乎 / Zhihu | [data-x-api/zhihu-api](https://github.com/data-x-api/zhihu-api) |
+| 微博 / Weibo | [data-x-api/weibo-api](https://github.com/data-x-api/weibo-api) |
+| B站 / Bilibili | [data-x-api/bilibili-api](https://github.com/data-x-api/bilibili-api) |
+| 快手 / Kuaishou | [data-x-api/kuaishou-api](https://github.com/data-x-api/kuaishou-api) |
+| TikTok | [data-x-api/tiktok-api](https://github.com/data-x-api/tiktok-api) |
+| X (Twitter) | [data-x-api/x-twitter-api](https://github.com/data-x-api/x-twitter-api) |
+| YouTube | [data-x-api/youtube-api](https://github.com/data-x-api/youtube-api) |
+| Reddit | [data-x-api/reddit-api](https://github.com/data-x-api/reddit-api) |
+| Instagram | [data-x-api/instagram-api](https://github.com/data-x-api/instagram-api) |
+| 广告库 / Ad libraries (Meta, Google, TikTok, LinkedIn) | [data-x-api/ad-library-api](https://github.com/data-x-api/ad-library-api) |
 
 ## Ready-to-run projects
 
