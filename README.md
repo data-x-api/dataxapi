@@ -16,6 +16,8 @@ our main repository at every release. Questions and bugs: open an issue.
 | Command line | `npx dataxapi --help` | published on npm as one file |
 | MCP server | `https://api.dataxapi.com/mcp` | hosted |
 | Agent Skills | `npx skills add data-x-api/skills` | [data-x-api/skills](https://github.com/data-x-api/skills) |
+| Dify plugin | Dify Marketplace | [data-x-api/dify-plugin-dataxapi](https://github.com/data-x-api/dify-plugin-dataxapi) |
+| n8n node | `n8n-nodes-dataxapi` | [data-x-api/n8n-nodes-dataxapi](https://github.com/data-x-api/n8n-nodes-dataxapi) |
 
 ## Quick start
 
@@ -81,6 +83,13 @@ Every endpoint, with its parameters, fields, price and a recorded example answer
 | `docs/mcp.md`, `docs/mcp/`, `docs/mcp-tools.json` | The MCP server, per platform, and its tool list |
 | `docs/prices.json` | Every endpoint's unit, price and what an empty result is charged |
 | `docs/zh/` | The same documents in Chinese (中文): `docs/zh/apis.md` and `docs/zh/apis/`, one page per endpoint |
+
+## By platform
+
+| 平台 / Platform | Every endpoint, scripts and recorded answers |
+|---|---|
+| 抖音（视频、评论、播放量、巨量算数、星图）/ Douyin | [data-x-api/douyin-api](https://github.com/data-x-api/douyin-api) |
+| 微信（公众号、视频号、搜一搜、微信指数）/ WeChat | [data-x-api/wechat-api](https://github.com/data-x-api/wechat-api) |
 
 ## Ready-to-run projects
 
