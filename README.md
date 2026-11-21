@@ -1,12 +1,12 @@
 # DataXAPI：小红书、抖音、公众号数据 API · Market data API for AI agents
 
-**小红书数据接口、抖音数据 API、公众号和视频号接口，以及微博、B站、知乎、快手、TikTok、X、YouTube**：给 AI 和代码用的公开数据接口。一个 Key、一种返回格式，按次付费，出错不收费；新账户免费试用最多 333 次，不用绑卡。每个接口一页中文说明：[docs/zh/apis.md](docs/zh/apis.md)；全部接口和价格：[dataxapi.com/zh/apis](https://dataxapi.com/zh/apis/?ref=gh-dataxapi)。
+**小红书数据接口、抖音数据 API、公众号和视频号接口，以及微博、B站、知乎、快手、TikTok、X、YouTube**：给 AI 和代码用的公开数据接口。一个 Key、一种返回格式，按次付费，出错不收费；新账户免费试用最多 333 次，不用绑卡。每个接口一页中文说明：[docs/zh/apis.md](https://github.com/data-x-api/dataxapi/blob/main/docs/zh/apis.md)；全部接口和价格：[dataxapi.com/zh/apis](https://dataxapi.com/zh/apis/?ref=gh-dataxapi)。
 
-[DataXAPI](https://dataxapi.com) is the market data layer for AI: public data from Douyin, Xiaohongshu (RedNote),
+[DataXAPI](https://dataxapi.com/?ref=gh-dataxapi) is the market data layer for AI: public data from Douyin, Xiaohongshu (RedNote),
 TikTok, WeChat, X, YouTube and more, read live by your AI and your code with one key and one response shape. Paid per
 call from $0.0003; failed calls are free. New accounts can try it free: up to 333 calls, no card. Social media is the
 largest category; creator rate cards (星图, 蒲公英), keyword indexes (巨量算数), ad libraries and shop products are the
-others. The live catalog is at [dataxapi.com/apis](https://dataxapi.com/apis/).
+others. The live catalog is at [dataxapi.com/apis](https://dataxapi.com/apis/?ref=gh-dataxapi).
 
 This repository holds the source of the two SDKs and the documents agents read. It is a mirror: it is overwritten from
 our main repository at every release. Questions and bugs: open an issue.
@@ -43,7 +43,7 @@ result = dx.douyin.videos.comments.list(id="7694940173372575014")
 HTTP: `GET https://api.dataxapi.com/v1/douyin/videos/comments/list?id=7694940173372575014` with
 `Authorization: Bearer $DATAXAPI_API_KEY`. An endpoint's path is its ID with the dots as slashes, under `/v1`.
 
-Make a key in the [console](https://dataxapi.com/console/keys/). Every result carries what the call was charged
+Make a key in the [console](https://dataxapi.com/console/keys/?ref=gh-dataxapi). Every result carries what the call was charged
 (`meta.billing.amount`, in US dollars). One call is one page; a next page is a new call.
 
 ## Connect an AI agent
@@ -56,7 +56,7 @@ Read https://dataxapi.com/agents.md and set up DataXAPI in this agent. My API ke
 
 Or add the MCP server: `https://api.dataxapi.com/mcp` (streamable HTTP), header `Authorization: Bearer <your key>`;
 ChatGPT and Claude connect by OAuth with the address alone. Five tools: `find` and `describe` (free, no key), `call`
-(charged), `read_more` and `account` (free). Guides for each client: [dataxapi.com/mcp](https://dataxapi.com/mcp/).
+(charged), `read_more` and `account` (free). Guides for each client: [dataxapi.com/mcp](https://dataxapi.com/mcp/?ref=gh-dataxapi).
 
 ## Platforms and example endpoints
 
@@ -72,7 +72,7 @@ ChatGPT and Claude connect by OAuth with the address alone. Five tools: `find` a
 | Ad libraries | `meta.ads.search`, `google.advertisers.ads.list`, `linkedin.ads.search`, `tiktok.ads.search` |
 
 Every endpoint, with its parameters, fields, price and a recorded example answer: `docs/apis/` here, or
-[dataxapi.com/apis](https://dataxapi.com/apis/).
+[dataxapi.com/apis](https://dataxapi.com/apis/?ref=gh-dataxapi).
 
 ## What is in `docs/`
 
@@ -119,15 +119,15 @@ Small projects, one task each: one script or one file, no dependencies, with the
 
 ## Links
 
-[Pricing](https://dataxapi.com/pricing/) · [Docs](https://dataxapi.com/docs/) · [All endpoints](https://dataxapi.com/apis/) ·
-[MCP](https://dataxapi.com/mcp/) · [Skills](https://dataxapi.com/skills/) · [Status](https://dataxapi.com/status/) ·
-[Changelog](https://dataxapi.com/changelog/) · [中文](https://dataxapi.com/zh/)
+[Pricing](https://dataxapi.com/pricing/?ref=gh-dataxapi) · [Docs](https://dataxapi.com/docs/?ref=gh-dataxapi) · [All endpoints](https://dataxapi.com/apis/?ref=gh-dataxapi) ·
+[MCP](https://dataxapi.com/mcp/?ref=gh-dataxapi) · [Skills](https://dataxapi.com/skills/?ref=gh-dataxapi) · [Status](https://dataxapi.com/status/?ref=gh-dataxapi) ·
+[Changelog](https://dataxapi.com/changelog/?ref=gh-dataxapi) · [中文](https://dataxapi.com/zh/?ref=gh-dataxapi)
 
 ## 中文
 
-DataXAPI 是给 AI 的市场数据层：抖音、小红书、TikTok、微信公众号和视频号、快手、B站、微博、知乎、X、YouTube 等平台的公开市场数据，你的 AI 和代码用一把 Key、同一种返回结构实时取回，按次付费，一次 $0.0003 起；调用失败不收费。新账户免费试用，最多 333 次，不用绑卡。社媒是最大的品类，另有星图和蒲公英的达人报价、巨量算数的关键词指数、广告库和电商商品。接进 AI：把上面那段提示词（换成你自己的 Key）贴给你的 agent。中文文档：[dataxapi.com/zh/docs](https://dataxapi.com/zh/docs/)。
+DataXAPI 是给 AI 的市场数据层：抖音、小红书、TikTok、微信公众号和视频号、快手、B站、微博、知乎、X、YouTube 等平台的公开市场数据，你的 AI 和代码用一把 Key、同一种返回结构实时取回，按次付费，一次 $0.0003 起；调用失败不收费。新账户免费试用，最多 333 次，不用绑卡。社媒是最大的品类，另有星图和蒲公英的达人报价、巨量算数的关键词指数、广告库和电商商品。接进 AI：把上面那段提示词（换成你自己的 Key）贴给你的 agent。中文文档：[dataxapi.com/zh/docs](https://dataxapi.com/zh/docs/?ref=gh-dataxapi)。
 
-每个接口的中文文档在这个仓库里也有一份：目录是 [`docs/zh/apis.md`](docs/zh/apis.md)，每个接口一页在 [`docs/zh/apis/`](docs/zh/apis/)，写明参数、返回字段、价格和一段录下来的真实返回。给模型读的索引是 [`docs/zh/llms.txt`](docs/zh/llms.txt)。
+每个接口的中文文档在这个仓库里也有一份：目录是 [`docs/zh/apis.md`](https://github.com/data-x-api/dataxapi/blob/main/docs/zh/apis.md)，每个接口一页在 [`docs/zh/apis/`](https://github.com/data-x-api/dataxapi/tree/main/docs/zh/apis/)，写明参数、返回字段、价格和一段录下来的真实返回。给模型读的索引是 [`docs/zh/llms.txt`](https://github.com/data-x-api/dataxapi/blob/main/docs/zh/llms.txt)。
 
 ## Licence
 
