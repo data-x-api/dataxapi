@@ -17,10 +17,10 @@ our main repository at every release. Questions and bugs: open an issue.
 | Python SDK | `pip install dataxapi` | `python/` |
 | Command line | `npx dataxapi --help` | published on npm as one file |
 | MCP server | `https://api.dataxapi.com/mcp` | hosted |
-| MCP server on stdio | `npx -y @dataxapi/mcp` · `uvx dataxapi-mcp` | [data-x-api/dataxapi-mcp](https://github.com/data-x-api/dataxapi-mcp) |
+| MCP server on stdio | `npx -y github:data-x-api/dataxapi-mcp` (npm and PyPI packages not out yet) | [data-x-api/dataxapi-mcp](https://github.com/data-x-api/dataxapi-mcp) |
 | Agent Skills | `npx skills add data-x-api/skills` | [data-x-api/skills](https://github.com/data-x-api/skills) |
-| Dify plugin | Dify Marketplace | [data-x-api/dify-plugin-dataxapi](https://github.com/data-x-api/dify-plugin-dataxapi) |
-| n8n node | `n8n-nodes-dataxapi` | [data-x-api/n8n-nodes-dataxapi](https://github.com/data-x-api/n8n-nodes-dataxapi) |
+| Dify plugin | In Dify: Install plugin → GitHub → `data-x-api/dify-plugin-dataxapi` (Marketplace listing in review) | [data-x-api/dify-plugin-dataxapi](https://github.com/data-x-api/dify-plugin-dataxapi) |
+| n8n node | `n8n-nodes-dataxapi` (not on npm yet) | [data-x-api/n8n-nodes-dataxapi](https://github.com/data-x-api/n8n-nodes-dataxapi) |
 
 ## Quick start
 
