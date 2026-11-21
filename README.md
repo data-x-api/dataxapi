@@ -1,4 +1,6 @@
-# DataXAPI: market data API for AI agents
+# DataXAPI：小红书、抖音、公众号数据 API · Market data API for AI agents
+
+**小红书数据接口、抖音数据 API、公众号和视频号接口，以及微博、B站、知乎、快手、TikTok、X、YouTube**：给 AI 和代码用的公开数据接口。一个 Key、一种返回格式，按次付费，出错不收费；新账户免费试用最多 333 次，不用绑卡。每个接口一页中文说明：[docs/zh/apis.md](docs/zh/apis.md)；全部接口和价格：[dataxapi.com/zh/apis](https://dataxapi.com/zh/apis/?ref=gh-dataxapi)。
 
 [DataXAPI](https://dataxapi.com) is the market data layer for AI: public data from Douyin, Xiaohongshu (RedNote),
 TikTok, WeChat, X, YouTube and more, read live by your AI and your code with one key and one response shape. Paid per
