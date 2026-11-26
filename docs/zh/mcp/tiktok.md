@@ -1,10 +1,10 @@
 # 在 AI 里用 TikTok 数据
 
-问 AI TikTok 上的事，它用实时数据回答：18 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI TikTok 上的事，它用实时数据回答：19 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
 更新于 2026-11-06
 
-- 接口：18 (TikTok，同一种返回格式)
+- 接口：19 (TikTok，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-tiktok](https://dataxapi.com/skills/dataxapi-tiktok.zip)
@@ -48,11 +48,11 @@
 
 ## TikTok 技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 TikTok 的 18 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 TikTok 的 19 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-tiktok.zip 装上 DataXAPI 技能 dataxapi-tiktok。
 
-## AI 能调的 TikTok 接口，全部 18 个
+## AI 能调的 TikTok 接口，全部 19 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -76,6 +76,7 @@
 | [TikTok Shop 商品搜索](https://dataxapi.com/zh/apis/tiktok/shop/products/search/) | `tiktok.shop.products.search` | $0.0020 |
 | [TikTok Shop 店铺商品](https://dataxapi.com/zh/apis/tiktok/shop/sellers/products/list/) | `tiktok.shop.sellers.products.list` | $0.0020 |
 | [TikTok 用户粉丝列表](https://dataxapi.com/zh/apis/tiktok/users/followers/list/) | `tiktok.users.followers.list` | $0.0020 |
+| [TikTok 无水印视频下载地址](https://dataxapi.com/zh/apis/tiktok/videos/media/get/) | `tiktok.videos.media.get` | $0.0020 |
 
 [TikTok 的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/tiktok/) · [TikTok API](https://dataxapi.com/zh/apis/tiktok/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -107,4 +108,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/tiktok/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/tiktok/)

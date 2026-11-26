@@ -1,10 +1,10 @@
 # 在 AI 里用微博数据
 
-问 AI 微博上的事，它用实时数据回答：11 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI 微博上的事，它用实时数据回答：13 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-06
+更新于 2026-11-21
 
-- 接口：11 (微博，同一种返回格式)
+- 接口：13 (微博，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-weibo](https://dataxapi.com/skills/dataxapi-weibo.zip)
@@ -46,11 +46,11 @@
 
 ## 微博技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出微博的 11 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出微博的 13 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-weibo.zip 装上 DataXAPI 技能 dataxapi-weibo。
 
-## AI 能调的微博接口，全部 11 个
+## AI 能调的微博接口，全部 13 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -59,6 +59,7 @@
 | [微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/) | `weibo.comments.replies.list` | $0.0020 |
 | [微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/) | `weibo.posts.comments.list` | $0.0020 |
 | [微博详情](https://dataxapi.com/zh/apis/weibo/posts/get/) | `weibo.posts.get` | $0.0020 |
+| [微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get/) | `weibo.posts.transcript.get` | 每次 $0.0020，识别的视频另加每分钟 $0.0038 |
 | [微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list/) | `weibo.posts.likers.list` | $0.0020 |
 | [微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search/) | `weibo.posts.search` | $0.0020 |
 | [微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list/) | `weibo.trends.list` | $0.0020 |
@@ -66,6 +67,7 @@
 | [微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get/) | `weibo.users.get` | $0.0020 |
 | [微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list/) | `weibo.users.posts.list` | $0.0020 |
 | [微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search/) | `weibo.users.search` | $0.0020 |
+| [微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get/) | `weibo.posts.media.get` | $0.0020 |
 | [微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list/) | `weibo.backup.trends.list` | $0.0300 |
 
 [微博的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/weibo/) · [微博 API](https://dataxapi.com/zh/apis/weibo/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
@@ -98,4 +100,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/weibo/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/weibo/)

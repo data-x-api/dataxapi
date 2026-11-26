@@ -1,10 +1,10 @@
 # Instagram data in your AI
 
-Ask your AI about Instagram and it answers with live data: 8 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Instagram and it answers with live data: 9 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
 Updated 2026-11-06
 
-- Endpoints: 8 (on Instagram, one response shape)
+- Endpoints: 9 (on Instagram, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-instagram](https://dataxapi.com/skills/dataxapi-instagram.zip)
@@ -46,11 +46,11 @@ What happens when you ask about Instagram: your AI looks the endpoint up for fre
 
 ## The Instagram skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 8 Instagram endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 9 Instagram endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-instagram from https://dataxapi.com/skills/dataxapi-instagram.zip.
 
-## All 8 Instagram endpoints your AI can call
+## All 9 Instagram endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -64,6 +64,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Instagram user profile](https://dataxapi.com/apis/instagram/users/get/) | `instagram.users.get` | $0.0020 |
 | [Instagram user posts](https://dataxapi.com/apis/instagram/users/posts/list/) | `instagram.users.posts.list` | $0.0020 |
 | [Instagram user search](https://dataxapi.com/apis/instagram/users/search/) | `instagram.users.search` | $0.0040 |
+| [Instagram video and photo downloader](https://dataxapi.com/apis/instagram/posts/media/get/) | `instagram.posts.media.get` | $0.0020 |
 
 [Every Instagram price, and what is charged →](https://dataxapi.com/pricing/instagram/) · [Instagram API](https://dataxapi.com/apis/instagram/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -95,4 +96,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/instagram/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/instagram/)

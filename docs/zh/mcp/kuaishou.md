@@ -1,10 +1,10 @@
 # 在 AI 里用快手数据
 
-问 AI 快手上的事，它用实时数据回答：8 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI 快手上的事，它用实时数据回答：10 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-06
+更新于 2026-11-21
 
-- 接口：8 (快手，同一种返回格式)
+- 接口：10 (快手，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-kuaishou](https://dataxapi.com/skills/dataxapi-kuaishou.zip)
@@ -46,11 +46,11 @@
 
 ## 快手技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出快手的 8 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出快手的 10 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-kuaishou.zip 装上 DataXAPI 技能 dataxapi-kuaishou。
 
-## AI 能调的快手接口，全部 8 个
+## AI 能调的快手接口，全部 10 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -63,7 +63,9 @@
 | [快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list/) | `kuaishou.users.videos.list` | $0.0200 |
 | [快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/) | `kuaishou.videos.comments.list` | $0.0020 |
 | [快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/) | `kuaishou.videos.get` | $0.0020 |
+| [快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get/) | `kuaishou.videos.transcript.get` | 每次 $0.0020，识别的视频另加每分钟 $0.0038 |
 | [快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search/) | `kuaishou.videos.search` | $0.0200 |
+| [快手视频和图集下载地址](https://dataxapi.com/zh/apis/kuaishou/videos/media/get/) | `kuaishou.videos.media.get` | $0.0020 |
 
 [快手的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/kuaishou/) · [快手 API](https://dataxapi.com/zh/apis/kuaishou/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -71,7 +73,7 @@
 
 ### 在 AI 里问快手要花多少钱？
 
-找接口、看参数、接着读已有结果都免费。一次调用 $0.0020 到 $0.0200，快手的每个接口各有标价。失败的调用不收费。
+找接口、看参数、接着读已有结果都免费。一次调用 $0.0020 到 $0.0210，快手的每个接口各有标价。失败的调用不收费。
 
 ### 需要快手账号吗？
 
@@ -95,4 +97,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/kuaishou/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/kuaishou/)

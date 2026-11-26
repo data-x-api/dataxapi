@@ -78,7 +78,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -361,9 +361,9 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 同一件事的其他平台：[抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list/)、[B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list/)、[Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list/)、[TikTok 评论回复](https://dataxapi.com/zh/apis/tiktok/comments/replies/list/)、[微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)、[小红书评论回复](https://dataxapi.com/zh/apis/xiaohongshu/comments/replies/list/)、[YouTube 评论回复](https://dataxapi.com/zh/apis/youtube/comments/replies/list/)、[微信视频号评论回复](https://dataxapi.com/zh/apis/wechat_channels/comments/replies/list/)、[知乎评论回复](https://dataxapi.com/zh/apis/zhihu/comments/replies/list/)
 
-其他平台的社交媒体数据：[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list/)、[Facebook 帖子评论](https://dataxapi.com/zh/apis/facebook/posts/comments/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list/)、[YouTube 视频评论](https://dataxapi.com/zh/apis/youtube/videos/comments/list/)、[微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list/)、[微信公众号文章评论](https://dataxapi.com/zh/apis/wechat_mp/articles/comments/list/)、[微信公众号评论回复](https://dataxapi.com/zh/apis/wechat_mp/comments/replies/list/)、[Reddit 帖子评论](https://dataxapi.com/zh/apis/reddit/posts/comments/list/)、[知乎回答评论](https://dataxapi.com/zh/apis/zhihu/answers/comments/list/)、[抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list/)
+其他平台的社交媒体数据：[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list/)、[Facebook 帖子评论](https://dataxapi.com/zh/apis/facebook/posts/comments/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list/)、[YouTube 视频评论](https://dataxapi.com/zh/apis/youtube/videos/comments/list/)、[微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list/)、[微信公众号文章评论](https://dataxapi.com/zh/apis/wechat_mp/articles/comments/list/)、[微信公众号评论回复](https://dataxapi.com/zh/apis/wechat_mp/comments/replies/list/)、[Reddit 帖子评论](https://dataxapi.com/zh/apis/reddit/posts/comments/list/)
 
-快手的接口：[快手评论回复](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list/)、[快手热榜](https://dataxapi.com/zh/apis/kuaishou/trends/list/)、[快手用户资料](https://dataxapi.com/zh/apis/kuaishou/users/get/)、[快手用户搜索](https://dataxapi.com/zh/apis/kuaishou/users/search/)、[快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list/)、[快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/)、[快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/)、[快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search/)
+快手的接口：[快手评论回复](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list/)、[快手热榜](https://dataxapi.com/zh/apis/kuaishou/trends/list/)、[快手用户资料](https://dataxapi.com/zh/apis/kuaishou/users/get/)、[快手用户搜索](https://dataxapi.com/zh/apis/kuaishou/users/search/)、[快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list/)、[快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/)、[快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/)、[快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get/)、[快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search/)、[快手视频和图集下载地址](https://dataxapi.com/zh/apis/kuaishou/videos/media/get/)
 
 怎么做和常见问题：[快手作品 ID、用户 ID 怎么找？短链接怎么转（2026）](https://dataxapi.com/zh/answers/kuaishou-video-user-id/)
 
@@ -389,4 +389,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list/)

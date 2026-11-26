@@ -1,10 +1,10 @@
 # 快手 API
 
-8 个接口读快手：视频、用户、评论、热榜。一次 $0.0020 起。不用登录快手，不用 Cookie；失败不收费。
+10 个接口读快手：视频、用户、评论、热榜。一次 $0.0020 起。不用登录快手，不用 Cookie；失败不收费。
 
 也叫：Kuaishou、快手短视频
 
-## 快手的 8 个接口，各取什么
+## 快手的 10 个接口，各取什么
 
 - [快手评论回复](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list.md)：按评论编号和它所在的作品编号取一页这条评论下的回复：正文、回复者、点赞数、发布时间、IP 属地。
 - [快手热榜](https://dataxapi.com/zh/apis/kuaishou/trends/list.md)：取快手热榜：50 个热点词连同平台置顶的条目，带名次和热度。
@@ -13,16 +13,20 @@
 - [快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list.md)：按用户编号取一页这个快手账号发布的视频，按最新或最热门排序：文案、播放数、互动数、发布时间。
 - [快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list.md)：按作品编号取一页快手视频的一级评论：正文、评论者、点赞数、发布时间、IP 属地。
 - [快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get.md)：按作品编号或链接取一条快手视频：文案、作者、播放数、互动数、发布时间。
+- [快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get.md)：给一条快手视频的链接、分享文案或作品编号，返回视频里说的话：全文、每一句的起止时间和现成的 SRT 字幕，连同文案、作者和时长；可以区分说话人。每次收费，识别语音的另按视频分钟数收，没人说话不收。5 分钟以内的视频直接返回文字；超过 5 分钟、2 小时以内的先回一个凭证（job），过一会儿带着它再调这个接口取文字，按实际分钟数收，只在取到文字时收。
 - [快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search.md)：按搜索词取一页快手作品，可按最新或最多点赞排序、按发布时间和视频时长筛选：文案、作者、播放数、互动数、发布时间、是视频还是图集，视频带时长。
+- [快手视频和图集下载地址](https://dataxapi.com/zh/apis/kuaishou/videos/media/get.md)：给一条快手视频或图集的编号、链接或分享文字，返回它的全部文件地址：视频的各档清晰度（带宽高、码率、大小和备用地址）和封面；图集给每张图片和配的音乐。地址不用带请求头，取不到了再调一次即可。
 
 ## 接口
 
-### 视频 (3)
+### 视频 (5)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search.md) | `GET /v1/kuaishou/videos/search` | 内容列表 | $0.0200 / 次 |
 | [快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get.md) | `GET /v1/kuaishou/videos/get` | 内容 | $0.0020 / 次 |
+| [快手视频和图集下载地址](https://dataxapi.com/zh/apis/kuaishou/videos/media/get.md) | `GET /v1/kuaishou/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get.md) | `GET /v1/kuaishou/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list.md) | `GET /v1/kuaishou/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 
 ### 用户 (3)
@@ -48,7 +52,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 10 到 60 条，各接口不同。6 个列表里有 5 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：8 个接口里有 7 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：10 个接口里有 9 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：快手评论回复、快手用户作品、快手作品评论：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **快照**：快手热榜：榜单是每 10 分钟刷新一次的快照，`meta.fetched_at` 写明是什么时候取的。
 
@@ -68,7 +72,7 @@
 
 ### 通过 API 能拿到快手的哪些数据？
 
-8 个接口：视频、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+10 个接口：视频、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用快手 API？
 
@@ -80,7 +84,7 @@
 
 ### 快手 API 怎么收费？
 
-按次收费，没有订阅。一次 $0.0020 到 $0.0200，每个接口的页面写明自己的价格。拿到数据才扣费，失败不收。
+按次收费，没有订阅。一次 $0.0020 到 $0.0210，每个接口的页面写明自己的价格。拿到数据才扣费，失败不收。
 
 ### 需要快手账号或 Cookie 吗？
 
@@ -115,4 +119,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/kuaishou/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/kuaishou/)

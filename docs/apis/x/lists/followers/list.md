@@ -74,7 +74,7 @@ Everything comes in one page; no cursor is issued.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0080 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-21 08:32 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -366,4 +366,4 @@ A list that does not exist cannot be told from a list nobody follows: both retur
 
 ---
 
-Last checked 2026-11-21 08:32 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/x/lists/followers/list/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/x/lists/followers/list/)

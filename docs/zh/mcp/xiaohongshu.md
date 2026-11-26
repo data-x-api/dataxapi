@@ -1,10 +1,10 @@
 # 在 AI 里用小红书数据
 
-问 AI 小红书上的事，它用实时数据回答：30 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0200 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI 小红书上的事，它用实时数据回答：33 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0200 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-11
+更新于 2026-11-21
 
-- 接口：30 (小红书，同一种返回格式)
+- 接口：33 (小红书，同一种返回格式)
 - 价格：$0.0200 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-xiaohongshu](https://dataxapi.com/skills/dataxapi-xiaohongshu.zip)
@@ -46,11 +46,11 @@
 
 ## 小红书技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出小红书的 30 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出小红书的 33 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-xiaohongshu.zip 装上 DataXAPI 技能 dataxapi-xiaohongshu。
 
-## AI 能调的小红书接口，全部 30 个
+## AI 能调的小红书接口，全部 33 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -79,6 +79,7 @@
 | [小红书蒲公英博主笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/notes/list/) | `xiaohongshu.pgy.creators.notes.list` | $0.0400 |
 | [小红书搜索框联想词](https://dataxapi.com/zh/apis/xiaohongshu/keywords/related/) | `xiaohongshu.keywords.related` | $0.0200 |
 | [小红书视频笔记详情（视频地址和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/get/) | `xiaohongshu.videos.get` | $0.0200 |
+| [小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get/) | `xiaohongshu.videos.transcript.get` | 每次 $0.0200，识别的视频另加每分钟 $0.0038 |
 | [小红书蒲公英博主粉丝趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/history/) | `xiaohongshu.pgy.creators.followers.history` | $0.0400 |
 | [小红书蒲公英相似博主](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/related/) | `xiaohongshu.pgy.creators.related` | $0.0400 |
 | [小红书蒲公英内容广场热门笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/trending/) | `xiaohongshu.pgy.notes.trending` | $0.0400 |
@@ -86,6 +87,8 @@
 | [小红书蒲公英博主粉丝概览](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/metrics/) | `xiaohongshu.pgy.creators.followers.metrics` | $0.0400 |
 | [小红书蒲公英博主核心数据趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/costs/history/) | `xiaohongshu.pgy.creators.costs.history` | $0.0400 |
 | [小红书蒲公英笔记数据](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/get/) | `xiaohongshu.pgy.notes.get` | $0.0400 |
+| [小红书无水印原图和实况图下载地址](https://dataxapi.com/zh/apis/xiaohongshu/notes/media/get/) | `xiaohongshu.notes.media.get` | $0.0200 |
+| [小红书无水印视频下载地址（各档清晰度和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/media/get/) | `xiaohongshu.videos.media.get` | $0.0200 |
 
 [小红书的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/xiaohongshu/) · [小红书 API](https://dataxapi.com/zh/apis/xiaohongshu/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -117,4 +120,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/xiaohongshu/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/xiaohongshu/)

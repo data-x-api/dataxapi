@@ -95,7 +95,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -421,9 +421,9 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 同一件事的其他平台：[抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list/)、[TikTok 话题作品](https://dataxapi.com/zh/apis/tiktok/hashtags/videos/list/)、[小红书话题笔记](https://dataxapi.com/zh/apis/xiaohongshu/topics/notes/list/)
 
-其他平台的社交媒体数据：[B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list/)、[B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/)、[B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search/)、[B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending/)、[抖音巨量算数达人热门视频](https://dataxapi.com/zh/apis/douyin/index/creators/videos/list/)、[抖音巨量算数关键词热门视频](https://dataxapi.com/zh/apis/douyin/index/videos/search/)、[抖音用户视频](https://dataxapi.com/zh/apis/douyin/users/videos/list/)、[抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get/)、[抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics/)、[抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related/)、[抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search/)、[抖音视频榜](https://dataxapi.com/zh/apis/douyin/videos/trending/)、[快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list/)、[快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/)、[快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search/)、[Telegram 频道消息](https://dataxapi.com/zh/apis/telegram/channels/messages/list/)、[Telegram 单条消息](https://dataxapi.com/zh/apis/telegram/messages/get/)、[X 社群帖子](https://dataxapi.com/zh/apis/x/communities/posts/list/)、[X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/list/)、[X 长文详情](https://dataxapi.com/zh/apis/x/posts/article/get/)
+其他平台的社交媒体数据：[B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list/)、[B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/)、[B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search/)、[B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending/)、[抖音巨量算数达人热门视频](https://dataxapi.com/zh/apis/douyin/index/creators/videos/list/)、[抖音巨量算数关键词热门视频](https://dataxapi.com/zh/apis/douyin/index/videos/search/)、[抖音用户视频](https://dataxapi.com/zh/apis/douyin/users/videos/list/)、[抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get/)、[抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics/)、[抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related/)、[抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search/)、[抖音视频榜](https://dataxapi.com/zh/apis/douyin/videos/trending/)、[快手用户作品](https://dataxapi.com/zh/apis/kuaishou/users/videos/list/)、[快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/)、[快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search/)、[Telegram 频道消息](https://dataxapi.com/zh/apis/telegram/channels/messages/list/)、[Telegram 单条消息](https://dataxapi.com/zh/apis/telegram/messages/get/)、[X 社群帖子](https://dataxapi.com/zh/apis/x/communities/posts/list/)、[X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/list/)
 
-Instagram的接口：[Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list/)、[Instagram 话题帖子](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[Instagram 用户资料](https://dataxapi.com/zh/apis/instagram/users/get/)、[Instagram 用户帖子](https://dataxapi.com/zh/apis/instagram/users/posts/list/)、[Instagram 用户搜索](https://dataxapi.com/zh/apis/instagram/users/search/)
+Instagram的接口：[Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list/)、[Instagram 话题帖子](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[Instagram 用户资料](https://dataxapi.com/zh/apis/instagram/users/get/)、[Instagram 用户帖子](https://dataxapi.com/zh/apis/instagram/users/posts/list/)、[Instagram 用户搜索](https://dataxapi.com/zh/apis/instagram/users/search/)、[Instagram 视频和图片下载地址](https://dataxapi.com/zh/apis/instagram/posts/media/get/)
 
 相关：[Instagram的全部接口](https://dataxapi.com/zh/apis/instagram/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 4 个平台上的对照](https://dataxapi.com/zh/roles/topics-posts-list/)、[内容对象的字段](https://dataxapi.com/zh/docs/objects/post/)
 
@@ -447,4 +447,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list/)

@@ -1,10 +1,10 @@
 # 在 AI 里用微信视频号数据
 
-问 AI 微信视频号上的事，它用实时数据回答：15 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0150 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI 微信视频号上的事，它用实时数据回答：17 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0150 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-06
+更新于 2026-11-21
 
-- 接口：15 (微信视频号，同一种返回格式)
+- 接口：17 (微信视频号，同一种返回格式)
 - 价格：$0.0150 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-wechat-channels](https://dataxapi.com/skills/dataxapi-wechat-channels.zip)
@@ -46,11 +46,11 @@
 
 ## 微信视频号技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出微信视频号的 15 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出微信视频号的 17 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-wechat-channels.zip 装上 DataXAPI 技能 dataxapi-wechat-channels。
 
-## AI 能调的微信视频号接口，全部 15 个
+## AI 能调的微信视频号接口，全部 17 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -71,6 +71,8 @@
 | [微信视频号作品互动数据](https://dataxapi.com/zh/apis/wechat_channels/videos/metrics/) | `wechat_channels.videos.metrics` | $0.0150 |
 | [微信视频号评论回复](https://dataxapi.com/zh/apis/wechat_channels/comments/replies/list/) | `wechat_channels.comments.replies.list` | $0.0150 |
 | [微信视频号直播回放](https://dataxapi.com/zh/apis/wechat_channels/users/live_replays/list/) | `wechat_channels.users.live_replays.list` | $0.0200 |
+| [视频号视频下载（文件地址和解密）](https://dataxapi.com/zh/apis/wechat_channels/videos/media/get/) | `wechat_channels.videos.media.get` | $0.0200 |
+| [视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get/) | `wechat_channels.videos.transcript.get` | 每次 $0.0200，识别的视频另加每分钟 $0.0038 |
 
 [微信视频号的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/wechat_channels/) · [微信视频号 API](https://dataxapi.com/zh/apis/wechat_channels/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -102,4 +104,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/wechat_channels/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/wechat_channels/)

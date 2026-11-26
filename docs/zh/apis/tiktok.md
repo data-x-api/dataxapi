@@ -1,10 +1,10 @@
 # TikTok API
 
-18 个接口读 TikTok：视频、话题、用户、评论、广告库、创意中心、TikTok Shop。一次 $0.0020 起。不用登录 TikTok，不用 Cookie；失败不收费。
+19 个接口读 TikTok：视频、话题、用户、评论、广告库、创意中心、TikTok Shop。一次 $0.0020 起。不用登录 TikTok，不用 Cookie；失败不收费。
 
 也叫：抖音国际版、抖音海外版
 
-## TikTok 的 18 个接口，各取什么
+## TikTok 的 19 个接口，各取什么
 
 - [TikTok 广告库搜索](https://dataxapi.com/zh/apis/tiktok/ads/search.md)：按关键词或广告主名字搜 TikTok 公开广告库（欧洲地区投放的广告）：广告主、标题、视频和图片素材、首次和最近一次展示的时间、触达人数档位；最新的在前，一页 12 条。这是广告透明度记录，和创意中心的热门广告是两份数据。
 - [TikTok 广告库广告详情](https://dataxapi.com/zh/apis/tiktok/ads/get.md)：按编号或链接取 TikTok 公开广告库里的一条广告：广告主、标题、视频和图片素材、落地页、首次和最近一次展示的时间、投放的国家、投放目标。
@@ -24,15 +24,17 @@
 - [TikTok Shop 商品搜索](https://dataxapi.com/zh/apis/tiktok/shop/products/search.md)：按搜索词取 TikTok Shop 美国站的商品：标题、现价和原价、评分、已售件数、店铺。
 - [TikTok Shop 店铺商品](https://dataxapi.com/zh/apis/tiktok/shop/sellers/products/list.md)：按店铺编号取一页这家 TikTok Shop 美国站店铺在售的商品：标题、现价和原价、评分、评价数、已售件数。
 - [TikTok 用户粉丝列表](https://dataxapi.com/zh/apis/tiktok/users/followers/list.md)：按账号名取一页关注该 TikTok 用户的账号，每页 50 个，从最新关注的开始：账号名、显示名、简介、粉丝数、关注数、作品数、获赞数，以及账号的国家或地区和语言，可看粉丝分布。
+- [TikTok 无水印视频下载地址](https://dataxapi.com/zh/apis/tiktok/videos/media/get.md)：给一条 TikTok 视频或图文的编号或链接，返回它的全部文件地址：无水印视频的各档清晰度（带宽高、编码、码率、大小和过期时间）、封面、背景音乐，图文另给每张图片。签名里写了过期时间的都给出 expires_at，过期了再调一次即可。
 
 ## 接口
 
-### 视频 (4)
+### 视频 (5)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [TikTok 视频搜索](https://dataxapi.com/zh/apis/tiktok/videos/search.md) | `GET /v1/tiktok/videos/search` | 内容列表 | $0.0020 / 次 |
 | [TikTok 视频详情](https://dataxapi.com/zh/apis/tiktok/videos/get.md) | `GET /v1/tiktok/videos/get` | 内容 | $0.0020 / 次 |
+| [TikTok 无水印视频下载地址](https://dataxapi.com/zh/apis/tiktok/videos/media/get.md) | `GET /v1/tiktok/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
 | [TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get.md) | `GET /v1/tiktok/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list.md) | `GET /v1/tiktok/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 
@@ -87,7 +89,7 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 ## 调用前要知道的
 
 - **每页条数**：列表每页 10 到 60 条，各接口不同。12 个列表里有 10 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：18 个接口里有 16 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：19 个接口里有 17 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：TikTok 评论回复、TikTok 视频评论、TikTok Shop 商品评价：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **预览结构**：有 8 个接口返回的是预览结构，字段还可能调整；其余返回统一的结构，所有平台都一样。
 
@@ -103,7 +105,7 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 
 ### 通过 API 能拿到 TikTok 的哪些数据？
 
-18 个接口：视频、话题、用户、评论、广告库、创意中心、TikTok Shop。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+19 个接口：视频、话题、用户、评论、广告库、创意中心、TikTok Shop。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用 TikTok API？
 
@@ -115,7 +117,7 @@ TikTok 的 18 个接口各取一份录制的真实返回，平台原始 JSON 合
 
 ### TikTok API 怎么收费？
 
-按次收费，没有订阅。18 个接口都是一次 $0.0020。拿到数据才扣费，失败不收。
+按次收费，没有订阅。19 个接口都是一次 $0.0020。拿到数据才扣费，失败不收。
 
 ### 需要 TikTok 账号或 Cookie 吗？
 
@@ -147,4 +149,4 @@ TikTok 的 18 个接口各取一份录制的真实返回，平台原始 JSON 合
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/tiktok/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/tiktok/)

@@ -102,7 +102,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -424,7 +424,7 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 Reddit的接口：[Reddit 帖子评论](https://dataxapi.com/zh/apis/reddit/posts/comments/list/)、[Reddit 帖子详情](https://dataxapi.com/zh/apis/reddit/posts/get/)、[Reddit 帖子搜索](https://dataxapi.com/zh/apis/reddit/posts/search/)、[Reddit 热门帖子](https://dataxapi.com/zh/apis/reddit/posts/trending/)、[Reddit 社区帖子](https://dataxapi.com/zh/apis/reddit/subreddits/posts/list/)、[Reddit 趋势搜索词](https://dataxapi.com/zh/apis/reddit/trends/list/)、[Reddit 用户资料](https://dataxapi.com/zh/apis/reddit/users/get/)、[Reddit 用户帖子](https://dataxapi.com/zh/apis/reddit/users/posts/list/)、[Reddit 社区资料](https://dataxapi.com/zh/apis/reddit/subreddits/get/)、[Reddit 用户活跃社区](https://dataxapi.com/zh/apis/reddit/users/subreddits/list/)、[Reddit 视频字幕](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)
 
-用到这个接口的 Skills：[竞品账号监测](https://dataxapi.com/zh/skills/competitors/)、[账号体检](https://dataxapi.com/zh/skills/account-audit/)
+用到这个接口的 Skills：[竞品账号监测](https://dataxapi.com/zh/skills/competitors/)、[账号体检](https://dataxapi.com/zh/skills/account-audit/)、[博主视频转文字](https://dataxapi.com/zh/skills/creator-transcripts/)
 
 相关：[Reddit的全部接口](https://dataxapi.com/zh/apis/reddit/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 17 个平台上的对照](https://dataxapi.com/zh/roles/accounts-posts-list/)、[内容对象的字段](https://dataxapi.com/zh/docs/objects/post/)
 
@@ -448,4 +448,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/reddit/users/posts/list/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/reddit/users/posts/list/)

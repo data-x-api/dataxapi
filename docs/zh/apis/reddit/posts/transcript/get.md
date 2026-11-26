@@ -39,12 +39,33 @@
 | 字段 | 类型 | 说明 | 起始档位 | 这个接口 |
 | --- | --- | --- | --- | --- |
 | `post_id` | 文本 | 所属内容的编号。 | `compact` | 有 |
+| `status` | 文本 | done 是文字已经在这里；processing 是长视频还在识别，文字还没有：过 retry_after_seconds 秒后带着 job 再调同一个接口取。取值：`done`、`processing`。 | `compact` | 这个接口不提供 |
+| `job` | 文本 | 长视频的凭证：带着它再调同一个接口取文字，提交后 24 小时内有效；只在 processing 时有。 | `compact` | 这个接口不提供 |
+| `retry_after_seconds` | 整数 | 建议多少秒后再来取；只在 processing 时有。 | `compact` | 这个接口不提供 |
 | `lang` | 文本 | 语言代码。在这个平台上：所取字幕文件的语言。 | `compact` | 有 |
 | `text` | 文本 | 全文。长文本：精简档只保留前 500 个字符，并在 `warnings` 里写明。 | `compact` | 有 |
 | `segments` | 对象列表 | 带时间的分段。 | `standard` | 有 |
 | `segments[].start` | 数字 | 开始时间，秒。 | `standard` | 有 |
 | `segments[].end` | 数字 | 结束时间，秒。 | `standard` | 有 |
 | `segments[].text` | 文本 | 这一段的文字。 | `standard` | 有 |
+| `segments[].speaker` | 文本 | 这一段是谁说的（1、2…，同一个人同一个号）；没要求区分说话人时为 null。 | `standard` | 这个接口不提供 |
+| `segments[].words` | 对象列表 | 这一段里每个字（词）的时间。 | `full` | 这个接口不提供 |
+| `segments[].words[].start` | 数字 | 开始时间，秒。 | `full` | 这个接口不提供 |
+| `segments[].words[].end` | 数字 | 结束时间，秒。 | `full` | 这个接口不提供 |
+| `segments[].words[].text` | 文本 | 这个字（词）。 | `full` | 这个接口不提供 |
+| `duration` | 数字 | 转写的音视频时长，秒；按分钟计费的接口按它收费。 | `standard` | 这个接口不提供 |
+| `post` | 对象 | 这段话所在的内容：标题、文案、作者、时长、发布时间、点赞和评论数，平台有什么给什么。 | `standard` | 这个接口不提供 |
+| `post.title` | 文本 | 标题；没有标题的平台没有。 | `standard` | 这个接口不提供 |
+| `post.text` | 文本 | 文案或简介。长文本：精简档只保留前 500 个字符，并在 `warnings` 里写明。 | `standard` | 这个接口不提供 |
+| `post.url` | 链接 | 内容的链接。 | `standard` | 这个接口不提供 |
+| `post.published_at` | 时间 | 发布时间。 | `standard` | 这个接口不提供 |
+| `post.duration` | 数字 | 平台写的视频时长，秒。 | `standard` | 这个接口不提供 |
+| `post.author` | 对象 | 作者。 | `standard` | 这个接口不提供 |
+| `post.author.id` | 文本 | 作者编号。 | `standard` | 这个接口不提供 |
+| `post.author.name` | 文本 | 作者的名字。 | `standard` | 这个接口不提供 |
+| `post.metrics` | 对象 | 互动数。 | `standard` | 这个接口不提供 |
+| `post.metrics.likes` | 整数 | 点赞数。 | `standard` | 这个接口不提供 |
+| `post.metrics.comments` | 整数 | 评论数。 | `standard` | 这个接口不提供 |
 | `approximate` | 对象列表 | 这一条里哪些数是约数或下限；都是准确值时不出现。 | `compact` | 有 |
 | `approximate[].field` | 文本 | 字段的路径，如 metrics.views。 | `compact` | 有 |
 | `approximate[].kind` | 文本 | 约数，还是下限。取值：`approximate`、`lower_bound`。 | `compact` | 有 |
@@ -66,7 +87,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -170,7 +191,7 @@ dataxapi call reddit.posts.transcript.get id=t3_1gea6yx
 
 取自 2026-10-12 21:52 UTC 录下的真实返回。名字、正文和编号是示例，链接也是，都不是录到的原文（页面不展示任何人的个人信息）；数字是原样。长列表做了截断。请求号、游标和余额是示意。
 
-返回大小：标准档 711 B（精简 500 B，完整 711 B）。
+返回大小：标准档 892 B（精简 681 B，完整 892 B）。
 
 ```jsonc
 {
@@ -202,7 +223,15 @@ dataxapi call reddit.posts.transcript.get id=t3_1gea6yx
     "fetched_at": "2026-10-12T21:52:57.000Z",
     "cached": false,
     "replayed": false,
-    "unavailable": {},
+    "unavailable": {
+      "segments.speaker": "capability",
+      "segments.words": "capability",
+      "duration": "capability",
+      "post": "capability",
+      "status": "capability",
+      "job": "capability",
+      "retry_after_seconds": "capability"
+    },
     "billing": {
       "amount": "0.002",
       "currency": "USD",
@@ -311,15 +340,15 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 这是 DataXAPI 社交媒体数据的一部分。同一把 Key 还能用：达人、广告、电商。
 
-同一件事的其他平台：[Meta 广告视频字幕](https://dataxapi.com/zh/apis/meta/ads/transcript/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get/)、[YouTube 视频字幕](https://dataxapi.com/zh/apis/youtube/videos/transcript/get/)、[LinkedIn 视频字幕](https://dataxapi.com/zh/apis/linkedin/posts/transcript/get/)、[X 视频字幕](https://dataxapi.com/zh/apis/x/posts/transcript/get/)
+同一件事的其他平台：[B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get/)、[抖音视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/douyin/videos/transcript/get/)、[快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get/)、[Meta 广告视频字幕](https://dataxapi.com/zh/apis/meta/ads/transcript/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get/)、[微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get/)、[YouTube 视频字幕](https://dataxapi.com/zh/apis/youtube/videos/transcript/get/)、[LinkedIn 视频字幕](https://dataxapi.com/zh/apis/linkedin/posts/transcript/get/)、[X 视频字幕](https://dataxapi.com/zh/apis/x/posts/transcript/get/)、[小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get/)、[视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get/)
 
-其他平台的社交媒体数据：[抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list/)、[抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list/)、[B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list/)、[B站热搜榜](https://dataxapi.com/zh/apis/bilibili/trends/list/)、[B站用户资料](https://dataxapi.com/zh/apis/bilibili/users/get/)、[B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list/)、[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/)、[B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search/)、[B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending/)、[抖音巨量算数品牌指数趋势](https://dataxapi.com/zh/apis/douyin/index/brands/history/)、[抖音巨量算数品牌指数对比](https://dataxapi.com/zh/apis/douyin/index/brands/metrics/)、[抖音巨量算数达人热门视频](https://dataxapi.com/zh/apis/douyin/index/creators/videos/list/)、[抖音巨量算数关键词人群画像](https://dataxapi.com/zh/apis/douyin/index/keywords/audience/get/)
+其他平台的社交媒体数据：[抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list/)、[抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list/)、[B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list/)、[B站热搜榜](https://dataxapi.com/zh/apis/bilibili/trends/list/)、[B站用户资料](https://dataxapi.com/zh/apis/bilibili/users/get/)、[B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list/)、[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/)
 
 Reddit的接口：[Reddit 帖子评论](https://dataxapi.com/zh/apis/reddit/posts/comments/list/)、[Reddit 帖子详情](https://dataxapi.com/zh/apis/reddit/posts/get/)、[Reddit 帖子搜索](https://dataxapi.com/zh/apis/reddit/posts/search/)、[Reddit 热门帖子](https://dataxapi.com/zh/apis/reddit/posts/trending/)、[Reddit 社区帖子](https://dataxapi.com/zh/apis/reddit/subreddits/posts/list/)、[Reddit 趋势搜索词](https://dataxapi.com/zh/apis/reddit/trends/list/)、[Reddit 用户资料](https://dataxapi.com/zh/apis/reddit/users/get/)、[Reddit 用户帖子](https://dataxapi.com/zh/apis/reddit/users/posts/list/)、[Reddit 社区资料](https://dataxapi.com/zh/apis/reddit/subreddits/get/)、[Reddit 用户活跃社区](https://dataxapi.com/zh/apis/reddit/users/subreddits/list/)、[Reddit 视频字幕](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)
 
-用到这个接口的 Skills：[爆款拆解](https://dataxapi.com/zh/skills/viral/)、[视频转文字](https://dataxapi.com/zh/skills/transcripts/)
+用到这个接口的 Skills：[爆款拆解](https://dataxapi.com/zh/skills/viral/)、[视频转文字](https://dataxapi.com/zh/skills/transcripts/)、[博主视频转文字](https://dataxapi.com/zh/skills/creator-transcripts/)
 
-相关：[Reddit的全部接口](https://dataxapi.com/zh/apis/reddit/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 7 个平台上的对照](https://dataxapi.com/zh/roles/transcripts-get/)、[逐字稿对象的字段](https://dataxapi.com/zh/docs/objects/transcript/)
+相关：[Reddit的全部接口](https://dataxapi.com/zh/apis/reddit/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 13 个平台上的对照](https://dataxapi.com/zh/roles/transcripts-get/)、[逐字稿对象的字段](https://dataxapi.com/zh/docs/objects/transcript/)
 
 ## 常见问题
 
@@ -337,4 +366,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)

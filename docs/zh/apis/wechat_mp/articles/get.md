@@ -75,13 +75,14 @@
 | `ext.byline` | 文本 | 文章署名的作者（不是公众号）；没署名为 null。 | `full` | 有 |
 | `ext.source_url` | 链接 | 文末“阅读原文”的链接；没有为 null。 | `full` | 有 |
 | `ext.ip_location` | 文本 | 文章页显示的发文 IP 属地：省份，海外的为国家。 | `full` | 有 |
+| `ext.markdown` | 文本 | 正文转成的 Markdown：标题、段落、加粗、列表、引用、链接和图片，图片保留原地址（mmbiz.qpic.cn）。取图片时不要带 Referer 请求头：带着别的网站的 Referer，拿到的是一张写着不可引用的占位图。长文本：精简档只保留前 500 个字符，并在 `warnings` 里写明。 | `full` | 有 |
 | `approximate` | 对象列表 | 这一条里哪些数是约数或下限；都是准确值时不出现。 | `compact` | 有 |
 | `approximate[].field` | 文本 | 字段的路径，如 metrics.views。 | `compact` | 有 |
 | `approximate[].kind` | 文本 | 约数，还是下限。取值：`approximate`、`lower_bound`。 | `compact` | 有 |
 
 某一条本来就没有这个值时，字段给 `null`。这个接口给不了的字段不出现，统一列在 `meta.unavailable`。
 
-每条数据的典型体积：`compact` 1.8 KB、`standard` 2.4 KB、`full` 2.7 KB（按 2026-10-29 09:45 UTC 录下的那次返回量的）。
+每条数据的典型体积：`compact` 1.8 KB、`standard` 2.4 KB、`full` 5.0 KB（按 2026-10-29 09:45 UTC 录下的那次返回量的）。
 
 ## 翻页
 
@@ -95,7 +96,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0200 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -199,7 +200,7 @@ dataxapi call wechat_mp.articles.get 'url=https://mp.weixin.qq.com/s?__biz=MjM5M
 
 取自 2026-10-29 09:45 UTC 录下的真实返回。名字、正文和编号是示例，链接也是，都不是录到的原文（页面不展示任何人的个人信息）；数字是原样。长列表做了截断。请求号、游标和余额是示意。
 
-返回大小：标准档 3.0 KB（精简 2.5 KB，完整 3.3 KB）。
+返回大小：标准档 3.0 KB（精简 2.5 KB，完整 5.5 KB）。
 
 ```jsonc
 {
@@ -376,4 +377,4 @@ $0.0200 一次。单次最高扣费 $0.0200。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/wechat_mp/articles/get/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/wechat_mp/articles/get/)

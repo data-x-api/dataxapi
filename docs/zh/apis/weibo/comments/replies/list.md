@@ -77,7 +77,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -377,9 +377,9 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 同一件事的其他平台：[抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list/)、[B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list/)、[快手评论回复](https://dataxapi.com/zh/apis/kuaishou/comments/replies/list/)、[Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list/)、[TikTok 评论回复](https://dataxapi.com/zh/apis/tiktok/comments/replies/list/)、[小红书评论回复](https://dataxapi.com/zh/apis/xiaohongshu/comments/replies/list/)、[YouTube 评论回复](https://dataxapi.com/zh/apis/youtube/comments/replies/list/)、[微信视频号评论回复](https://dataxapi.com/zh/apis/wechat_channels/comments/replies/list/)、[知乎评论回复](https://dataxapi.com/zh/apis/zhihu/comments/replies/list/)
 
-其他平台的社交媒体数据：[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list/)、[快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/)、[Facebook 帖子评论](https://dataxapi.com/zh/apis/facebook/posts/comments/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list/)、[小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list/)、[YouTube 视频评论](https://dataxapi.com/zh/apis/youtube/videos/comments/list/)、[微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list/)、[微信公众号文章评论](https://dataxapi.com/zh/apis/wechat_mp/articles/comments/list/)、[微信公众号评论回复](https://dataxapi.com/zh/apis/wechat_mp/comments/replies/list/)
+其他平台的社交媒体数据：[B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/)、[抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list/)、[快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list/)、[Facebook 帖子评论](https://dataxapi.com/zh/apis/facebook/posts/comments/list/)、[Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list/)、[TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list/)、[小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list/)、[YouTube 视频评论](https://dataxapi.com/zh/apis/youtube/videos/comments/list/)、[微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list/)
 
-微博的接口：[微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[微博详情](https://dataxapi.com/zh/apis/weibo/posts/get/)、[微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list/)、[微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search/)、[微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list/)、[微博用户粉丝列表](https://dataxapi.com/zh/apis/weibo/users/followers/list/)、[微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get/)、[微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list/)、[微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search/)、[微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list/)
+微博的接口：[微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[微博详情](https://dataxapi.com/zh/apis/weibo/posts/get/)、[微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get/)、[微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list/)、[微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search/)、[微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list/)、[微博用户粉丝列表](https://dataxapi.com/zh/apis/weibo/users/followers/list/)、[微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get/)、[微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list/)、[微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search/)、[微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get/)、[微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list/)
 
 怎么做和常见问题：[微博爬虫被封之后怎么办（2026）](https://dataxapi.com/zh/answers/weibo-scraper-blocked/)
 
@@ -405,4 +405,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)

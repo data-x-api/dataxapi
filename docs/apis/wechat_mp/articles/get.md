@@ -75,13 +75,14 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `ext.byline` | text | The author the article is signed by (not the account); null where it is unsigned. | `full` | Yes |
 | `ext.source_url` | link | The link of the article's "read the original" at its end; null where there is none. | `full` | Yes |
 | `ext.ip_location` | text | Where the article was posted from, as its page shows it: the province, or the country for one posted from abroad. | `full` | Yes |
+| `ext.markdown` | text | The article as Markdown: headings, paragraphs, bold, lists, quotes, links and pictures, each picture at its own address (mmbiz.qpic.cn). Fetch the pictures without a Referer header: with another site's Referer, what comes back is a placeholder saying the picture may not be used. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `full` | Yes |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
 
-Typical size of one item: `compact` 1.8 KB, `standard` 2.4 KB, `full` 2.7 KB (measured on the response recorded 2026-10-29 09:45 UTC).
+Typical size of one item: `compact` 1.8 KB, `standard` 2.4 KB, `full` 5.0 KB (measured on the response recorded 2026-10-29 09:45 UTC).
 
 ## Paging
 
@@ -95,7 +96,7 @@ One object per call: there is nothing to page.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0200 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-21 08:32 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -199,7 +200,7 @@ Add this to your MCP client, then ask your agent to call `wechat_mp.articles.get
 
 From a response recorded 2026-10-29 09:45 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 3.0 KB in the standard view (2.5 KB compact, 3.3 KB full).
+Size as sent: 3.0 KB in the standard view (2.5 KB compact, 5.5 KB full).
 
 ```jsonc
 {
@@ -376,4 +377,4 @@ The answer is 404 not_found. charged and amount in the body say what this one co
 
 ---
 
-Last checked 2026-11-21 08:32 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/wechat_mp/articles/get/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/wechat_mp/articles/get/)

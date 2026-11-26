@@ -1,10 +1,10 @@
 # 小红书 API
 
-30 个接口读小红书：视频、笔记、图片、话题、用户、评论、热榜、关键词、蒲公英、小红书商城。一次 $0.0200 起。不用登录小红书，不用 Cookie；失败不收费。
+33 个接口读小红书：视频、笔记、图片、话题、用户、评论、热榜、关键词、蒲公英、小红书商城。一次 $0.0200 起。不用登录小红书，不用 Cookie；失败不收费。
 
 也叫：Xiaohongshu (RedNote)、小红薯
 
-## 小红书的 30 个接口，各取什么
+## 小红书的 33 个接口，各取什么
 
 - [小红书图片搜索](https://dataxapi.com/zh/apis/xiaohongshu/images/search.md)：按搜索词取一页小红书图片，每条是一张图片和它所在的笔记：图片地址、笔记的标题、正文、作者、点赞、评论、收藏、分享数。分享数在这里给不了（总是 0，不交付），要看分享数请用笔记详情 xiaohongshu.notes.get。
 - [小红书笔记详情](https://dataxapi.com/zh/apis/xiaohongshu/notes/get.md)：按笔记编号或链接取一篇小红书笔记：标题、正文、作者、互动数、图片，以及是不是报备过的品牌合作笔记。
@@ -29,6 +29,7 @@
 - [小红书蒲公英博主笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/notes/list.md)：按蒲公英博主编号取一页这位小红书博主的笔记（蒲公英的“笔记案例”），带蒲公英给的数据：阅读数、点赞数、收藏数、外溢进店人数、是否商业合作和合作品牌、是否带过付费推广流量。可只看合作笔记、跨域合作笔记、图文或视频，按最新、阅读最多或互动最多排，按内容特征或类目筛，阅读数可只算自然流量。
 - [小红书搜索框联想词](https://dataxapi.com/zh/apis/xiaohongshu/keywords/related.md)：按关键词取小红书搜索框里输入这个词时给的联想词（下拉补全），按小红书列出的顺序排，一次约 10 个。只有词和名次，没有指数。
 - [小红书视频笔记详情（视频地址和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/get.md)：按笔记编号或链接取一篇小红书视频笔记：标题、正文、作者、互动数，加上视频文件地址、时长、封面、平台生成的中文字幕（SRT，可当文字稿），以及是不是报备过的品牌合作笔记。只用于视频笔记；图文笔记用笔记详情。
+- [小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get.md)：给一篇小红书视频笔记的链接、分享文案或编号，返回视频里说的话：全文、每一句的起止时间和现成的 SRT 字幕，连同标题、作者和时长；平台给视频生成了字幕的直接用字幕，没有的识别语音，可以区分说话人。每次收费，识别语音的另按视频分钟数收，用平台字幕的不另收，没人说话不收。5 分钟以内的视频直接返回文字；超过 5 分钟、2 小时以内的先回一个凭证（job），过一会儿带着它再调这个接口取文字，按实际分钟数收，只在取到文字时收。
 - [小红书蒲公英博主粉丝趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/history.md)：按蒲公英博主编号取这位小红书博主最近 30 天或 60 天每天的粉丝数，以及这段时间净增多少、涨了百分之几。看博主有没有在涨粉、有没有突然掉粉或刷粉。
 - [小红书蒲公英相似博主](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/related.md)：给一个蒲公英博主编号，取蒲公英推荐的和他相似的小红书博主：博主编号、昵称、小红书号、所在地、内容类目、粉丝数，完整档另有报价和阅读、互动中位数。一次 4 位（蒲公英一页就 4 位），通常共几位到几十位，可以翻页。
 - [小红书蒲公英内容广场热门笔记](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/trending.md)：取蒲公英内容广场的热门笔记榜：小红书热门、产品种草、电商推广、蒲公英合作等 8 个榜，看整榜或只看和某个词有关的，近 3、7、14、30 天，可只要图文或视频。每条有标题、发布时间、阅读、点赞、收藏、评论、图片，和博主的编号、昵称、粉丝数。不用给编号，适合找爆款和选题。
@@ -36,21 +37,26 @@
 - [小红书蒲公英博主粉丝概览](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/followers/metrics.md)：按蒲公英博主编号取这位小红书博主粉丝的质量：粉丝数和近 30 天净增，活跃粉丝、互动粉丝、阅读粉丝、购买粉丝各有多少、占全部粉丝的比例，和超过了多少同类博主。看粉丝是不是真的在看、在买。
 - [小红书蒲公英博主核心数据趋势](https://dataxapi.com/zh/apis/xiaohongshu/pgy/creators/costs/history.md)：按蒲公英博主编号取这位小红书博主最近 30 天或 90 天每天的核心数据：CPM、CPE（互动单价）、CPV（阅读单价）、外溢进店单价，和单篇笔记曝光、阅读、互动、外溢进店人数的中位数，以及整段的汇总。可看日常笔记或合作笔记两种口径，看博主的投放性价比是在变好还是变差。
 - [小红书蒲公英笔记数据](https://dataxapi.com/zh/apis/xiaohongshu/pgy/notes/get.md)：按笔记编号取蒲公英给品牌看的这篇小红书笔记的数据：曝光、阅读、点赞、收藏、评论、分享、带来的涨粉，报备的合作品牌，品牌组件（评论区、正文、底部）的点击率档位，以及标题、正文、图片、发布时间和博主编号。合作笔记结案、核对博主交付用。蒲公英只给自己博主的笔记数据，取不到数据的笔记（如品牌自己发的）返回 404。
+- [小红书无水印原图和实况图下载地址](https://dataxapi.com/zh/apis/xiaohongshu/notes/media/get.md)：给一篇小红书图文笔记的编号、链接或分享文字，返回每张图片的无水印原图地址（平台保存的最大尺寸，带宽高和格式），实况图另给那段视频的地址；地址不用带请求头，过期了再调一次即可。只用于图文笔记，视频笔记用 xiaohongshu.videos.media.get。
+- [小红书无水印视频下载地址（各档清晰度和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/media/get.md)：给一篇小红书视频笔记的编号、链接或分享文字，返回无水印视频的全部文件地址：每种编码（H.264、H.265 等）的每档清晰度，带宽高、码率和大小，另有备用地址，以及封面和平台生成的字幕文件（SRT，按语言给）；地址不用带请求头，取不到了再调一次即可。只用于视频笔记，图文笔记用 xiaohongshu.notes.media.get。
 
 ## 接口
 
-### 视频 (1)
+### 视频 (3)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [小红书视频笔记详情（视频地址和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/get.md) | `GET /v1/xiaohongshu/videos/get` | 内容 | $0.0200 / 次 |
+| [小红书无水印视频下载地址（各档清晰度和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/media/get.md) | `GET /v1/xiaohongshu/videos/media/get` | 视频和图片文件 | $0.0200 / 次 |
+| [小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get.md) | `GET /v1/xiaohongshu/videos/transcript/get` | 逐字稿 | $0.0200 / 次 |
 
-### 笔记 (3)
+### 笔记 (4)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [小红书笔记搜索](https://dataxapi.com/zh/apis/xiaohongshu/notes/search.md) | `GET /v1/xiaohongshu/notes/search` | 内容列表 | $0.0200 / 次 |
 | [小红书笔记详情](https://dataxapi.com/zh/apis/xiaohongshu/notes/get.md) | `GET /v1/xiaohongshu/notes/get` | 内容 | $0.0200 / 次 |
+| [小红书无水印原图和实况图下载地址](https://dataxapi.com/zh/apis/xiaohongshu/notes/media/get.md) | `GET /v1/xiaohongshu/notes/media/get` | 视频和图片文件 | $0.0200 / 次 |
 | [小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list.md) | `GET /v1/xiaohongshu/notes/comments/list` | 评论列表 | $0.0200 / 次 |
 
 ### 图片 (1)
@@ -126,7 +132,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 4 到 120 条，各接口不同。16 个列表里有 12 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：30 个接口里有 20 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：33 个接口里有 23 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：小红书评论回复、小红书蒲公英关联词、小红书话题笔记、小红书商品评价、小红书蒲公英博主笔记、小红书搜索框联想词、小红书蒲公英相似博主：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **预览结构**：有 18 个接口返回的是预览结构，字段还可能调整；其余返回统一的结构，所有平台都一样。
 - **快照**：小红书热点、小红书蒲公英内容广场热门笔记：榜单是每 10 分钟刷新一次的快照，`meta.fetched_at` 写明是什么时候取的。
@@ -147,7 +153,7 @@
 
 ### 通过 API 能拿到小红书的哪些数据？
 
-30 个接口：视频、笔记、图片、话题、用户、评论、热榜、关键词、蒲公英、小红书商城。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+33 个接口：视频、笔记、图片、话题、用户、评论、热榜、关键词、蒲公英、小红书商城。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用小红书 API？
 
@@ -262,4 +268,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/xiaohongshu/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/xiaohongshu/)

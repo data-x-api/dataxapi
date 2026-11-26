@@ -1,10 +1,10 @@
 # TikTok API
 
-18 endpoints read TikTok: videos, hashtags, users, comments, ad library, Creative Center, TikTok Shop. From $0.0020 a call. No TikTok login and no cookie; a failed call is free.
+19 endpoints read TikTok: videos, hashtags, users, comments, ad library, Creative Center, TikTok Shop. From $0.0020 a call. No TikTok login and no cookie; a failed call is free.
 
-> 18 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 19 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## tiktok.ads.search
 
@@ -167,3 +167,12 @@ Get a page of the accounts following a TikTok user, by handle, 50 a page, newest
 - Request: `GET /v1/tiktok/users/followers/list`
 - Parameters: `username` (required), `cursor`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/tiktok/users/followers/list.md
+
+## tiktok.videos.media.get
+
+Give a TikTok video or photo post by ID or link and get the address of every file it has: the video without watermark in each quality (with width, height, codec, bit rate, size and when it expires), the cover, the background music, and each picture of a photo post. Where a signature says when an address expires, expires_at says so; another call gives new ones. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: TikTok video downloader, no watermark API
+- Request: `GET /v1/tiktok/videos/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/tiktok/videos/media/get.md

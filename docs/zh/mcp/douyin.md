@@ -1,10 +1,10 @@
 # 在 AI 里用抖音数据
 
-问 AI 抖音上的事，它用实时数据回答：38 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI 抖音上的事，它用实时数据回答：42 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-10
+更新于 2026-11-25
 
-- 接口：38 (抖音，同一种返回格式)
+- 接口：42 (抖音，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-douyin](https://dataxapi.com/skills/dataxapi-douyin.zip)
@@ -48,11 +48,11 @@
 
 ## 抖音技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出抖音的 38 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出抖音的 42 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-douyin.zip 装上 DataXAPI 技能 dataxapi-douyin。
 
-## AI 能调的抖音接口，全部 38 个
+## AI 能调的抖音接口，全部 42 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -77,6 +77,7 @@
 | [抖音用户视频](https://dataxapi.com/zh/apis/douyin/users/videos/list/) | `douyin.users.videos.list` | $0.0020 |
 | [抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list/) | `douyin.videos.comments.list` | $0.0020 |
 | [抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get/) | `douyin.videos.get` | $0.0020 |
+| [抖音视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/douyin/videos/transcript/get/) | `douyin.videos.transcript.get` | 每次 $0.0020，识别的视频另加每分钟 $0.0038 |
 | [抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics/) | `douyin.videos.metrics` | $0.0020 |
 | [抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related/) | `douyin.videos.related` | $0.0020 |
 | [抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search/) | `douyin.videos.search` | $0.0200 |
@@ -94,8 +95,11 @@
 | [抖音星图营销活动日历](https://dataxapi.com/zh/apis/douyin/xingtu/campaigns/list/) | `douyin.xingtu.campaigns.list` | $0.0040 |
 | [抖音星图视频数据报告（播放量、完播率）](https://dataxapi.com/zh/apis/douyin/xingtu/videos/get/) | `douyin.xingtu.videos.get` | $0.0040 |
 | [抖音搜索框联想词](https://dataxapi.com/zh/apis/douyin/keywords/related/) | `douyin.keywords.related` | $0.0200 |
+| [抖音无水印视频和图片下载地址](https://dataxapi.com/zh/apis/douyin/videos/media/get/) | `douyin.videos.media.get` | $0.0020 |
+| [抖音音乐详情（背景音乐 MP3 和使用人数）](https://dataxapi.com/zh/apis/douyin/music/get/) | `douyin.music.get` | $0.0020 |
 | [抖音用户视频（备用版）](https://dataxapi.com/zh/apis/douyin/backup/users/videos/list/) | `douyin.backup.users.videos.list` | $0.0300 |
 | [抖音视频搜索（备用版）](https://dataxapi.com/zh/apis/douyin/backup/videos/search/) | `douyin.backup.videos.search` | $0.0300 |
+| [抖音星图达人粉丝画像（备用版）](https://dataxapi.com/zh/apis/douyin/xingtu/backup/creators/audience/get/) | `douyin.xingtu.backup.creators.audience.get` | $0.0400 |
 
 [抖音的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/douyin/) · [抖音 API](https://dataxapi.com/zh/apis/douyin/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -127,4 +131,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/douyin/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/douyin/)

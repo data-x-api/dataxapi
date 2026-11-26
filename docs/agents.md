@@ -1,6 +1,6 @@
 # DataXAPI: set it up in this agent
 
-> You are an AI agent, and a person asked you to connect DataXAPI: market data from 21 platforms through one key, 237 endpoints, paid per call from $0.0003. Do the four steps in order. If one fails, stop and tell the person what failed.
+> You are an AI agent, and a person asked you to connect DataXAPI: market data from 21 platforms through one key, 254 endpoints, paid per call from $0.0003. Do the four steps in order. If one fails, stop and tell the person what failed.
 
 中文版在本页下半部分。
 
@@ -62,7 +62,7 @@ The server lists 5 tools:
 
 - `find`: find the endpoint for a need said in words. No key, free.
 - `describe`: the whole contract of 1 to 5 endpoints: parameters, fields, price, the most one call can cost. No key, free.
-- `call`: fetch one page of data from one endpoint. Needs the key; charged per call or per item, as `describe` says.
+- `call`: fetch one page of data from one endpoint. Needs the key; charged per call, per item or per minute, as `describe` says.
 - `read_more`: the rest of a result that was cut to fit, or the same result in another view. Needs the key that made the call; free.
 - `account`: the balance, a call's receipt, usage, and which endpoints are up. Free.
 
@@ -100,13 +100,13 @@ The server lists 5 tools:
 - [Catalog](https://api.dataxapi.com/v1/catalog/capabilities), [status](https://api.dataxapi.com/v1/catalog/status), [error codes](https://api.dataxapi.com/v1/catalog/errors): no key needed.
 - [Skill packages](https://dataxapi.com/skills/manifest.json), and the files an agent finds a service by: [API catalog](https://dataxapi.com/.well-known/api-catalog), [MCP server card](https://dataxapi.com/.well-known/mcp/server-card.json), [index of skills](https://dataxapi.com/.well-known/agent-skills/index.json), [AI catalog](https://dataxapi.com/.well-known/ai-catalog.json).
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ---
 
 ## DataXAPI：在这个 agent 里接好它
 
-你是一个 AI agent，用户让你接好 DataXAPI：一把 Key 取 21 个平台的市场数据，237 个接口，按次付费，一次 $0.0003 起。按顺序做下面四步；哪一步不成，停下来告诉用户是哪一步、为什么。
+你是一个 AI agent，用户让你接好 DataXAPI：一把 Key 取 21 个平台的市场数据，254 个接口，按次付费，一次 $0.0003 起。按顺序做下面四步；哪一步不成，停下来告诉用户是哪一步、为什么。
 
 ### 1. 收好 Key
 
@@ -166,7 +166,7 @@ bearer_token_env_var = "DATAXAPI_API_KEY"
 
 - `find`: 用一句话找接口。不用 Key，不收费。
 - `describe`: 1 到 5 个接口的完整约定：参数、字段、价格、单次最高扣费。不用 Key，不收费。
-- `call`: 从一个接口取一页数据。要 Key；按次或按条收费，以 `describe` 说的为准。
+- `call`: 从一个接口取一页数据。要 Key；按次、按条或按分钟收费，以 `describe` 说的为准。
 - `read_more`: 读一次结果里被截掉的部分，或换一种详略再读。要发起那次调用的 Key；不收费。
 - `account`: 余额、某次调用的扣费、用量、哪些接口现在可用。不收费。
 

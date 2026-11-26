@@ -1,10 +1,10 @@
 # WeChat Channels API
 
-15 endpoints read WeChat Channels: videos, users, collections, comments. From $0.0150 a call. No WeChat Channels login and no cookie; a failed call is free.
+17 endpoints read WeChat Channels: videos, users, collections, comments. From $0.0150 a call. No WeChat Channels login and no cookie; a failed call is free.
 
-> 15 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 17 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## wechat_channels.users.get
 
@@ -140,3 +140,21 @@ Get the replays of a WeChat Channels account's live streams by the account's ID,
 - Request: `GET /v1/wechat_channels/users/live_replays/list`
 - Parameters: `id` (required), `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/wechat_channels/users/live_replays/list.md
+
+## wechat_channels.videos.media.get
+
+Give a WeChat Channels video by its ID, share link or a search result's export/ ID and get the video file's address (with width, height, size and length), the cover, and the method and key that decrypt it: only the first 131072 bytes of a Channels file are encrypted, and once decrypted as decrypt says, it is a playable MP4. Use the address and key of one answer together; no headers are needed. Once the address stops working, another call gives a new pair. One object a call; $0.0200 per call. Errors and timeouts are not charged.
+
+- Name: WeChat Channels video download API
+- Request: `GET /v1/wechat_channels/videos/media/get`
+- Parameters: `id`, `url`, `export_id`, `view`, `fields`; give exactly one of id, url, export_id
+- Whole contract: https://dataxapi.com/apis/wechat_channels/videos/media/get.md
+
+## wechat_channels.videos.transcript.get
+
+Give a WeChat Channels video's share link, ID or a search result's export/ ID and get what is said in it: the whole text, each sentence with its start and end time, and ready SRT subtitles, with the caption, author and length; speakers can be told apart. The Channels file is decrypted for you. Charged a call, plus by the minute of video when its speech is recognised; nothing when nobody speaks. A video of up to 5 minutes comes back as text; one over 5 minutes and up to 2 hours is answered at once with a job: call again with it a little later for the text, charged by its actual minutes and only when the text is delivered. One object a call; $0.0200 a call, plus $0.0038 a minute when the speech is recognised (a part minute counts as one); none when the platform's own captions are used; at most $0.0390 a call for a video of up to 5 minutes, a longer one, up to 2 hours, by its actual minutes. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: WeChat Channels video transcript API
+- Request: `GET /v1/wechat_channels/videos/transcript/get`
+- Parameters: `id`, `url`, `export_id`, `speakers`, `job`, `view`, `fields`; give exactly one of id, url, export_id, job
+- Whole contract: https://dataxapi.com/apis/wechat_channels/videos/transcript/get.md

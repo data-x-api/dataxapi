@@ -1,10 +1,10 @@
 # Xiaohongshu (RedNote) data in your AI
 
-Ask your AI about Xiaohongshu (RedNote) and it answers with live data: 30 endpoints through 5 MCP tools or one skill package, from $0.0200 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Xiaohongshu (RedNote) and it answers with live data: 33 endpoints through 5 MCP tools or one skill package, from $0.0200 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-Updated 2026-11-11
+Updated 2026-11-21
 
-- Endpoints: 30 (on Xiaohongshu (RedNote), one response shape)
+- Endpoints: 33 (on Xiaohongshu (RedNote), one response shape)
 - Price: from $0.0200 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-xiaohongshu](https://dataxapi.com/skills/dataxapi-xiaohongshu.zip)
@@ -46,11 +46,11 @@ What happens when you ask about Xiaohongshu (RedNote): your AI looks the endpoin
 
 ## The Xiaohongshu (RedNote) skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 30 Xiaohongshu (RedNote) endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 33 Xiaohongshu (RedNote) endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-xiaohongshu from https://dataxapi.com/skills/dataxapi-xiaohongshu.zip.
 
-## All 30 Xiaohongshu (RedNote) endpoints your AI can call
+## All 33 Xiaohongshu (RedNote) endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -79,6 +79,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Xiaohongshu PGY creator notes](https://dataxapi.com/apis/xiaohongshu/pgy/creators/notes/list/) | `xiaohongshu.pgy.creators.notes.list` | $0.0400 |
 | [Xiaohongshu search suggestions](https://dataxapi.com/apis/xiaohongshu/keywords/related/) | `xiaohongshu.keywords.related` | $0.0200 |
 | [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get/) | `xiaohongshu.videos.get` | $0.0200 |
+| [Xiaohongshu video transcript (video to text)](https://dataxapi.com/apis/xiaohongshu/videos/transcript/get/) | `xiaohongshu.videos.transcript.get` | $0.0200 a call, plus $0.0038 a minute when the speech is recognised |
 | [Xiaohongshu PGY creator follower history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/history/) | `xiaohongshu.pgy.creators.followers.history` | $0.0400 |
 | [Xiaohongshu PGY similar creators](https://dataxapi.com/apis/xiaohongshu/pgy/creators/related/) | `xiaohongshu.pgy.creators.related` | $0.0400 |
 | [Xiaohongshu PGY trending notes](https://dataxapi.com/apis/xiaohongshu/pgy/notes/trending/) | `xiaohongshu.pgy.notes.trending` | $0.0400 |
@@ -86,6 +87,8 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Xiaohongshu PGY creator follower summary](https://dataxapi.com/apis/xiaohongshu/pgy/creators/followers/metrics/) | `xiaohongshu.pgy.creators.followers.metrics` | $0.0400 |
 | [Xiaohongshu PGY creator core figures history](https://dataxapi.com/apis/xiaohongshu/pgy/creators/costs/history/) | `xiaohongshu.pgy.creators.costs.history` | $0.0400 |
 | [Xiaohongshu PGY note metrics](https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/) | `xiaohongshu.pgy.notes.get` | $0.0400 |
+| [RedNote (Xiaohongshu) image downloader, originals and live photos](https://dataxapi.com/apis/xiaohongshu/notes/media/get/) | `xiaohongshu.notes.media.get` | $0.0200 |
+| [RedNote (Xiaohongshu) video downloader](https://dataxapi.com/apis/xiaohongshu/videos/media/get/) | `xiaohongshu.videos.media.get` | $0.0200 |
 
 [Every Xiaohongshu (RedNote) price, and what is charged →](https://dataxapi.com/pricing/xiaohongshu/) · [Xiaohongshu (RedNote) API](https://dataxapi.com/apis/xiaohongshu/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -117,4 +120,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/xiaohongshu/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/xiaohongshu/)

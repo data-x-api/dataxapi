@@ -1,9 +1,9 @@
 {
- "revision": "720fc3ea8dadb865",
- "generated_from": "catalog revision 720fc3ea8dadb865, price book 19",
+ "revision": "0051cce45e9530b9",
+ "generated_from": "catalog revision 0051cce45e9530b9, price book 22",
  "prices": {
-  "version": "19",
-  "effective_at": "2026-11-17T18:04:34.631Z",
+  "version": "22",
+  "effective_at": "2026-11-25T13:46:46.822Z",
   "currency": "USD"
  },
  "base_url": "https://api.dataxapi.com",
@@ -89,6 +89,15 @@
    "charge_when_empty": "0",
    "charge_when_not_found": "0.002",
    "docs": "https://dataxapi.com/apis/bilibili/videos/get/"
+  },
+  {
+   "id": "bilibili.videos.transcript.get",
+   "path": "/v1/bilibili/videos/transcript/get",
+   "unit": "minute",
+   "price": "0.004",
+   "max_charge": "0.023",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/transcript/get/"
   },
   {
    "id": "bilibili.videos.search",
@@ -270,6 +279,15 @@
    "docs": "https://dataxapi.com/apis/douyin/videos/get/"
   },
   {
+   "id": "douyin.videos.transcript.get",
+   "path": "/v1/douyin/videos/transcript/get",
+   "unit": "minute",
+   "price": "0.002",
+   "max_charge": "0.021",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/douyin/videos/transcript/get/"
+  },
+  {
    "id": "douyin.videos.metrics",
    "path": "/v1/douyin/videos/metrics",
    "unit": "call",
@@ -387,6 +405,15 @@
    "max_charge": "0.002",
    "charge_when_empty": "0",
    "docs": "https://dataxapi.com/apis/kuaishou/videos/get/"
+  },
+  {
+   "id": "kuaishou.videos.transcript.get",
+   "path": "/v1/kuaishou/videos/transcript/get",
+   "unit": "minute",
+   "price": "0.002",
+   "max_charge": "0.021",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/kuaishou/videos/transcript/get/"
   },
   {
    "id": "kuaishou.videos.search",
@@ -884,6 +911,15 @@
    "charge_when_empty": "0",
    "charge_when_not_found": "0.002",
    "docs": "https://dataxapi.com/apis/weibo/posts/get/"
+  },
+  {
+   "id": "weibo.posts.transcript.get",
+   "path": "/v1/weibo/posts/transcript/get",
+   "unit": "minute",
+   "price": "0.002",
+   "max_charge": "0.021",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/weibo/posts/transcript/get/"
   },
   {
    "id": "weibo.posts.likers.list",
@@ -2167,6 +2203,15 @@
    "docs": "https://dataxapi.com/apis/xiaohongshu/videos/get/"
   },
   {
+   "id": "xiaohongshu.videos.transcript.get",
+   "path": "/v1/xiaohongshu/videos/transcript/get",
+   "unit": "minute",
+   "price": "0.02",
+   "max_charge": "0.039",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/videos/transcript/get/"
+  },
+  {
    "id": "xiaohongshu.pgy.creators.followers.history",
    "path": "/v1/xiaohongshu/pgy/creators/followers/history",
    "unit": "call",
@@ -2235,6 +2280,112 @@
    "docs": "https://dataxapi.com/apis/xiaohongshu/pgy/notes/get/"
   },
   {
+   "id": "douyin.videos.media.get",
+   "path": "/v1/douyin/videos/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/videos/media/get/"
+  },
+  {
+   "id": "xiaohongshu.notes.media.get",
+   "path": "/v1/xiaohongshu/notes/media/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/notes/media/get/"
+  },
+  {
+   "id": "xiaohongshu.videos.media.get",
+   "path": "/v1/xiaohongshu/videos/media/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.02",
+   "docs": "https://dataxapi.com/apis/xiaohongshu/videos/media/get/"
+  },
+  {
+   "id": "kuaishou.videos.media.get",
+   "path": "/v1/kuaishou/videos/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/kuaishou/videos/media/get/"
+  },
+  {
+   "id": "weibo.posts.media.get",
+   "path": "/v1/weibo/posts/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.002",
+   "docs": "https://dataxapi.com/apis/weibo/posts/media/get/"
+  },
+  {
+   "id": "wechat_channels.videos.media.get",
+   "path": "/v1/wechat_channels/videos/media/get",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.02",
+   "docs": "https://dataxapi.com/apis/wechat_channels/videos/media/get/"
+  },
+  {
+   "id": "wechat_channels.videos.transcript.get",
+   "path": "/v1/wechat_channels/videos/transcript/get",
+   "unit": "minute",
+   "price": "0.02",
+   "max_charge": "0.039",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_channels/videos/transcript/get/"
+  },
+  {
+   "id": "tiktok.videos.media.get",
+   "path": "/v1/tiktok/videos/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/tiktok/videos/media/get/"
+  },
+  {
+   "id": "instagram.posts.media.get",
+   "path": "/v1/instagram/posts/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/instagram/posts/media/get/"
+  },
+  {
+   "id": "bilibili.videos.media.get",
+   "path": "/v1/bilibili/videos/media/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.002",
+   "docs": "https://dataxapi.com/apis/bilibili/videos/media/get/"
+  },
+  {
+   "id": "douyin.music.get",
+   "path": "/v1/douyin/music/get",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.002",
+   "docs": "https://dataxapi.com/apis/douyin/music/get/"
+  },
+  {
    "id": "bilibili.backup.users.videos.list",
    "path": "/v1/bilibili/backup/users/videos/list",
    "unit": "call",
@@ -2260,6 +2411,16 @@
    "max_charge": "0.03",
    "charge_when_empty": "0.03",
    "docs": "https://dataxapi.com/apis/douyin/backup/videos/search/"
+  },
+  {
+   "id": "douyin.xingtu.backup.creators.audience.get",
+   "path": "/v1/douyin/xingtu/backup/creators/audience/get",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "charge_when_not_found": "0.04",
+   "docs": "https://dataxapi.com/apis/douyin/xingtu/backup/creators/audience/get/"
   },
   {
    "id": "weibo.backup.trends.list",

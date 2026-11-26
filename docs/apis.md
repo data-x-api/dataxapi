@@ -1,10 +1,10 @@
 # Data API catalog
 
-Posts, comments, accounts, trends, creator rate cards and ad libraries: 237 endpoints on 21 platforms, one key, one response shape. From $0.0003 a call, each endpoint at its own price, and a failed call is free.
+Posts, comments, accounts, trends, creator rate cards and ad libraries: 254 endpoints on 21 platforms, one key, one response shape. From $0.0003 a call, each endpoint at its own price, and a failed call is free.
 
 ## [Douyin API](https://dataxapi.com/apis/douyin.md)
 
-38 endpoints · from $0.0020
+42 endpoints · from $0.0020
 
 ### Backup versions (2)
 
@@ -13,12 +13,14 @@ Posts, comments, accounts, trends, creator rate cards and ad libraries: 237 endp
 | [Douyin video search (backup)](https://dataxapi.com/apis/douyin/backup/videos/search.md) | `GET /v1/douyin/backup/videos/search` | Post list | $0.0300 / call |
 | [Douyin user videos (backup)](https://dataxapi.com/apis/douyin/backup/users/videos/list.md) | `GET /v1/douyin/backup/users/videos/list` | Post list | $0.0300 / call |
 
-### Videos (6)
+### Videos (8)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Douyin video search](https://dataxapi.com/apis/douyin/videos/search.md) | `GET /v1/douyin/videos/search` | Post list | $0.0200 / call |
 | [Douyin video detail](https://dataxapi.com/apis/douyin/videos/get.md) | `GET /v1/douyin/videos/get` | Post | $0.0020 / call |
+| [Douyin video downloader, no watermark](https://dataxapi.com/apis/douyin/videos/media/get.md) | `GET /v1/douyin/videos/media/get` | Media files | $0.0020 / call |
+| [Douyin video transcript (video to text)](https://dataxapi.com/apis/douyin/videos/transcript/get.md) | `GET /v1/douyin/videos/transcript/get` | Transcript | $0.0020 / call |
 | [Douyin video comments](https://dataxapi.com/apis/douyin/videos/comments/list.md) | `GET /v1/douyin/videos/comments/list` | Comment list | $0.0020 / call |
 | [Douyin video play count](https://dataxapi.com/apis/douyin/videos/metrics.md) | `GET /v1/douyin/videos/metrics` | Post | $0.0020 / call |
 | [Douyin related videos](https://dataxapi.com/apis/douyin/videos/related.md) | `GET /v1/douyin/videos/related` | Post list | $0.0020 / call |
@@ -57,6 +59,12 @@ Posts, comments, accounts, trends, creator rate cards and ad libraries: 237 endp
 | --- | --- | --- | --- |
 | [Douyin search suggestions](https://dataxapi.com/apis/douyin/keywords/related.md) | `GET /v1/douyin/keywords/related` | Related keyword list | $0.0200 / call |
 
+### Music (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Douyin music detail](https://dataxapi.com/apis/douyin/music/get.md) | `GET /v1/douyin/music/get` | Music | $0.0020 / call |
+
 ### [trend-index](https://dataxapi.com/apis/douyin/index.md) (10)
 
 Douyin's official index tool (巨量算数, Juliang Suanshu): day-by-day keyword and brand indexes, who searches a keyword, related keywords, live hot topics and creator figures.
@@ -74,13 +82,14 @@ Douyin's official index tool (巨量算数, Juliang Suanshu): day-by-day keyword
 | [Douyin trend-index related keywords](https://dataxapi.com/apis/douyin/index/keywords/related.md) | `GET /v1/douyin/index/keywords/related` | Related keyword list | $0.0020 / call |
 | [Douyin trend-index live hot topics](https://dataxapi.com/apis/douyin/index/trends/list.md) | `GET /v1/douyin/index/trends/list` | Trend list | $0.0020 / call |
 
-### [Xingtu](https://dataxapi.com/apis/douyin/xingtu.md) (12)
+### [Xingtu](https://dataxapi.com/apis/douyin/xingtu.md) (13)
 
 Douyin's official creator marketplace (星图): creator search, rate cards, audience profiles, reach and conversion figures.
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Douyin Xingtu creator search](https://dataxapi.com/apis/douyin/xingtu/creators/search.md) | `GET /v1/douyin/xingtu/creators/search` | Creator list | $0.0040 / call |
+| [Douyin Xingtu creator audience (backup)](https://dataxapi.com/apis/douyin/xingtu/backup/creators/audience/get.md) | `GET /v1/douyin/xingtu/backup/creators/audience/get` | Audience | $0.0400 / call |
 | [Douyin Xingtu creator audience](https://dataxapi.com/apis/douyin/xingtu/creators/audience/get.md) | `GET /v1/douyin/xingtu/creators/audience/get` | Audience | $0.0040 / call |
 | [Douyin Xingtu creator content mix](https://dataxapi.com/apis/douyin/xingtu/creators/content_mix/get.md) | `GET /v1/douyin/xingtu/creators/content_mix/get` | Xingtu creator content mix | $0.0040 / call |
 | [Douyin Xingtu creator conversion](https://dataxapi.com/apis/douyin/xingtu/creators/conversion/get.md) | `GET /v1/douyin/xingtu/creators/conversion/get` | Xingtu creator conversion | $0.0040 / call |
@@ -95,7 +104,7 @@ Douyin's official creator marketplace (星图): creator search, rate cards, audi
 
 ## [Bilibili API](https://dataxapi.com/apis/bilibili.md)
 
-9 endpoints · from $0.0020
+11 endpoints · from $0.0020
 
 ### Backup versions (1)
 
@@ -103,12 +112,14 @@ Douyin's official creator marketplace (星图): creator search, rate cards, audi
 | --- | --- | --- | --- |
 | [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list.md) | `GET /v1/bilibili/backup/users/videos/list` | Post list | $0.0300 / call |
 
-### Videos (4)
+### Videos (6)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search.md) | `GET /v1/bilibili/videos/search` | Post list | $0.0020 / call |
 | [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get.md) | `GET /v1/bilibili/videos/get` | Post | $0.0020 / call |
+| [Bilibili video downloader](https://dataxapi.com/apis/bilibili/videos/media/get.md) | `GET /v1/bilibili/videos/media/get` | Media files | $0.0020 / call |
+| [Bilibili video transcript (video to text)](https://dataxapi.com/apis/bilibili/videos/transcript/get.md) | `GET /v1/bilibili/videos/transcript/get` | Transcript | $0.0040 / call |
 | [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list.md) | `GET /v1/bilibili/videos/comments/list` | Comment list | $0.0020 / call |
 | [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending.md) | `GET /v1/bilibili/videos/trending` | Post list | $0.0020 / call |
 
@@ -133,14 +144,16 @@ Douyin's official creator marketplace (星图): creator search, rate cards, audi
 
 ## [Kuaishou API](https://dataxapi.com/apis/kuaishou.md)
 
-8 endpoints · from $0.0020
+10 endpoints · from $0.0020
 
-### Videos (3)
+### Videos (5)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search.md) | `GET /v1/kuaishou/videos/search` | Post list | $0.0200 / call |
 | [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get.md) | `GET /v1/kuaishou/videos/get` | Post | $0.0020 / call |
+| [Kuaishou video downloader](https://dataxapi.com/apis/kuaishou/videos/media/get.md) | `GET /v1/kuaishou/videos/media/get` | Media files | $0.0020 / call |
+| [Kuaishou video transcript (video to text)](https://dataxapi.com/apis/kuaishou/videos/transcript/get.md) | `GET /v1/kuaishou/videos/transcript/get` | Transcript | $0.0020 / call |
 | [Kuaishou video comments](https://dataxapi.com/apis/kuaishou/videos/comments/list.md) | `GET /v1/kuaishou/videos/comments/list` | Comment list | $0.0020 / call |
 
 ### Users (3)
@@ -339,13 +352,14 @@ Lists on X: the posts of a list, its members and its followers.
 
 ## [Instagram API](https://dataxapi.com/apis/instagram.md)
 
-8 endpoints · from $0.0020
+9 endpoints · from $0.0020
 
-### Posts (3)
+### Posts (4)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Instagram post detail](https://dataxapi.com/apis/instagram/posts/get.md) | `GET /v1/instagram/posts/get` | Post | $0.0020 / call |
+| [Instagram video and photo downloader](https://dataxapi.com/apis/instagram/posts/media/get.md) | `GET /v1/instagram/posts/media/get` | Media files | $0.0020 / call |
 | [Instagram video transcript](https://dataxapi.com/apis/instagram/posts/transcript/get.md) | `GET /v1/instagram/posts/transcript/get` | Transcript | $0.0020 / call |
 | [Instagram post comments](https://dataxapi.com/apis/instagram/posts/comments/list.md) | `GET /v1/instagram/posts/comments/list` | Comment list | $0.0020 / call |
 
@@ -371,14 +385,15 @@ Lists on X: the posts of a list, its members and its followers.
 
 ## [TikTok API](https://dataxapi.com/apis/tiktok.md)
 
-18 endpoints · from $0.0020
+19 endpoints · from $0.0020
 
-### Videos (4)
+### Videos (5)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [TikTok video search](https://dataxapi.com/apis/tiktok/videos/search.md) | `GET /v1/tiktok/videos/search` | Post list | $0.0020 / call |
 | [TikTok video detail](https://dataxapi.com/apis/tiktok/videos/get.md) | `GET /v1/tiktok/videos/get` | Post | $0.0020 / call |
+| [TikTok video downloader, no watermark](https://dataxapi.com/apis/tiktok/videos/media/get.md) | `GET /v1/tiktok/videos/media/get` | Media files | $0.0020 / call |
 | [TikTok video transcript](https://dataxapi.com/apis/tiktok/videos/transcript/get.md) | `GET /v1/tiktok/videos/transcript/get` | Transcript | $0.0020 / call |
 | [TikTok video comments](https://dataxapi.com/apis/tiktok/videos/comments/list.md) | `GET /v1/tiktok/videos/comments/list` | Comment list | $0.0020 / call |
 
@@ -432,7 +447,7 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 
 ## [Weibo API](https://dataxapi.com/apis/weibo.md)
 
-11 endpoints · from $0.0020
+13 endpoints · from $0.0020
 
 ### Backup versions (1)
 
@@ -440,12 +455,14 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 | --- | --- | --- | --- |
 | [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list.md) | `GET /v1/weibo/backup/trends/list` | Trend list | $0.0300 / call |
 
-### Posts (4)
+### Posts (6)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search.md) | `GET /v1/weibo/posts/search` | Post list | $0.0020 / call |
 | [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get.md) | `GET /v1/weibo/posts/get` | Post | $0.0020 / call |
+| [Weibo video and image downloader](https://dataxapi.com/apis/weibo/posts/media/get.md) | `GET /v1/weibo/posts/media/get` | Media files | $0.0020 / call |
+| [Weibo video transcript (video to text)](https://dataxapi.com/apis/weibo/posts/transcript/get.md) | `GET /v1/weibo/posts/transcript/get` | Transcript | $0.0020 / call |
 | [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list.md) | `GET /v1/weibo/posts/comments/list` | Comment list | $0.0020 / call |
 | [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list.md) | `GET /v1/weibo/posts/likers/list` | Account list | $0.0020 / call |
 
@@ -472,20 +489,23 @@ Public product data of TikTok Shop: product search, product details, buyer revie
 
 ## [Xiaohongshu (RedNote) API](https://dataxapi.com/apis/xiaohongshu.md)
 
-30 endpoints · from $0.0200
+33 endpoints · from $0.0200
 
-### Videos (1)
+### Videos (3)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Xiaohongshu video note with its video and subtitles](https://dataxapi.com/apis/xiaohongshu/videos/get.md) | `GET /v1/xiaohongshu/videos/get` | Post | $0.0200 / call |
+| [RedNote (Xiaohongshu) video downloader](https://dataxapi.com/apis/xiaohongshu/videos/media/get.md) | `GET /v1/xiaohongshu/videos/media/get` | Media files | $0.0200 / call |
+| [Xiaohongshu video transcript (video to text)](https://dataxapi.com/apis/xiaohongshu/videos/transcript/get.md) | `GET /v1/xiaohongshu/videos/transcript/get` | Transcript | $0.0200 / call |
 
-### Notes (3)
+### Notes (4)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Xiaohongshu note search](https://dataxapi.com/apis/xiaohongshu/notes/search.md) | `GET /v1/xiaohongshu/notes/search` | Post list | $0.0200 / call |
 | [Xiaohongshu note detail](https://dataxapi.com/apis/xiaohongshu/notes/get.md) | `GET /v1/xiaohongshu/notes/get` | Post | $0.0200 / call |
+| [RedNote (Xiaohongshu) image downloader, originals and live photos](https://dataxapi.com/apis/xiaohongshu/notes/media/get.md) | `GET /v1/xiaohongshu/notes/media/get` | Media files | $0.0200 / call |
 | [Xiaohongshu note comments](https://dataxapi.com/apis/xiaohongshu/notes/comments/list.md) | `GET /v1/xiaohongshu/notes/comments/list` | Comment list | $0.0200 / call |
 
 ### Images (1)
@@ -594,7 +614,7 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 
 ## [WeChat Channels API](https://dataxapi.com/apis/wechat_channels.md)
 
-15 endpoints · from $0.0150
+17 endpoints · from $0.0150
 
 ### Backup versions (3)
 
@@ -604,13 +624,15 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 | [WeChat Channels account profile (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/get.md) | `GET /v1/wechat_channels/backup/users/get` | Account | $0.0300 / call |
 | [WeChat Channels account videos (backup)](https://dataxapi.com/apis/wechat_channels/backup/users/videos/list.md) | `GET /v1/wechat_channels/backup/users/videos/list` | Post list | $0.0600 / call |
 
-### Videos (5)
+### Videos (7)
 
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [WeChat Channels video search](https://dataxapi.com/apis/wechat_channels/videos/search.md) | `GET /v1/wechat_channels/videos/search` | Post list | $0.0200 / call |
 | [WeChat Channels video detail](https://dataxapi.com/apis/wechat_channels/videos/get.md) | `GET /v1/wechat_channels/videos/get` | Post | $0.0200 / call |
+| [WeChat Channels video download](https://dataxapi.com/apis/wechat_channels/videos/media/get.md) | `GET /v1/wechat_channels/videos/media/get` | Media files | $0.0200 / call |
 | [WeChat Channels video share link](https://dataxapi.com/apis/wechat_channels/videos/share_link/get.md) | `GET /v1/wechat_channels/videos/share_link/get` | Channels share link | $0.0200 / call |
+| [WeChat Channels video transcript](https://dataxapi.com/apis/wechat_channels/videos/transcript/get.md) | `GET /v1/wechat_channels/videos/transcript/get` | Transcript | $0.0200 / call |
 | [WeChat Channels video comments](https://dataxapi.com/apis/wechat_channels/videos/comments/list.md) | `GET /v1/wechat_channels/videos/comments/list` | Comment list | $0.0200 / call |
 | [WeChat Channels video stats](https://dataxapi.com/apis/wechat_channels/videos/metrics.md) | `GET /v1/wechat_channels/videos/metrics` | Post | $0.0150 / call |
 
@@ -818,4 +840,4 @@ Public product data of Xiaohongshu's shop: product search, product details and b
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/)

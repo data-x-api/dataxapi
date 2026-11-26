@@ -1,8 +1,8 @@
 # Instagram API
 
-8 个接口读 Instagram：帖子、话题、用户、评论。一次 $0.0020 起。不用登录 Instagram，不用 Cookie；失败不收费。
+9 个接口读 Instagram：帖子、话题、用户、评论。一次 $0.0020 起。不用登录 Instagram，不用 Cookie；失败不收费。
 
-## Instagram 的 8 个接口，各取什么
+## Instagram 的 9 个接口，各取什么
 
 - [Instagram 评论回复](https://dataxapi.com/zh/apis/instagram/comments/replies/list.md)：按评论编号和它所在的帖子短码取一页回复：正文、回复者、发布时间。
 - [Instagram 话题帖子](https://dataxapi.com/zh/apis/instagram/hashtags/posts/list.md)：按话题名取一页带这个话题的最新 Instagram 帖子，每页约 33 条：文案、作者编号、点赞评论数、发布时间、图片。
@@ -12,14 +12,16 @@
 - [Instagram 用户资料](https://dataxapi.com/zh/apis/instagram/users/get.md)：按账号名取 Instagram 用户资料：显示名、简介、粉丝数、关注数、是否认证、是否私密，主页上的网站和链接。
 - [Instagram 用户帖子](https://dataxapi.com/zh/apis/instagram/users/posts/list.md)：按账号名取一页 Instagram 用户发布的帖子，每页 12 条，可只要 Reels：文案、点赞评论播放数、发布时间、图片和视频地址，联名帖的其他作者。
 - [Instagram 用户搜索](https://dataxapi.com/zh/apis/instagram/users/search.md)：按关键词搜索 Instagram 账号，一次约 50 个，不翻页：账号名、显示名、头像、是否认证、是否私密。
+- [Instagram 视频和图片下载地址](https://dataxapi.com/zh/apis/instagram/posts/media/get.md)：给一条 Instagram 帖子或 Reel 的短码或链接，返回它的全部文件地址：视频和它的封面图，多图帖里的每张图片和每段视频（按顺序编号），带宽高和过期时间；过期了再调一次即可。
 
 ## 接口
 
-### 帖子 (3)
+### 帖子 (4)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get.md) | `GET /v1/instagram/posts/get` | 内容 | $0.0020 / 次 |
+| [Instagram 视频和图片下载地址](https://dataxapi.com/zh/apis/instagram/posts/media/get.md) | `GET /v1/instagram/posts/media/get` | 视频和图片文件 | $0.0020 / 次 |
 | [Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get.md) | `GET /v1/instagram/posts/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list.md) | `GET /v1/instagram/posts/comments/list` | 评论列表 | $0.0020 / 次 |
 
@@ -46,7 +48,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 12 到 50 条，各接口不同。5 个列表里有 4 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：8 个接口里有 8 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：9 个接口里有 9 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：Instagram 用户帖子：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 
 ## 调用结果不对时先看这里
@@ -61,7 +63,7 @@
 
 ### 通过 API 能拿到 Instagram 的哪些数据？
 
-8 个接口：帖子、话题、用户、评论。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+9 个接口：帖子、话题、用户、评论。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用 Instagram API？
 
@@ -91,4 +93,4 @@ Instagram 的 8 个接口各取一份录制的真实返回，平台原始 JSON �
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/instagram/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/instagram/)

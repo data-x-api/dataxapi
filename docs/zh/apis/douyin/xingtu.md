@@ -1,6 +1,6 @@
 # 抖音星图 API（巨量星图）
 
-12 个接口读抖音星图：达人搜索、报价、粉丝画像、传播和转化。一次 $0.0020 到 $0.0400。不用登录抖音，不用 Cookie；失败不收费。
+13 个接口读抖音星图：达人搜索、报价、粉丝画像、传播和转化。一次 $0.0020 到 $0.0400。不用登录抖音，不用 Cookie；失败不收费。
 
 也叫：Xingtu
 
@@ -20,7 +20,7 @@
 
 更新：当场取，调用那一刻去星图读
 
-## 这 12 个接口
+## 这 13 个接口
 
 ### 达人 (10)
 
@@ -42,6 +42,12 @@
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [抖音星图营销活动日历](https://dataxapi.com/zh/apis/douyin/xingtu/campaigns/list.md) | `GET /v1/douyin/xingtu/campaigns/list` | 星图营销活动列表 | $0.0040 / 次 |
+
+### 备用版 (1)
+
+| 接口 | 请求 | 返回 | 价格 |
+| --- | --- | --- | --- |
+| [抖音星图达人粉丝画像（备用版）](https://dataxapi.com/zh/apis/douyin/xingtu/backup/creators/audience/get.md) | `GET /v1/douyin/xingtu/backup/creators/audience/get` | 粉丝画像 | $0.0400 / 次 |
 
 ### 视频 (1)
 
@@ -119,4 +125,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/douyin/xingtu/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/douyin/xingtu/)

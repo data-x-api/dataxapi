@@ -1,8 +1,8 @@
 # DataXAPI
 
-> Market data over one HTTP interface, paid per call. Every endpoint shares one set of parameter names, one envelope and one error structure. 237 endpoints on 21 platforms. Free trial: up to 333 calls, no card.
+> Market data over one HTTP interface, paid per call. Every endpoint shares one set of parameter names, one envelope and one error structure. 254 endpoints on 21 platforms. Free trial: up to 333 calls, no card.
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. In Chinese: https://dataxapi.com/zh/llms.txt
+Generated from catalog revision 0051cce45e9530b9, price book 22. In Chinese: https://dataxapi.com/zh/llms.txt
 
 ## Call it
 
@@ -33,9 +33,10 @@ A task is a few calls under a spending cap. `dataxapi run <task> --plan` shows i
 - `account-audit`: How is this account doing? `social.accounts.get`, `social.accounts.posts.list`, 17 platforms, e.g. 2 calls ≤ $0.004
 - `viral`: Why did this post take off? `social.posts.get`, `social.transcripts.get`, 18 platforms, e.g. 2 calls ≤ $0.004
 - `creators`: Who are the accounts to work with in this category? `social.accounts.search`, 12 platforms, e.g. 2 calls ≤ $0.004
-- `transcripts`: What does this video say? `social.transcripts.get`, 7 platforms, e.g. 1 call ≤ $0.002
+- `transcripts`: What does this video say? `social.transcripts.get`, 13 platforms, e.g. 1 call ≤ $0.002
 - `ads`: What ads are competitors running? `ads.ads.search`, 3 platforms, e.g. 2 calls ≤ $0.004
 - `products`: What is selling, and what do buyers say? `commerce.products.search`, `commerce.products.reviews.list`, 2 platforms, e.g. 4 calls ≤ $0.008
+- `creator-transcripts`: What has this creator said in their latest videos? `social.accounts.posts.list`, `social.transcripts.get`, 12 platforms, e.g. 13 calls ≤ $0.216
 
 ## Look things up (no key needed)
 
@@ -49,33 +50,36 @@ A task is a few calls under a spending cap. `dataxapi run <task> --plan` shows i
 
 ## Endpoints by platform
 
-A platform's file lists its endpoints with parameters and prices, and links to each one's whole contract: the Markdown version of its reference page (under /zh, in Chinese).
+A platform's file lists its endpoints with parameters and prices, each linked to its whole contract (under /zh, in Chinese).
 
-Each platform also has a skill package, with its endpoints, prices and the questions each answers: `https://dataxapi.com/skills/dataxapi-<platform>.zip` (the platform's ID with `-` for `_`).
+A skill package per platform, with its endpoints, prices and the questions each answers: `https://dataxapi.com/skills/dataxapi-<platform>.zip` (the platform's ID with `-` for `_`).
 
 `+`: also has a backup version (same request, higher price), its ID with `backup` after the platform or group: `weibo.backup.trends.list`.
 
-- [Douyin](https://dataxapi.com/apis/douyin.md) `douyin` (36): comments.replies.list, hashtags.videos.list, index.brands.history, index.brands.metrics, index.creators.videos.list, index.creators.audience.get, index.creators.metrics, index.keywords.audience.get, index.keywords.history, index.keywords.related, index.trends.list, index.videos.search, trends.list, users.get, users.history, users.search, users.videos.list+, videos.comments.list, videos.get, videos.metrics, videos.related, videos.search+, videos.trending, xingtu.creators.rates.get, xingtu.creators.search, xingtu.creators.get, xingtu.creators.audience.get, xingtu.creators.metrics, xingtu.creators.videos.list, xingtu.creators.keywords.get, xingtu.creators.scores.get, xingtu.creators.content_mix.get, xingtu.creators.conversion.get, xingtu.campaigns.list, xingtu.videos.get, keywords.related
-- [Bilibili](https://dataxapi.com/apis/bilibili.md) `bilibili` (8): comments.replies.list, trends.list, users.get, users.videos.list+, videos.comments.list, videos.get, videos.search, videos.trending
-- [Kuaishou](https://dataxapi.com/apis/kuaishou.md) `kuaishou` (8): comments.replies.list, trends.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search
+- [Douyin](https://dataxapi.com/apis/douyin.md) `douyin` (36): hashtags.videos.list, index.brands.history, index.brands.metrics, index.creators.videos.list, index.creators.audience.get, index.creators.metrics, index.keywords.audience.get, index.keywords.history, index.keywords.related, index.trends.list, index.videos.search, trends.list, users.get, users.history, users.search, users.videos.list+, videos.comments.list, videos.get, videos.metrics, videos.related, videos.search+, videos.trending, xingtu.creators.rates.get, xingtu.creators.search, xingtu.creators.get, xingtu.creators.audience.get+, xingtu.creators.metrics, xingtu.creators.videos.list, xingtu.creators.keywords.get, xingtu.creators.scores.get, xingtu.creators.content_mix.get, xingtu.creators.conversion.get, xingtu.campaigns.list, xingtu.videos.get, keywords.related, music.get
+- [Bilibili](https://dataxapi.com/apis/bilibili.md) `bilibili` (7): trends.list, users.get, users.videos.list+, videos.comments.list, videos.get, videos.search, videos.trending
+- [Kuaishou](https://dataxapi.com/apis/kuaishou.md) `kuaishou` (7): trends.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search
 - [Telegram](https://dataxapi.com/apis/telegram.md) `telegram` (3): channels.get, channels.messages.list, messages.get
-- [X (Twitter)](https://dataxapi.com/apis/x.md) `x` (21): communities.posts.list, lists.posts.list, posts.article.get, posts.get, posts.quotes.list, posts.replies.list, posts.retweeters.list, posts.search, threads.posts.list, trends.list, users.followers.list, users.following.list, users.get, users.mentions.list, users.posts.list, users.search, communities.get, communities.members.list, lists.followers.list, lists.members.list, posts.transcript.get
+- [X (Twitter)](https://dataxapi.com/apis/x.md) `x` (20): communities.posts.list, lists.posts.list, posts.article.get, posts.get, posts.quotes.list, posts.replies.list, posts.retweeters.list, posts.search, threads.posts.list, trends.list, users.followers.list, users.following.list, users.get, users.mentions.list, users.posts.list, users.search, communities.get, communities.members.list, lists.followers.list, lists.members.list
 - [Facebook](https://dataxapi.com/apis/facebook.md) `facebook` (4): pages.get, pages.posts.list, posts.comments.list, posts.get
 - [Google Ads](https://dataxapi.com/apis/google.md) `google` (3): ads.get, advertisers.ads.list, advertisers.search
-- [LinkedIn](https://dataxapi.com/apis/linkedin.md) `linkedin` (7): ads.get, ads.search, companies.get, companies.posts.list, posts.get, posts.search, posts.transcript.get
-- [Meta Ad Library](https://dataxapi.com/apis/meta.md) `meta` (5): ads.get, ads.search, ads.transcript.get, advertisers.ads.list, advertisers.search
+- [LinkedIn](https://dataxapi.com/apis/linkedin.md) `linkedin` (6): ads.get, ads.search, companies.get, companies.posts.list, posts.get, posts.search
+- [Meta Ad Library](https://dataxapi.com/apis/meta.md) `meta` (4): ads.get, ads.search, advertisers.ads.list, advertisers.search
 - [Threads](https://dataxapi.com/apis/threads.md) `threads` (4): posts.get, posts.search, users.get, users.posts.list
-- [Instagram](https://dataxapi.com/apis/instagram.md) `instagram` (8): comments.replies.list, hashtags.posts.list, posts.comments.list, posts.get, posts.transcript.get, users.get, users.posts.list, users.search
-- [TikTok](https://dataxapi.com/apis/tiktok.md) `tiktok` (18): ads.search, ads.get, comments.replies.list, creative_center.ads.get, creative_center.ads.search, hashtags.videos.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search, videos.transcript.get, shop.products.get, shop.products.reviews.list, shop.products.search, shop.sellers.products.list, users.followers.list
-- [Weibo](https://dataxapi.com/apis/weibo.md) `weibo` (10): comments.replies.list, posts.comments.list, posts.get, posts.likers.list, posts.search, trends.list+, users.followers.list, users.get, users.posts.list, users.search
-- [Xiaohongshu (RedNote)](https://dataxapi.com/apis/xiaohongshu.md) `xiaohongshu` (30): images.search, notes.get, comments.replies.list, notes.comments.list, notes.search, pgy.keywords.history, pgy.keywords.related, topics.notes.list, topics.get, trends.list, users.get, users.notes.list, users.search, shop.products.get, shop.products.reviews.list, shop.products.search, pgy.creators.search, pgy.creators.get, pgy.creators.audience.get, pgy.creators.metrics, pgy.creators.notes.list, keywords.related, videos.get, pgy.creators.followers.history, pgy.creators.related, pgy.notes.trending, pgy.creators.costs.metrics, pgy.creators.followers.metrics, pgy.creators.costs.history, pgy.notes.get
-- [YouTube](https://dataxapi.com/apis/youtube.md) `youtube` (10): channels.get, channels.search, channels.videos.list, comments.replies.list, videos.comments.list, videos.get, videos.search, videos.transcript.get, channels.posts.list, posts.get
-- [WeChat Channels](https://dataxapi.com/apis/wechat_channels.md) `wechat_channels` (12): users.get+, videos.get, videos.comments.list, videos.share_link.get, users.collections.list, collections.videos.list, users.videos.list+, videos.search+, users.search, videos.metrics, comments.replies.list, users.live_replays.list
+- [Instagram](https://dataxapi.com/apis/instagram.md) `instagram` (6): hashtags.posts.list, posts.comments.list, posts.get, users.get, users.posts.list, users.search
+- [TikTok](https://dataxapi.com/apis/tiktok.md) `tiktok` (16): ads.search, ads.get, creative_center.ads.get, creative_center.ads.search, hashtags.videos.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search, shop.products.get, shop.products.reviews.list, shop.products.search, shop.sellers.products.list, users.followers.list
+- [Weibo](https://dataxapi.com/apis/weibo.md) `weibo` (9): posts.comments.list, posts.get, posts.likers.list, posts.search, trends.list+, users.followers.list, users.get, users.posts.list, users.search
+- [Xiaohongshu (RedNote)](https://dataxapi.com/apis/xiaohongshu.md) `xiaohongshu` (29): images.search, notes.get, notes.comments.list, notes.search, pgy.keywords.history, pgy.keywords.related, topics.notes.list, topics.get, trends.list, users.get, users.notes.list, users.search, shop.products.get, shop.products.reviews.list, shop.products.search, pgy.creators.search, pgy.creators.get, pgy.creators.audience.get, pgy.creators.metrics, pgy.creators.notes.list, keywords.related, videos.get, pgy.creators.followers.history, pgy.creators.related, pgy.notes.trending, pgy.creators.costs.metrics, pgy.creators.followers.metrics, pgy.creators.costs.history, pgy.notes.get
+- [YouTube](https://dataxapi.com/apis/youtube.md) `youtube` (8): channels.get, channels.search, channels.videos.list, videos.comments.list, videos.get, videos.search, channels.posts.list, posts.get
+- [WeChat Channels](https://dataxapi.com/apis/wechat_channels.md) `wechat_channels` (11): users.get+, videos.get, videos.comments.list, videos.share_link.get, users.collections.list, collections.videos.list, users.videos.list+, videos.search+, users.search, videos.metrics, users.live_replays.list
 - [WeChat Search](https://dataxapi.com/apis/wechat.md) `wechat` (5): posts.search+, accounts.search, index.keywords.history, keywords.related, miniprograms.search
 - [WeChat Official Accounts](https://dataxapi.com/apis/wechat_mp.md) `wechat_mp` (8): accounts.articles.list, accounts.get, articles.comments.list, articles.get, articles.metrics, comments.replies.list, accounts.search, accounts.owner.get
-- [Reddit](https://dataxapi.com/apis/reddit.md) `reddit` (11): posts.comments.list, posts.get, posts.search, posts.trending, subreddits.posts.list, trends.list, users.get, users.posts.list, subreddits.get, users.subreddits.list, posts.transcript.get
-- [Zhihu](https://dataxapi.com/apis/zhihu.md) `zhihu` (16): answers.comments.list, answers.get, articles.get, columns.articles.list, comments.replies.list, pins.get, posts.search, questions.answers.list, questions.get, trends.list, users.answers.list, users.articles.list, users.followers.list, users.get, users.pins.list, users.search
+- [Reddit](https://dataxapi.com/apis/reddit.md) `reddit` (10): posts.comments.list, posts.get, posts.search, posts.trending, subreddits.posts.list, trends.list, users.get, users.posts.list, subreddits.get, users.subreddits.list
+- [Zhihu](https://dataxapi.com/apis/zhihu.md) `zhihu` (15): answers.comments.list, answers.get, articles.get, columns.articles.list, pins.get, posts.search, questions.answers.list, questions.get, trends.list, users.answers.list, users.articles.list, users.followers.list, users.get, users.pins.list, users.search
 - [Pinterest](https://dataxapi.com/apis/pinterest.md) `pinterest` (2): pins.get, pins.search
+- Files of a post (video, audio, pictures), 8 platforms: `videos.media.get` or `notes.media.get` or `posts.media.get` after the platform's ID
+- What a video says, as text, 13 platforms: `videos.transcript.get` or `ads.transcript.get` or `posts.transcript.get` after the platform's ID
+- The replies under a comment, 10 platforms: `comments.replies.list` after the platform's ID
 
 ## Your account
 

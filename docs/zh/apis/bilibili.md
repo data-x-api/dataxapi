@@ -1,10 +1,10 @@
 # B站 API
 
-9 个接口读 B站：视频、用户、评论、热榜。一次 $0.0020 起。不用登录 B站，不用 Cookie；失败不收费。
+11 个接口读 B站：视频、用户、评论、热榜。一次 $0.0020 起。不用登录 B站，不用 Cookie；失败不收费。
 
 也叫：Bilibili、哔哩哔哩、小破站
 
-## B站的 9 个接口，各取什么
+## B站的 11 个接口，各取什么
 
 - [B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list.md)：按评论编号和它所在视频的 BV 号取一页回复：正文、回复者、点赞数、回复的是哪一条、发布时间。
 - [B站热搜榜](https://dataxapi.com/zh/apis/bilibili/trends/list.md)：取 B 站当前的热搜词榜，最多 50 个词，带名次、热度和榜单上显示的那句话。
@@ -12,8 +12,10 @@
 - [B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list.md)：按用户编号取一页 B 站用户投稿的视频，新的在前：标题、简介、播放数、评论数、弹幕数、时长、发布时间。
 - [B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list.md)：按 BV 号取一页 B 站视频评论，可按热门或最新排：正文、评论者和他的等级、点赞数、回复数、发布时间。
 - [B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get.md)：按 BV 号或链接取一个 B 站视频：标题、简介、UP 主、播放、点赞、投币、收藏、弹幕数、时长、标签、分区、IP 属地，以及取字幕和弹幕要用的 cid。
+- [B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get.md)：给一个 B 站视频的链接或 BV 号，返回视频里说的话：全文、每一句的起止时间和现成的 SRT 字幕，连同标题、UP 主和时长；可以区分说话人。多 P 视频转第一 P。每次收费，识别语音的另按视频分钟数收，没人说话不收。5 分钟以内的视频直接返回文字；超过 5 分钟、2 小时以内的先回一个凭证（job），过一会儿带着它再调这个接口取文字，按实际分钟数收，只在取到文字时收。
 - [B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search.md)：按搜索词取一页 B 站视频，可按相关度、最新或播放最多排：标题、UP 主、播放、点赞、收藏、评论数、时长。
 - [B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending.md)：取一页 B 站综合热门视频：标题、简介、UP 主、播放、点赞、投币、收藏、弹幕数、时长、分区、IP 属地、推荐理由。
+- [B 站视频和音频下载地址](https://dataxapi.com/zh/apis/bilibili/videos/media/get.md)：给一个 B 站视频的 BV 号或链接，返回视频的各档清晰度和音频的各档音质，分开给（带宽高、编码、码率、备用地址和过期时间）；每个地址都要带请求头 Referer: https://www.bilibili.com 去取，音视频用 ffmpeg 合成一个文件，过期了再调一次即可。
 - [B站用户投稿（备用版）](https://dataxapi.com/zh/apis/bilibili/backup/users/videos/list.md)：B站用户投稿的备用版，原接口取不到时改调：参数和返回相同（不含简介和评论数），价格更高。
 
 ## 接口
@@ -24,12 +26,14 @@
 | --- | --- | --- | --- |
 | [B站用户投稿（备用版）](https://dataxapi.com/zh/apis/bilibili/backup/users/videos/list.md) | `GET /v1/bilibili/backup/users/videos/list` | 内容列表 | $0.0300 / 次 |
 
-### 视频 (4)
+### 视频 (6)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search.md) | `GET /v1/bilibili/videos/search` | 内容列表 | $0.0020 / 次 |
 | [B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get.md) | `GET /v1/bilibili/videos/get` | 内容 | $0.0020 / 次 |
+| [B 站视频和音频下载地址](https://dataxapi.com/zh/apis/bilibili/videos/media/get.md) | `GET /v1/bilibili/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get.md) | `GET /v1/bilibili/videos/transcript/get` | 逐字稿 | $0.0040 / 次 |
 | [B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list.md) | `GET /v1/bilibili/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 | [B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending.md) | `GET /v1/bilibili/videos/trending` | 内容列表 | $0.0020 / 次 |
 
@@ -55,7 +59,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 20 到 50 条，各接口不同。7 个列表里有 6 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：9 个接口里有 9 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：11 个接口里有 11 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：B站用户投稿、B站用户投稿（备用版）：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **快照**：B站热搜榜、B站综合热门：榜单是每 10 分钟刷新一次的快照，`meta.fetched_at` 写明是什么时候取的。
 
@@ -75,7 +79,7 @@
 
 ### 通过 API 能拿到 B站的哪些数据？
 
-9 个接口：视频、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+11 个接口：视频、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用 B站 API？
 
@@ -126,4 +130,4 @@ B站的 9 个接口各取一份录制的真实返回，平台原始 JSON 合计 
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/bilibili/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/bilibili/)

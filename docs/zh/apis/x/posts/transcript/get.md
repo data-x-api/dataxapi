@@ -31,12 +31,33 @@
 | 字段 | 类型 | 说明 | 起始档位 | 这个接口 |
 | --- | --- | --- | --- | --- |
 | `post_id` | 文本 | 所属内容的编号。 | `compact` | 有 |
+| `status` | 文本 | done 是文字已经在这里；processing 是长视频还在识别，文字还没有：过 retry_after_seconds 秒后带着 job 再调同一个接口取。取值：`done`、`processing`。 | `compact` | 这个接口不提供 |
+| `job` | 文本 | 长视频的凭证：带着它再调同一个接口取文字，提交后 24 小时内有效；只在 processing 时有。 | `compact` | 这个接口不提供 |
+| `retry_after_seconds` | 整数 | 建议多少秒后再来取；只在 processing 时有。 | `compact` | 这个接口不提供 |
 | `lang` | 文本 | 语言代码。 | `compact` | 这个接口不提供 |
 | `text` | 文本 | 全文。长文本：精简档只保留前 500 个字符，并在 `warnings` 里写明。 | `compact` | 有 |
 | `segments` | 对象列表 | 带时间的分段。 | `standard` | 这个接口不提供 |
 | `segments[].start` | 数字 | 开始时间，秒。 | `standard` | 这个接口不提供 |
 | `segments[].end` | 数字 | 结束时间，秒。 | `standard` | 这个接口不提供 |
 | `segments[].text` | 文本 | 这一段的文字。 | `standard` | 这个接口不提供 |
+| `segments[].speaker` | 文本 | 这一段是谁说的（1、2…，同一个人同一个号）；没要求区分说话人时为 null。 | `standard` | 这个接口不提供 |
+| `segments[].words` | 对象列表 | 这一段里每个字（词）的时间。 | `full` | 这个接口不提供 |
+| `segments[].words[].start` | 数字 | 开始时间，秒。 | `full` | 这个接口不提供 |
+| `segments[].words[].end` | 数字 | 结束时间，秒。 | `full` | 这个接口不提供 |
+| `segments[].words[].text` | 文本 | 这个字（词）。 | `full` | 这个接口不提供 |
+| `duration` | 数字 | 转写的音视频时长，秒；按分钟计费的接口按它收费。 | `standard` | 这个接口不提供 |
+| `post` | 对象 | 这段话所在的内容：标题、文案、作者、时长、发布时间、点赞和评论数，平台有什么给什么。 | `standard` | 这个接口不提供 |
+| `post.title` | 文本 | 标题；没有标题的平台没有。 | `standard` | 这个接口不提供 |
+| `post.text` | 文本 | 文案或简介。长文本：精简档只保留前 500 个字符，并在 `warnings` 里写明。 | `standard` | 这个接口不提供 |
+| `post.url` | 链接 | 内容的链接。 | `standard` | 这个接口不提供 |
+| `post.published_at` | 时间 | 发布时间。 | `standard` | 这个接口不提供 |
+| `post.duration` | 数字 | 平台写的视频时长，秒。 | `standard` | 这个接口不提供 |
+| `post.author` | 对象 | 作者。 | `standard` | 这个接口不提供 |
+| `post.author.id` | 文本 | 作者编号。 | `standard` | 这个接口不提供 |
+| `post.author.name` | 文本 | 作者的名字。 | `standard` | 这个接口不提供 |
+| `post.metrics` | 对象 | 互动数。 | `standard` | 这个接口不提供 |
+| `post.metrics.likes` | 整数 | 点赞数。 | `standard` | 这个接口不提供 |
+| `post.metrics.comments` | 整数 | 评论数。 | `standard` | 这个接口不提供 |
 | `approximate` | 对象列表 | 这一条里哪些数是约数或下限；都是准确值时不出现。 | `compact` | 有 |
 | `approximate[].field` | 文本 | 字段的路径，如 metrics.views。 | `compact` | 有 |
 | `approximate[].kind` | 文本 | 约数，还是下限。取值：`approximate`、`lower_bound`。 | `compact` | 有 |
@@ -58,7 +79,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -162,7 +183,7 @@ dataxapi call x.posts.transcript.get id=2109760407824961716
 
 取自 2026-10-12 21:46 UTC 录下的真实返回。名字、正文和编号是示例，链接也是，都不是录到的原文（页面不展示任何人的个人信息）；数字是原样。长列表做了截断。请求号、游标和余额是示意。
 
-返回大小：标准档 611 B（精简 611 B，完整 611 B）。
+返回大小：标准档 731 B（精简 731 B，完整 731 B）。
 
 ```jsonc
 {
@@ -181,7 +202,15 @@ dataxapi call x.posts.transcript.get id=2109760407824961716
     "fetched_at": "2026-10-12T21:46:34.000Z",
     "cached": false,
     "replayed": false,
-    "unavailable": { "lang": "capability", "segments": "capability" },
+    "unavailable": {
+      "lang": "capability",
+      "segments": "capability",
+      "duration": "capability",
+      "post": "capability",
+      "status": "capability",
+      "job": "capability",
+      "retry_after_seconds": "capability"
+    },
     "billing": {
       "amount": "0.002",
       "currency": "USD",
@@ -288,9 +317,7 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 这是 DataXAPI 社交媒体数据的一部分。同一把 Key 还能用：达人、广告、电商。
 
-同一件事的其他平台：[Meta 广告视频字幕](https://dataxapi.com/zh/apis/meta/ads/transcript/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get/)、[YouTube 视频字幕](https://dataxapi.com/zh/apis/youtube/videos/transcript/get/)、[LinkedIn 视频字幕](https://dataxapi.com/zh/apis/linkedin/posts/transcript/get/)、[Reddit 视频字幕](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)
-
-其他平台的社交媒体数据：[抖音评论回复](https://dataxapi.com/zh/apis/douyin/comments/replies/list/)、[抖音话题视频](https://dataxapi.com/zh/apis/douyin/hashtags/videos/list/)、[B站评论回复](https://dataxapi.com/zh/apis/bilibili/comments/replies/list/)、[B站热搜榜](https://dataxapi.com/zh/apis/bilibili/trends/list/)
+同一件事的其他平台：[B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get/)、[抖音视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/douyin/videos/transcript/get/)、[快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get/)、[Meta 广告视频字幕](https://dataxapi.com/zh/apis/meta/ads/transcript/get/)、[Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get/)、[TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get/)、[微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get/)、[YouTube 视频字幕](https://dataxapi.com/zh/apis/youtube/videos/transcript/get/)、[LinkedIn 视频字幕](https://dataxapi.com/zh/apis/linkedin/posts/transcript/get/)、[Reddit 视频字幕](https://dataxapi.com/zh/apis/reddit/posts/transcript/get/)、[小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get/)、[视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get/)
 
 X（推特）的接口：[X 长文详情](https://dataxapi.com/zh/apis/x/posts/article/get/)、[X 帖子详情](https://dataxapi.com/zh/apis/x/posts/get/)、[X 帖子引用列表](https://dataxapi.com/zh/apis/x/posts/quotes/list/)、[X 帖子回复列表](https://dataxapi.com/zh/apis/x/posts/replies/list/)、[X 帖子转推用户](https://dataxapi.com/zh/apis/x/posts/retweeters/list/)、[X 帖子搜索](https://dataxapi.com/zh/apis/x/posts/search/)、[X 帖子对话串](https://dataxapi.com/zh/apis/x/threads/posts/list/)、[X 趋势榜](https://dataxapi.com/zh/apis/x/trends/list/)、[X 用户粉丝列表](https://dataxapi.com/zh/apis/x/users/followers/list/)、[X 用户关注列表](https://dataxapi.com/zh/apis/x/users/following/list/)、[X 用户资料](https://dataxapi.com/zh/apis/x/users/get/)、[X 用户提及](https://dataxapi.com/zh/apis/x/users/mentions/list/)、[X 用户帖子列表](https://dataxapi.com/zh/apis/x/users/posts/list/)、[X 用户搜索](https://dataxapi.com/zh/apis/x/users/search/)、[X 视频字幕](https://dataxapi.com/zh/apis/x/posts/transcript/get/)
 
@@ -298,9 +325,9 @@ X 社群的接口：[X 社群帖子](https://dataxapi.com/zh/apis/x/communities/
 
 X 列表的接口：[X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/list/)、[X 列表关注者](https://dataxapi.com/zh/apis/x/lists/followers/list/)、[X 列表成员](https://dataxapi.com/zh/apis/x/lists/members/list/)
 
-用到这个接口的 Skills：[爆款拆解](https://dataxapi.com/zh/skills/viral/)、[视频转文字](https://dataxapi.com/zh/skills/transcripts/)
+用到这个接口的 Skills：[爆款拆解](https://dataxapi.com/zh/skills/viral/)、[视频转文字](https://dataxapi.com/zh/skills/transcripts/)、[博主视频转文字](https://dataxapi.com/zh/skills/creator-transcripts/)
 
-相关：[X（推特）的全部接口](https://dataxapi.com/zh/apis/x/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 7 个平台上的对照](https://dataxapi.com/zh/roles/transcripts-get/)、[逐字稿对象的字段](https://dataxapi.com/zh/docs/objects/transcript/)
+相关：[X（推特）的全部接口](https://dataxapi.com/zh/apis/x/)、[社交媒体数据](https://dataxapi.com/zh/categories/social/)、[这件事在 13 个平台上的对照](https://dataxapi.com/zh/roles/transcripts-get/)、[逐字稿对象的字段](https://dataxapi.com/zh/docs/objects/transcript/)
 
 ## 常见问题
 
@@ -318,4 +345,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/x/posts/transcript/get/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/x/posts/transcript/get/)

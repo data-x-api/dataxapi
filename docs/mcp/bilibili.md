@@ -1,10 +1,10 @@
 # Bilibili data in your AI
 
-Ask your AI about Bilibili and it answers with live data: 9 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Bilibili and it answers with live data: 11 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-Updated 2026-11-06
+Updated 2026-11-21
 
-- Endpoints: 9 (on Bilibili, one response shape)
+- Endpoints: 11 (on Bilibili, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-bilibili](https://dataxapi.com/skills/dataxapi-bilibili.zip)
@@ -46,11 +46,11 @@ What happens when you ask about Bilibili: your AI looks the endpoint up for free
 
 ## The Bilibili skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 9 Bilibili endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 11 Bilibili endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-bilibili from https://dataxapi.com/skills/dataxapi-bilibili.zip.
 
-## All 9 Bilibili endpoints your AI can call
+## All 11 Bilibili endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -62,8 +62,10 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/) | `bilibili.users.videos.list` | $0.0020 |
 | [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/) | `bilibili.videos.comments.list` | $0.0020 |
 | [Bilibili video detail](https://dataxapi.com/apis/bilibili/videos/get/) | `bilibili.videos.get` | $0.0020 |
+| [Bilibili video transcript (video to text)](https://dataxapi.com/apis/bilibili/videos/transcript/get/) | `bilibili.videos.transcript.get` | $0.0040 a call, plus $0.0038 a minute when the speech is recognised |
 | [Bilibili video search](https://dataxapi.com/apis/bilibili/videos/search/) | `bilibili.videos.search` | $0.0020 |
 | [Bilibili popular videos](https://dataxapi.com/apis/bilibili/videos/trending/) | `bilibili.videos.trending` | $0.0020 |
+| [Bilibili video downloader](https://dataxapi.com/apis/bilibili/videos/media/get/) | `bilibili.videos.media.get` | $0.0020 |
 | [Bilibili user videos (backup)](https://dataxapi.com/apis/bilibili/backup/users/videos/list/) | `bilibili.backup.users.videos.list` | $0.0300 |
 
 [Every Bilibili price, and what is charged →](https://dataxapi.com/pricing/bilibili/) · [Bilibili API](https://dataxapi.com/apis/bilibili/) · [MCP](https://dataxapi.com/mcp/)
@@ -96,4 +98,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/bilibili/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/bilibili/)

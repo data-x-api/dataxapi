@@ -1,12 +1,14 @@
 # 对象
 
-DataXAPI 的返回由 39 种对象组成：每页有它的字段、每个字段在各平台取的是哪个数，以及返回它的接口。DataXAPI 的接口一次 $0.0003 起，失败不收费。
+DataXAPI 的返回由 41 种对象组成：每页有它的字段、每个字段在各平台取的是哪个数，以及返回它的接口。DataXAPI 的接口一次 $0.0003 起，失败不收费。
 
 - [Post（内容）对象](https://dataxapi.com/zh/docs/objects/post.md)
 - [Comment（评论）对象](https://dataxapi.com/zh/docs/objects/comment.md)
 - [Account（账号）对象](https://dataxapi.com/zh/docs/objects/account.md)
 - [Trend（热点）对象](https://dataxapi.com/zh/docs/objects/trend.md)
 - [Transcript（逐字稿）对象](https://dataxapi.com/zh/docs/objects/transcript.md)
+- [Media files（视频和图片文件）对象](https://dataxapi.com/zh/docs/objects/media.md)
+- [Music（音乐）对象](https://dataxapi.com/zh/docs/objects/music.md)
 - [Creator rates（达人报价）对象](https://dataxapi.com/zh/docs/objects/creator_rates.md)
 - [Community（社区）对象](https://dataxapi.com/zh/docs/objects/community.md)
 - [Product（商品）对象](https://dataxapi.com/zh/docs/objects/product.md)
@@ -44,4 +46,4 @@ DataXAPI 的返回由 39 种对象组成：每页有它的字段、每个字段�
 
 ---
 
-目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/docs/objects/)
+目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/docs/objects/)

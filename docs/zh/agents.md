@@ -1,6 +1,6 @@
 # DataXAPI：在这个 agent 里接好它
 
-你是一个 AI agent，用户让你接好 DataXAPI：一把 Key 取 21 个平台的市场数据，237 个接口，按次付费，一次 $0.0003 起。按顺序做下面四步；哪一步不成，停下来告诉用户是哪一步、为什么。
+你是一个 AI agent，用户让你接好 DataXAPI：一把 Key 取 21 个平台的市场数据，254 个接口，按次付费，一次 $0.0003 起。按顺序做下面四步；哪一步不成，停下来告诉用户是哪一步、为什么。
 
 ## 1. 收好 Key
 
@@ -60,7 +60,7 @@ bearer_token_env_var = "DATAXAPI_API_KEY"
 
 - `find`: 用一句话找接口。不用 Key，不收费。
 - `describe`: 1 到 5 个接口的完整约定：参数、字段、价格、单次最高扣费。不用 Key，不收费。
-- `call`: 从一个接口取一页数据。要 Key；按次或按条收费，以 `describe` 说的为准。
+- `call`: 从一个接口取一页数据。要 Key；按次、按条或按分钟收费，以 `describe` 说的为准。
 - `read_more`: 读一次结果里被截掉的部分，或换一种详略再读。要发起那次调用的 Key；不收费。
 - `account`: 余额、某次调用的扣费、用量、哪些接口现在可用。不收费。
 
@@ -98,4 +98,4 @@ bearer_token_env_var = "DATAXAPI_API_KEY"
 - [目录](https://api.dataxapi.com/v1/catalog/capabilities)、[状态](https://api.dataxapi.com/v1/catalog/status)、[错误码](https://api.dataxapi.com/v1/catalog/errors)：都不用 Key。
 - [技能包](https://dataxapi.com/skills/manifest.json)，以及 agent 用来发现服务的几个文件：[API 目录](https://dataxapi.com/.well-known/api-catalog)、[MCP 服务卡片](https://dataxapi.com/.well-known/mcp/server-card.json)、[技能索引](https://dataxapi.com/.well-known/agent-skills/index.json)、[AI 目录](https://dataxapi.com/.well-known/ai-catalog.json)。
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。English: https://dataxapi.com/agents.md
+按目录修订号 0051cce45e9530b9、价目版本 22生成。English: https://dataxapi.com/agents.md

@@ -88,7 +88,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -280,7 +280,7 @@ X 列表的接口：[X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/
 
 怎么做和常见问题：[盯推特账号，X 官方 API 太贵怎么办（2026）](https://dataxapi.com/zh/answers/watch-x-accounts-official-api-too-expensive/)、[给 AI 和 agent 用的X（推特）数据接口：返回省 token、Claude 和 Cursor 直接调（2026）](https://dataxapi.com/zh/answers/x-twitter-api-for-ai-agents/)、[怎么只取一个 X（推特）账号自己发的帖子，不要转推？（2026）](https://dataxapi.com/zh/answers/x-own-posts-without-retweets/)
 
-用到这个接口的 Skills：[竞品账号监测](https://dataxapi.com/zh/skills/competitors/)、[账号体检](https://dataxapi.com/zh/skills/account-audit/)
+用到这个接口的 Skills：[竞品账号监测](https://dataxapi.com/zh/skills/competitors/)、[账号体检](https://dataxapi.com/zh/skills/account-audit/)、[博主视频转文字](https://dataxapi.com/zh/skills/creator-transcripts/)
 
 所属接口和其他取值：[X 用户帖子列表 API](https://dataxapi.com/zh/apis/x/users/posts/list/)、[X 用户回复 API](https://dataxapi.com/zh/apis/x/users/posts/list/replies/)
 
@@ -306,4 +306,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/x/users/posts/list/media/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/x/users/posts/list/media/)

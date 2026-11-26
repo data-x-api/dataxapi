@@ -77,6 +77,7 @@
 | `ext.text_truncated` | 是否 | 正文是否被截短：长微博在列表和搜索里只给开头，取详情拿全文。 | `full` | 有 |
 | `ext.ip_location` | 文本 | 平台显示的 IP 属地。 | `full` | 有 |
 | `ext.reposted_id` | 文本 | 它转发的那条微博的编号；不是转发则为 null。 | `full` | 有 |
+| `ext.video_url` | 链接 | 视频文件地址（平台给的最高一档 MP4），签过名，会过期；不是视频微博为 null。 | `full` | 有 |
 | `approximate` | 对象列表 | 这一条里哪些数是约数或下限；都是准确值时不出现。 | `compact` | 有 |
 | `approximate[].field` | 文本 | 字段的路径，如 metrics.views。 | `compact` | 有 |
 | `approximate[].kind` | 文本 | 约数，还是下限。取值：`approximate`、`lower_bound`。 | `compact` | 有 |
@@ -97,7 +98,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-21 08:32 UTC，按价目版本 19，2026-11-17 18:04 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -201,7 +202,7 @@ dataxapi call weibo.posts.get id=5352571897120856
 
 取自 2026-10-12 19:01 UTC 录下的真实返回。名字、正文和编号是示例，链接也是，都不是录到的原文（页面不展示任何人的个人信息）；数字是原样。长列表做了截断。请求号、游标和余额是示意。
 
-返回大小：标准档 1.6 KB（精简 1.3 KB，完整 1.6 KB）。
+返回大小：标准档 1.6 KB（精简 1.3 KB，完整 1.7 KB）。
 
 ```jsonc
 {
@@ -363,7 +364,7 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 同一件事的其他平台：[B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/)、[抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get/)、[快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get/)、[Telegram 单条消息](https://dataxapi.com/zh/apis/telegram/messages/get/)、[X 帖子详情](https://dataxapi.com/zh/apis/x/posts/get/)、[Facebook 帖子详情](https://dataxapi.com/zh/apis/facebook/posts/get/)、[LinkedIn 帖子详情](https://dataxapi.com/zh/apis/linkedin/posts/get/)、[Threads 帖子详情](https://dataxapi.com/zh/apis/threads/posts/get/)、[Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get/)、[TikTok 视频详情](https://dataxapi.com/zh/apis/tiktok/videos/get/)、[小红书笔记详情](https://dataxapi.com/zh/apis/xiaohongshu/notes/get/)、[YouTube 视频详情](https://dataxapi.com/zh/apis/youtube/videos/get/)、[微信视频号作品详情](https://dataxapi.com/zh/apis/wechat_channels/videos/get/)、[微信公众号文章详情](https://dataxapi.com/zh/apis/wechat_mp/articles/get/)、[Reddit 帖子详情](https://dataxapi.com/zh/apis/reddit/posts/get/)、[知乎回答详情](https://dataxapi.com/zh/apis/zhihu/answers/get/)、[知乎文章详情](https://dataxapi.com/zh/apis/zhihu/articles/get/)、[知乎想法详情](https://dataxapi.com/zh/apis/zhihu/pins/get/)、[知乎问题详情](https://dataxapi.com/zh/apis/zhihu/questions/get/)、[Pinterest 图钉详情](https://dataxapi.com/zh/apis/pinterest/pins/get/)
 
-微博的接口：[微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[微博详情](https://dataxapi.com/zh/apis/weibo/posts/get/)、[微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list/)、[微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search/)、[微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list/)、[微博用户粉丝列表](https://dataxapi.com/zh/apis/weibo/users/followers/list/)、[微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get/)、[微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list/)、[微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search/)、[微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list/)
+微博的接口：[微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list/)、[微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list/)、[微博详情](https://dataxapi.com/zh/apis/weibo/posts/get/)、[微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get/)、[微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list/)、[微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search/)、[微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list/)、[微博用户粉丝列表](https://dataxapi.com/zh/apis/weibo/users/followers/list/)、[微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get/)、[微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list/)、[微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search/)、[微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get/)、[微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list/)
 
 怎么做和常见问题：[微博爬虫被封之后怎么办（2026）](https://dataxapi.com/zh/answers/weibo-scraper-blocked/)、[怎么让 AI 读知乎、B 站、微博（2026）](https://dataxapi.com/zh/answers/ai-read-zhihu-bilibili-weibo/)、[微博 432 错误是什么意思（2026）](https://dataxapi.com/zh/answers/weibo-432-client-error/)、[微博数据接口哪里有？帖子、评论、热搜怎么取（2026）](https://dataxapi.com/zh/answers/weibo-data-apis/)、[微博 MCP：在 Claude、Cursor 里查微博和热搜（2026）](https://dataxapi.com/zh/answers/weibo-mcp/)、[微博 mid、uid、bid 是什么？怎么从链接里拿（2026）](https://dataxapi.com/zh/answers/weibo-mid-uid-bid/)、[社媒数据接口常见问题：按平台说清能取什么、不能取什么（2026）](https://dataxapi.com/zh/answers/social-media-data-api-faq/)、[给 AI 和 agent 用的微博数据接口：返回省 token、Claude 和 Cursor 直接调（2026）](https://dataxapi.com/zh/answers/weibo-api-for-ai-agents/)、[微博视频的播放量怎么用 API 取？（2026）](https://dataxapi.com/zh/answers/weibo-video-play-count/)
 
@@ -387,4 +388,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-21 08:32 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/weibo/posts/get/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/weibo/posts/get/)

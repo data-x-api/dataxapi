@@ -1,10 +1,10 @@
 # 在 AI 里用 B站数据
 
-问 AI B站上的事，它用实时数据回答：9 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI B站上的事，它用实时数据回答：11 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
-更新于 2026-11-06
+更新于 2026-11-21
 
-- 接口：9 (B站，同一种返回格式)
+- 接口：11 (B站，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-bilibili](https://dataxapi.com/skills/dataxapi-bilibili.zip)
@@ -46,11 +46,11 @@
 
 ## B站技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 B站的 9 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 B站的 11 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-bilibili.zip 装上 DataXAPI 技能 dataxapi-bilibili。
 
-## AI 能调的 B站接口，全部 9 个
+## AI 能调的 B站接口，全部 11 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -62,8 +62,10 @@
 | [B站用户投稿](https://dataxapi.com/zh/apis/bilibili/users/videos/list/) | `bilibili.users.videos.list` | $0.0020 |
 | [B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list/) | `bilibili.videos.comments.list` | $0.0020 |
 | [B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get/) | `bilibili.videos.get` | $0.0020 |
+| [B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get/) | `bilibili.videos.transcript.get` | 每次 $0.0040，识别的视频另加每分钟 $0.0038 |
 | [B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search/) | `bilibili.videos.search` | $0.0020 |
 | [B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending/) | `bilibili.videos.trending` | $0.0020 |
+| [B 站视频和音频下载地址](https://dataxapi.com/zh/apis/bilibili/videos/media/get/) | `bilibili.videos.media.get` | $0.0020 |
 | [B站用户投稿（备用版）](https://dataxapi.com/zh/apis/bilibili/backup/users/videos/list/) | `bilibili.backup.users.videos.list` | $0.0300 |
 
 [B站的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/bilibili/) · [B站 API](https://dataxapi.com/zh/apis/bilibili/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
@@ -96,4 +98,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/bilibili/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/bilibili/)

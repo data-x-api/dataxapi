@@ -1,14 +1,15 @@
 # 微博 API
 
-11 个接口读微博：帖子、用户、评论、热榜。一次 $0.0020 起。不用登录微博，不用 Cookie；失败不收费。
+13 个接口读微博：帖子、用户、评论、热榜。一次 $0.0020 起。不用登录微博，不用 Cookie；失败不收费。
 
 也叫：Weibo、新浪微博
 
-## 微博的 11 个接口，各取什么
+## 微博的 13 个接口，各取什么
 
 - [微博评论回复](https://dataxapi.com/zh/apis/weibo/comments/replies/list.md)：按评论编号取一页回复：正文、回复者、点赞数、回复的是哪一条、发布时间、IP 属地。
 - [微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list.md)：按微博编号取一页评论：正文、评论者、点赞数、回复数、发布时间、IP 属地。
 - [微博详情](https://dataxapi.com/zh/apis/weibo/posts/get.md)：按微博编号取一条微博：全文（长微博也是全文）、作者、点赞、评论、转发、阅读数（视频微博是播放数）、图片、话题、IP 属地。
+- [微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get.md)：给一条带视频的微博的链接、分享文字或编号，返回视频里说的话：全文、每一句的起止时间和现成的 SRT 字幕，连同正文、作者和时长；可以区分说话人。每次收费，识别语音的另按视频分钟数收，没人说话不收。5 分钟以内的视频直接返回文字；超过 5 分钟、2 小时以内的先回一个凭证（job），过一会儿带着它再调这个接口取文字，按实际分钟数收，只在取到文字时收。
 - [微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list.md)：按微博编号取最近给这条微博点赞的账号，一次约 50 个：昵称、简介、头像、是否认证和认证类型、粉丝数、关注数、微博数，资料里填的性别和地区。
 - [微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search.md)：按搜索词取一页微博，新发的在前：正文（长微博在这里是截短的）、作者和粉丝数、点赞、评论、转发数、视频播放数、图片、话题。
 - [微博热搜榜](https://dataxapi.com/zh/apis/weibo/trends/list.md)：取微博当前的热搜榜，50 个词，带名次、热度和标签（新、热等）。
@@ -16,6 +17,7 @@
 - [微博用户资料](https://dataxapi.com/zh/apis/weibo/users/get.md)：按用户编号取微博用户资料：昵称、简介、头像、是否认证和认证说明、粉丝数、关注数、微博数，主页上的转评赞总数、获赞总数，性别和地区。
 - [微博用户微博](https://dataxapi.com/zh/apis/weibo/users/posts/list.md)：按用户编号取一页该用户主页上的微博（原创和转发），新的在前：正文（长微博在这里是截短的）、点赞、评论、转发数、视频播放数、图片、话题、IP 属地、是否置顶。
 - [微博用户搜索](https://dataxapi.com/zh/apis/weibo/users/search.md)：按搜索词取一页微博用户：编号、昵称、头像、主页链接。
+- [微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get.md)：给一条微博的编号、链接或分享文字，返回视频的各档清晰度（到 4K 的有几档给几档，带宽高、码率、大小、是否带水印和过期时间）、封面，或者每张图片的最大尺寸地址；只对视频微博和图片微博，纯文字的按没有文件返回。地址不用带请求头，过期了再调一次即可。
 - [微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list.md)：微博热搜榜的备用版，原接口取不到时改调：参数和返回相同，价格更高。
 
 ## 接口
@@ -26,12 +28,14 @@
 | --- | --- | --- | --- |
 | [微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list.md) | `GET /v1/weibo/backup/trends/list` | 热点列表 | $0.0300 / 次 |
 
-### 帖子 (4)
+### 帖子 (6)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search.md) | `GET /v1/weibo/posts/search` | 内容列表 | $0.0020 / 次 |
 | [微博详情](https://dataxapi.com/zh/apis/weibo/posts/get.md) | `GET /v1/weibo/posts/get` | 内容 | $0.0020 / 次 |
+| [微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get.md) | `GET /v1/weibo/posts/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get.md) | `GET /v1/weibo/posts/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list.md) | `GET /v1/weibo/posts/comments/list` | 评论列表 | $0.0020 / 次 |
 | [微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list.md) | `GET /v1/weibo/posts/likers/list` | 账号列表 | $0.0020 / 次 |
 
@@ -59,7 +63,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 10 到 100 条，各接口不同。9 个列表里有 6 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：11 个接口里有 11 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：13 个接口里有 13 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **快照**：微博热搜榜、微博热搜榜（备用版）：榜单是每 10 分钟刷新一次的快照，`meta.fetched_at` 写明是什么时候取的。
 
 ## 调用结果不对时先看这里
@@ -78,7 +82,7 @@
 
 ### 通过 API 能拿到微博的哪些数据？
 
-11 个接口：帖子、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+13 个接口：帖子、用户、评论、热榜。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用微博 API？
 
@@ -132,4 +136,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/weibo/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/weibo/)

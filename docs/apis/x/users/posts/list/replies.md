@@ -88,7 +88,7 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-21 08:32 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -280,7 +280,7 @@ X Lists endpoints: [X list posts](https://dataxapi.com/apis/x/lists/posts/list/)
 
 How-to guides and answers: [Watching X (Twitter) accounts, and the official API costs too much: what now? (2026)](https://dataxapi.com/answers/watch-x-accounts-official-api-too-expensive/), [X (Twitter) API for AI agents and LLMs: fewer tokens, called from Claude and Cursor (2026)](https://dataxapi.com/answers/x-twitter-api-for-ai-agents/), [How to get only an X account's own posts, without retweets (2026)](https://dataxapi.com/answers/x-own-posts-without-retweets/)
 
-Skills that use this endpoint: [Competitor account monitoring](https://dataxapi.com/skills/competitors/), [Account check-up](https://dataxapi.com/skills/account-audit/)
+Skills that use this endpoint: [Competitor account monitoring](https://dataxapi.com/skills/competitors/), [Account check-up](https://dataxapi.com/skills/account-audit/), [A creator's videos to text](https://dataxapi.com/skills/creator-transcripts/)
 
 The endpoint and its other options: [X user posts API](https://dataxapi.com/apis/x/users/posts/list/), [X user media API](https://dataxapi.com/apis/x/users/posts/list/media/)
 
@@ -306,4 +306,4 @@ An account that does not exist is not answered with a 404: it is reported as an 
 
 ---
 
-Last checked 2026-11-21 08:32 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/x/users/posts/list/replies/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/x/users/posts/list/replies/)

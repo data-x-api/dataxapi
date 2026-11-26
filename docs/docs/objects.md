@@ -1,12 +1,14 @@
 # Objects
 
-39 objects make up every DataXAPI response: each page has its fields, what each field is on every platform, and the endpoints that return it. DataXAPI's endpoints are from $0.0003 a call, and a failed call is not charged.
+41 objects make up every DataXAPI response: each page has its fields, what each field is on every platform, and the endpoints that return it. DataXAPI's endpoints are from $0.0003 a call, and a failed call is not charged.
 
 - [Post object](https://dataxapi.com/docs/objects/post.md)
 - [Comment object](https://dataxapi.com/docs/objects/comment.md)
 - [Account object](https://dataxapi.com/docs/objects/account.md)
 - [Trend object](https://dataxapi.com/docs/objects/trend.md)
 - [Transcript object](https://dataxapi.com/docs/objects/transcript.md)
+- [Media files object](https://dataxapi.com/docs/objects/media.md)
+- [Music object](https://dataxapi.com/docs/objects/music.md)
 - [Creator rates object](https://dataxapi.com/docs/objects/creator_rates.md)
 - [Community object](https://dataxapi.com/docs/objects/community.md)
 - [Product object](https://dataxapi.com/docs/objects/product.md)
@@ -44,4 +46,4 @@
 
 ---
 
-Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/docs/objects/)
+Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/docs/objects/)

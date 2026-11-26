@@ -1,10 +1,10 @@
 # Instagram API
 
-8 endpoints read Instagram: posts, hashtags, users, comments. From $0.0020 a call. No Instagram login and no cookie; a failed call is free.
+9 endpoints read Instagram: posts, hashtags, users, comments. From $0.0020 a call. No Instagram login and no cookie; a failed call is free.
 
-> 8 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 9 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## instagram.comments.replies.list
 
@@ -77,3 +77,12 @@ Search Instagram accounts by keyword, about 50 in one answer and no further page
 - Request: `GET /v1/instagram/users/search`
 - Parameters: `query` (required), `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/instagram/users/search.md
+
+## instagram.posts.media.get
+
+Give an Instagram post or reel by shortcode or link and get the address of every file it has: the video and its still, or each picture and video of a carousel, numbered in order, with width, height and when each address expires; once they have, another call gives new ones. One object a call; $0.0020 per call. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: Instagram video and photo downloader API
+- Request: `GET /v1/instagram/posts/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/instagram/posts/media/get.md

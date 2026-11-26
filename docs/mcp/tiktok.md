@@ -1,10 +1,10 @@
 # TikTok data in your AI
 
-Ask your AI about TikTok and it answers with live data: 18 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about TikTok and it answers with live data: 19 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
 Updated 2026-11-06
 
-- Endpoints: 18 (on TikTok, one response shape)
+- Endpoints: 19 (on TikTok, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-tiktok](https://dataxapi.com/skills/dataxapi-tiktok.zip)
@@ -48,11 +48,11 @@ What happens when you ask about TikTok: your AI looks the endpoint up for free, 
 
 ## The TikTok skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 18 TikTok endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 19 TikTok endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-tiktok from https://dataxapi.com/skills/dataxapi-tiktok.zip.
 
-## All 18 TikTok endpoints your AI can call
+## All 19 TikTok endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -76,6 +76,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [TikTok Shop product search](https://dataxapi.com/apis/tiktok/shop/products/search/) | `tiktok.shop.products.search` | $0.0020 |
 | [TikTok Shop seller products](https://dataxapi.com/apis/tiktok/shop/sellers/products/list/) | `tiktok.shop.sellers.products.list` | $0.0020 |
 | [TikTok user followers](https://dataxapi.com/apis/tiktok/users/followers/list/) | `tiktok.users.followers.list` | $0.0020 |
+| [TikTok video downloader, no watermark](https://dataxapi.com/apis/tiktok/videos/media/get/) | `tiktok.videos.media.get` | $0.0020 |
 
 [Every TikTok price, and what is charged →](https://dataxapi.com/pricing/tiktok/) · [TikTok API](https://dataxapi.com/apis/tiktok/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -107,4 +108,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/tiktok/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/tiktok/)

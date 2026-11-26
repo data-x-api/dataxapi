@@ -1,6 +1,6 @@
 # 抖音 API
 
-38 个接口读抖音：视频、话题、用户、评论、热榜、关键词、巨量算数、星图。一次 $0.0020 起。不用登录抖音，不用 Cookie；失败不收费。
+39 个接口读抖音：视频、话题、用户、评论、热榜、关键词、巨量算数、星图。一次 $0.0020 起。不用登录抖音，不用 Cookie；失败不收费。
 
 也叫：Douyin、抖音短视频
 
@@ -13,12 +13,14 @@
 | [抖音视频搜索（备用版）](https://dataxapi.com/zh/apis/douyin/backup/videos/search.md) | `GET /v1/douyin/backup/videos/search` | 内容列表 | $0.0300 / 次 |
 | [抖音用户视频（备用版）](https://dataxapi.com/zh/apis/douyin/backup/users/videos/list.md) | `GET /v1/douyin/backup/users/videos/list` | 内容列表 | $0.0300 / 次 |
 
-### 视频 (6)
+### 视频 (8)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search.md) | `GET /v1/douyin/videos/search` | 内容列表 | $0.0200 / 次 |
 | [抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get.md) | `GET /v1/douyin/videos/get` | 内容 | $0.0020 / 次 |
+| [抖音无水印视频和图片下载地址](https://dataxapi.com/zh/apis/douyin/videos/media/get.md) | `GET /v1/douyin/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [抖音视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/douyin/videos/transcript/get.md) | `GET /v1/douyin/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list.md) | `GET /v1/douyin/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 | [抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics.md) | `GET /v1/douyin/videos/metrics` | 内容 | $0.0020 / 次 |
 | [抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related.md) | `GET /v1/douyin/videos/related` | 内容列表 | $0.0020 / 次 |
@@ -57,6 +59,12 @@
 | --- | --- | --- | --- |
 | [抖音搜索框联想词](https://dataxapi.com/zh/apis/douyin/keywords/related.md) | `GET /v1/douyin/keywords/related` | 关联词列表 | $0.0200 / 次 |
 
+### 音乐 (1)
+
+| 接口 | 请求 | 返回 | 价格 |
+| --- | --- | --- | --- |
+| [抖音音乐详情（背景音乐 MP3 和使用人数）](https://dataxapi.com/zh/apis/douyin/music/get.md) | `GET /v1/douyin/music/get` | 音乐 | $0.0020 / 次 |
+
 ### [巨量算数](https://dataxapi.com/zh/apis/douyin/index.md) (10)
 
 抖音官方的指数工具：关键词和品牌的逐日指数、搜索人群画像、关联词、实时热点和达人指标。
@@ -74,13 +82,14 @@
 | [抖音巨量算数关联词](https://dataxapi.com/zh/apis/douyin/index/keywords/related.md) | `GET /v1/douyin/index/keywords/related` | 关联词列表 | $0.0020 / 次 |
 | [抖音巨量算数实时热点](https://dataxapi.com/zh/apis/douyin/index/trends/list.md) | `GET /v1/douyin/index/trends/list` | 热点列表 | $0.0020 / 次 |
 
-### [星图](https://dataxapi.com/zh/apis/douyin/xingtu.md) (12)
+### [星图](https://dataxapi.com/zh/apis/douyin/xingtu.md) (13)
 
 抖音官方的达人合作平台：达人搜索、报价、粉丝画像、传播和转化数据。
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [抖音星图达人搜索](https://dataxapi.com/zh/apis/douyin/xingtu/creators/search.md) | `GET /v1/douyin/xingtu/creators/search` | 达人列表 | $0.0040 / 次 |
+| [抖音星图达人粉丝画像（备用版）](https://dataxapi.com/zh/apis/douyin/xingtu/backup/creators/audience/get.md) | `GET /v1/douyin/xingtu/backup/creators/audience/get` | 粉丝画像 | $0.0400 / 次 |
 | [抖音星图达人粉丝画像](https://dataxapi.com/zh/apis/douyin/xingtu/creators/audience/get.md) | `GET /v1/douyin/xingtu/creators/audience/get` | 粉丝画像 | $0.0040 / 次 |
 | [抖音星图达人内容分布](https://dataxapi.com/zh/apis/douyin/xingtu/creators/content_mix/get.md) | `GET /v1/douyin/xingtu/creators/content_mix/get` | 星图达人内容分布 | $0.0040 / 次 |
 | [抖音星图达人转化能力](https://dataxapi.com/zh/apis/douyin/xingtu/creators/conversion/get.md) | `GET /v1/douyin/xingtu/creators/conversion/get` | 星图达人转化能力 | $0.0040 / 次 |
@@ -96,10 +105,10 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 1 到 250 条，各接口不同。20 个列表里有 12 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：38 个接口里有 22 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：42 个接口里有 25 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：抖音评论回复、抖音巨量算数达人热门视频、抖音巨量算数关键词热度趋势、抖音巨量算数关联词、抖音用户视频、抖音视频评论、抖音相关视频、抖音星图达人作品表现、抖音搜索框联想词、抖音用户视频（备用版）：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **一次取多个**：用 `ids` 一次请求可以取多个：抖音达人互动与粉丝趋势（最多 5 个）、抖音星图达人资料（最多 50 个）。
-- **预览结构**：有 20 个接口返回的是预览结构，字段还可能调整；其余返回统一的结构，所有平台都一样。
+- **预览结构**：有 21 个接口返回的是预览结构，字段还可能调整；其余返回统一的结构，所有平台都一样。
 - **快照**：抖音巨量算数实时热点、抖音热榜、抖音视频榜：榜单是每 10 分钟刷新一次的快照，`meta.fetched_at` 写明是什么时候取的。
 
 ## 调用结果不对时先看这里
@@ -145,4 +154,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/douyin/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/douyin/)

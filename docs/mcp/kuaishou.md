@@ -1,10 +1,10 @@
 # Kuaishou data in your AI
 
-Ask your AI about Kuaishou and it answers with live data: 8 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Kuaishou and it answers with live data: 10 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-Updated 2026-11-06
+Updated 2026-11-21
 
-- Endpoints: 8 (on Kuaishou, one response shape)
+- Endpoints: 10 (on Kuaishou, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-kuaishou](https://dataxapi.com/skills/dataxapi-kuaishou.zip)
@@ -46,11 +46,11 @@ What happens when you ask about Kuaishou: your AI looks the endpoint up for free
 
 ## The Kuaishou skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 8 Kuaishou endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 10 Kuaishou endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-kuaishou from https://dataxapi.com/skills/dataxapi-kuaishou.zip.
 
-## All 8 Kuaishou endpoints your AI can call
+## All 10 Kuaishou endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -63,7 +63,9 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Kuaishou user videos](https://dataxapi.com/apis/kuaishou/users/videos/list/) | `kuaishou.users.videos.list` | $0.0200 |
 | [Kuaishou video comments](https://dataxapi.com/apis/kuaishou/videos/comments/list/) | `kuaishou.videos.comments.list` | $0.0020 |
 | [Kuaishou video detail](https://dataxapi.com/apis/kuaishou/videos/get/) | `kuaishou.videos.get` | $0.0020 |
+| [Kuaishou video transcript (video to text)](https://dataxapi.com/apis/kuaishou/videos/transcript/get/) | `kuaishou.videos.transcript.get` | $0.0020 a call, plus $0.0038 a minute when the speech is recognised |
 | [Kuaishou video search](https://dataxapi.com/apis/kuaishou/videos/search/) | `kuaishou.videos.search` | $0.0200 |
+| [Kuaishou video downloader](https://dataxapi.com/apis/kuaishou/videos/media/get/) | `kuaishou.videos.media.get` | $0.0020 |
 
 [Every Kuaishou price, and what is charged →](https://dataxapi.com/pricing/kuaishou/) · [Kuaishou API](https://dataxapi.com/apis/kuaishou/) · [MCP](https://dataxapi.com/mcp/)
 
@@ -71,7 +73,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 
 ### What does it cost to ask about Kuaishou?
 
-Finding endpoints, reading their parameters and reading on in a result are free. A call costs from $0.0020 to $0.0200, each Kuaishou endpoint at its own price. A call that fails is never charged.
+Finding endpoints, reading their parameters and reading on in a result are free. A call costs from $0.0020 to $0.0210, each Kuaishou endpoint at its own price. A call that fails is never charged.
 
 ### Do I need a Kuaishou account?
 
@@ -95,4 +97,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/kuaishou/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/kuaishou/)

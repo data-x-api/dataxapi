@@ -1,10 +1,10 @@
 # 数据 API 目录
 
-内容、评论、账号、热榜、达人报价和广告库：21 个平台、237 个接口，一把 Key，一种返回格式。一次 $0.0003 起，每个接口各有标价；失败不收费。
+内容、评论、账号、热榜、达人报价和广告库：21 个平台、254 个接口，一把 Key，一种返回格式。一次 $0.0003 起，每个接口各有标价；失败不收费。
 
 ## [抖音 API](https://dataxapi.com/zh/apis/douyin.md)
 
-38 个接口 · $0.0020 起
+42 个接口 · $0.0020 起
 
 ### 备用版 (2)
 
@@ -13,12 +13,14 @@
 | [抖音视频搜索（备用版）](https://dataxapi.com/zh/apis/douyin/backup/videos/search.md) | `GET /v1/douyin/backup/videos/search` | 内容列表 | $0.0300 / 次 |
 | [抖音用户视频（备用版）](https://dataxapi.com/zh/apis/douyin/backup/users/videos/list.md) | `GET /v1/douyin/backup/users/videos/list` | 内容列表 | $0.0300 / 次 |
 
-### 视频 (6)
+### 视频 (8)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [抖音视频搜索](https://dataxapi.com/zh/apis/douyin/videos/search.md) | `GET /v1/douyin/videos/search` | 内容列表 | $0.0200 / 次 |
 | [抖音视频详情](https://dataxapi.com/zh/apis/douyin/videos/get.md) | `GET /v1/douyin/videos/get` | 内容 | $0.0020 / 次 |
+| [抖音无水印视频和图片下载地址](https://dataxapi.com/zh/apis/douyin/videos/media/get.md) | `GET /v1/douyin/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [抖音视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/douyin/videos/transcript/get.md) | `GET /v1/douyin/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [抖音视频评论](https://dataxapi.com/zh/apis/douyin/videos/comments/list.md) | `GET /v1/douyin/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 | [抖音视频播放量](https://dataxapi.com/zh/apis/douyin/videos/metrics.md) | `GET /v1/douyin/videos/metrics` | 内容 | $0.0020 / 次 |
 | [抖音相关视频](https://dataxapi.com/zh/apis/douyin/videos/related.md) | `GET /v1/douyin/videos/related` | 内容列表 | $0.0020 / 次 |
@@ -57,6 +59,12 @@
 | --- | --- | --- | --- |
 | [抖音搜索框联想词](https://dataxapi.com/zh/apis/douyin/keywords/related.md) | `GET /v1/douyin/keywords/related` | 关联词列表 | $0.0200 / 次 |
 
+### 音乐 (1)
+
+| 接口 | 请求 | 返回 | 价格 |
+| --- | --- | --- | --- |
+| [抖音音乐详情（背景音乐 MP3 和使用人数）](https://dataxapi.com/zh/apis/douyin/music/get.md) | `GET /v1/douyin/music/get` | 音乐 | $0.0020 / 次 |
+
 ### [巨量算数](https://dataxapi.com/zh/apis/douyin/index.md) (10)
 
 抖音官方的指数工具：关键词和品牌的逐日指数、搜索人群画像、关联词、实时热点和达人指标。
@@ -74,13 +82,14 @@
 | [抖音巨量算数关联词](https://dataxapi.com/zh/apis/douyin/index/keywords/related.md) | `GET /v1/douyin/index/keywords/related` | 关联词列表 | $0.0020 / 次 |
 | [抖音巨量算数实时热点](https://dataxapi.com/zh/apis/douyin/index/trends/list.md) | `GET /v1/douyin/index/trends/list` | 热点列表 | $0.0020 / 次 |
 
-### [星图](https://dataxapi.com/zh/apis/douyin/xingtu.md) (12)
+### [星图](https://dataxapi.com/zh/apis/douyin/xingtu.md) (13)
 
 抖音官方的达人合作平台：达人搜索、报价、粉丝画像、传播和转化数据。
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [抖音星图达人搜索](https://dataxapi.com/zh/apis/douyin/xingtu/creators/search.md) | `GET /v1/douyin/xingtu/creators/search` | 达人列表 | $0.0040 / 次 |
+| [抖音星图达人粉丝画像（备用版）](https://dataxapi.com/zh/apis/douyin/xingtu/backup/creators/audience/get.md) | `GET /v1/douyin/xingtu/backup/creators/audience/get` | 粉丝画像 | $0.0400 / 次 |
 | [抖音星图达人粉丝画像](https://dataxapi.com/zh/apis/douyin/xingtu/creators/audience/get.md) | `GET /v1/douyin/xingtu/creators/audience/get` | 粉丝画像 | $0.0040 / 次 |
 | [抖音星图达人内容分布](https://dataxapi.com/zh/apis/douyin/xingtu/creators/content_mix/get.md) | `GET /v1/douyin/xingtu/creators/content_mix/get` | 星图达人内容分布 | $0.0040 / 次 |
 | [抖音星图达人转化能力](https://dataxapi.com/zh/apis/douyin/xingtu/creators/conversion/get.md) | `GET /v1/douyin/xingtu/creators/conversion/get` | 星图达人转化能力 | $0.0040 / 次 |
@@ -95,7 +104,7 @@
 
 ## [B站 API](https://dataxapi.com/zh/apis/bilibili.md)
 
-9 个接口 · $0.0020 起
+11 个接口 · $0.0020 起
 
 ### 备用版 (1)
 
@@ -103,12 +112,14 @@
 | --- | --- | --- | --- |
 | [B站用户投稿（备用版）](https://dataxapi.com/zh/apis/bilibili/backup/users/videos/list.md) | `GET /v1/bilibili/backup/users/videos/list` | 内容列表 | $0.0300 / 次 |
 
-### 视频 (4)
+### 视频 (6)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [B站视频搜索](https://dataxapi.com/zh/apis/bilibili/videos/search.md) | `GET /v1/bilibili/videos/search` | 内容列表 | $0.0020 / 次 |
 | [B站视频详情](https://dataxapi.com/zh/apis/bilibili/videos/get.md) | `GET /v1/bilibili/videos/get` | 内容 | $0.0020 / 次 |
+| [B 站视频和音频下载地址](https://dataxapi.com/zh/apis/bilibili/videos/media/get.md) | `GET /v1/bilibili/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [B站视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/bilibili/videos/transcript/get.md) | `GET /v1/bilibili/videos/transcript/get` | 逐字稿 | $0.0040 / 次 |
 | [B站视频评论](https://dataxapi.com/zh/apis/bilibili/videos/comments/list.md) | `GET /v1/bilibili/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 | [B站综合热门](https://dataxapi.com/zh/apis/bilibili/videos/trending.md) | `GET /v1/bilibili/videos/trending` | 内容列表 | $0.0020 / 次 |
 
@@ -133,14 +144,16 @@
 
 ## [快手 API](https://dataxapi.com/zh/apis/kuaishou.md)
 
-8 个接口 · $0.0020 起
+10 个接口 · $0.0020 起
 
-### 视频 (3)
+### 视频 (5)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [快手视频搜索](https://dataxapi.com/zh/apis/kuaishou/videos/search.md) | `GET /v1/kuaishou/videos/search` | 内容列表 | $0.0200 / 次 |
 | [快手作品详情](https://dataxapi.com/zh/apis/kuaishou/videos/get.md) | `GET /v1/kuaishou/videos/get` | 内容 | $0.0020 / 次 |
+| [快手视频和图集下载地址](https://dataxapi.com/zh/apis/kuaishou/videos/media/get.md) | `GET /v1/kuaishou/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [快手视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/kuaishou/videos/transcript/get.md) | `GET /v1/kuaishou/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [快手作品评论](https://dataxapi.com/zh/apis/kuaishou/videos/comments/list.md) | `GET /v1/kuaishou/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 
 ### 用户 (3)
@@ -339,13 +352,14 @@ X 的列表（Lists）：列表里的帖子、成员和关注者。
 
 ## [Instagram API](https://dataxapi.com/zh/apis/instagram.md)
 
-8 个接口 · $0.0020 起
+9 个接口 · $0.0020 起
 
-### 帖子 (3)
+### 帖子 (4)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [Instagram 帖子详情](https://dataxapi.com/zh/apis/instagram/posts/get.md) | `GET /v1/instagram/posts/get` | 内容 | $0.0020 / 次 |
+| [Instagram 视频和图片下载地址](https://dataxapi.com/zh/apis/instagram/posts/media/get.md) | `GET /v1/instagram/posts/media/get` | 视频和图片文件 | $0.0020 / 次 |
 | [Instagram 视频字幕](https://dataxapi.com/zh/apis/instagram/posts/transcript/get.md) | `GET /v1/instagram/posts/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [Instagram 帖子评论](https://dataxapi.com/zh/apis/instagram/posts/comments/list.md) | `GET /v1/instagram/posts/comments/list` | 评论列表 | $0.0020 / 次 |
 
@@ -371,14 +385,15 @@ X 的列表（Lists）：列表里的帖子、成员和关注者。
 
 ## [TikTok API](https://dataxapi.com/zh/apis/tiktok.md)
 
-18 个接口 · $0.0020 起
+19 个接口 · $0.0020 起
 
-### 视频 (4)
+### 视频 (5)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [TikTok 视频搜索](https://dataxapi.com/zh/apis/tiktok/videos/search.md) | `GET /v1/tiktok/videos/search` | 内容列表 | $0.0020 / 次 |
 | [TikTok 视频详情](https://dataxapi.com/zh/apis/tiktok/videos/get.md) | `GET /v1/tiktok/videos/get` | 内容 | $0.0020 / 次 |
+| [TikTok 无水印视频下载地址](https://dataxapi.com/zh/apis/tiktok/videos/media/get.md) | `GET /v1/tiktok/videos/media/get` | 视频和图片文件 | $0.0020 / 次 |
 | [TikTok 视频字幕](https://dataxapi.com/zh/apis/tiktok/videos/transcript/get.md) | `GET /v1/tiktok/videos/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [TikTok 视频评论](https://dataxapi.com/zh/apis/tiktok/videos/comments/list.md) | `GET /v1/tiktok/videos/comments/list` | 评论列表 | $0.0020 / 次 |
 
@@ -432,7 +447,7 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 
 ## [微博 API](https://dataxapi.com/zh/apis/weibo.md)
 
-11 个接口 · $0.0020 起
+13 个接口 · $0.0020 起
 
 ### 备用版 (1)
 
@@ -440,12 +455,14 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 | --- | --- | --- | --- |
 | [微博热搜榜（备用版）](https://dataxapi.com/zh/apis/weibo/backup/trends/list.md) | `GET /v1/weibo/backup/trends/list` | 热点列表 | $0.0300 / 次 |
 
-### 帖子 (4)
+### 帖子 (6)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [微博实时搜索](https://dataxapi.com/zh/apis/weibo/posts/search.md) | `GET /v1/weibo/posts/search` | 内容列表 | $0.0020 / 次 |
 | [微博详情](https://dataxapi.com/zh/apis/weibo/posts/get.md) | `GET /v1/weibo/posts/get` | 内容 | $0.0020 / 次 |
+| [微博视频和图片下载地址](https://dataxapi.com/zh/apis/weibo/posts/media/get.md) | `GET /v1/weibo/posts/media/get` | 视频和图片文件 | $0.0020 / 次 |
+| [微博视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/weibo/posts/transcript/get.md) | `GET /v1/weibo/posts/transcript/get` | 逐字稿 | $0.0020 / 次 |
 | [微博评论](https://dataxapi.com/zh/apis/weibo/posts/comments/list.md) | `GET /v1/weibo/posts/comments/list` | 评论列表 | $0.0020 / 次 |
 | [微博点赞用户](https://dataxapi.com/zh/apis/weibo/posts/likers/list.md) | `GET /v1/weibo/posts/likers/list` | 账号列表 | $0.0020 / 次 |
 
@@ -472,20 +489,23 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 
 ## [小红书 API](https://dataxapi.com/zh/apis/xiaohongshu.md)
 
-30 个接口 · $0.0200 起
+33 个接口 · $0.0200 起
 
-### 视频 (1)
+### 视频 (3)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [小红书视频笔记详情（视频地址和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/get.md) | `GET /v1/xiaohongshu/videos/get` | 内容 | $0.0200 / 次 |
+| [小红书无水印视频下载地址（各档清晰度和字幕）](https://dataxapi.com/zh/apis/xiaohongshu/videos/media/get.md) | `GET /v1/xiaohongshu/videos/media/get` | 视频和图片文件 | $0.0200 / 次 |
+| [小红书视频转文字（文案提取、逐字稿）](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get.md) | `GET /v1/xiaohongshu/videos/transcript/get` | 逐字稿 | $0.0200 / 次 |
 
-### 笔记 (3)
+### 笔记 (4)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [小红书笔记搜索](https://dataxapi.com/zh/apis/xiaohongshu/notes/search.md) | `GET /v1/xiaohongshu/notes/search` | 内容列表 | $0.0200 / 次 |
 | [小红书笔记详情](https://dataxapi.com/zh/apis/xiaohongshu/notes/get.md) | `GET /v1/xiaohongshu/notes/get` | 内容 | $0.0200 / 次 |
+| [小红书无水印原图和实况图下载地址](https://dataxapi.com/zh/apis/xiaohongshu/notes/media/get.md) | `GET /v1/xiaohongshu/notes/media/get` | 视频和图片文件 | $0.0200 / 次 |
 | [小红书笔记评论](https://dataxapi.com/zh/apis/xiaohongshu/notes/comments/list.md) | `GET /v1/xiaohongshu/notes/comments/list` | 评论列表 | $0.0200 / 次 |
 
 ### 图片 (1)
@@ -594,7 +614,7 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 
 ## [微信视频号 API](https://dataxapi.com/zh/apis/wechat_channels.md)
 
-15 个接口 · $0.0150 起
+17 个接口 · $0.0150 起
 
 ### 备用版 (3)
 
@@ -604,13 +624,15 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 | [微信视频号账号资料（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/get.md) | `GET /v1/wechat_channels/backup/users/get` | 账号 | $0.0300 / 次 |
 | [微信视频号用户作品（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/videos/list.md) | `GET /v1/wechat_channels/backup/users/videos/list` | 内容列表 | $0.0600 / 次 |
 
-### 视频 (5)
+### 视频 (7)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [微信搜一搜视频号视频搜索](https://dataxapi.com/zh/apis/wechat_channels/videos/search.md) | `GET /v1/wechat_channels/videos/search` | 内容列表 | $0.0200 / 次 |
 | [微信视频号作品详情](https://dataxapi.com/zh/apis/wechat_channels/videos/get.md) | `GET /v1/wechat_channels/videos/get` | 内容 | $0.0200 / 次 |
+| [视频号视频下载（文件地址和解密）](https://dataxapi.com/zh/apis/wechat_channels/videos/media/get.md) | `GET /v1/wechat_channels/videos/media/get` | 视频和图片文件 | $0.0200 / 次 |
 | [微信视频号作品分享链接](https://dataxapi.com/zh/apis/wechat_channels/videos/share_link/get.md) | `GET /v1/wechat_channels/videos/share_link/get` | 视频号分享链接 | $0.0200 / 次 |
+| [视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get.md) | `GET /v1/wechat_channels/videos/transcript/get` | 逐字稿 | $0.0200 / 次 |
 | [微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list.md) | `GET /v1/wechat_channels/videos/comments/list` | 评论列表 | $0.0200 / 次 |
 | [微信视频号作品互动数据](https://dataxapi.com/zh/apis/wechat_channels/videos/metrics.md) | `GET /v1/wechat_channels/videos/metrics` | 内容 | $0.0150 / 次 |
 
@@ -818,4 +840,4 @@ TikTok Shop 的公开商品数据：商品搜索、商品详情、买家评价�
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/)

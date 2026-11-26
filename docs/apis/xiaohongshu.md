@@ -1,10 +1,10 @@
 # Xiaohongshu (RedNote) API
 
-30 endpoints read Xiaohongshu (RedNote): videos, notes, images, topics, users, comments, trends, keywords, PGY, Xiaohongshu Shop. From $0.0200 a call. No Xiaohongshu login and no cookie; a failed call is free.
+33 endpoints read Xiaohongshu (RedNote): videos, notes, images, topics, users, comments, trends, keywords, PGY, Xiaohongshu Shop. From $0.0200 a call. No Xiaohongshu login and no cookie; a failed call is free.
 
-> 30 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 33 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## xiaohongshu.images.search
 
@@ -213,6 +213,15 @@ Get one Xiaohongshu video note by ID or link: title, text, author, engagement co
 - Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
 - Whole contract: https://dataxapi.com/apis/xiaohongshu/videos/get.md
 
+## xiaohongshu.videos.transcript.get
+
+Give a Xiaohongshu video note's link, share text or ID and get what is said in it: the whole text, each sentence with its start and end time, and ready SRT subtitles, with the title, author and length; the platform's own subtitles where it made them, the speech recognised where it did not, and speakers can be told apart. Charged a call, plus by the minute of video when its speech is recognised (not when the platform's subtitles are used); nothing when nobody speaks. A video of up to 5 minutes comes back as text; one over 5 minutes and up to 2 hours is answered at once with a job: call again with it a little later for the text, charged by its actual minutes and only when the text is delivered. One object a call; $0.0200 a call, plus $0.0038 a minute when the speech is recognised (a part minute counts as one); none when the platform's own captions are used; at most $0.0390 a call for a video of up to 5 minutes, a longer one, up to 2 hours, by its actual minutes. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: Xiaohongshu (RedNote) video transcript (video to text) API
+- Request: `GET /v1/xiaohongshu/videos/transcript/get`
+- Parameters: `id`, `url`, `speakers`, `job`, `view`, `fields`; give exactly one of id, url, job
+- Whole contract: https://dataxapi.com/apis/xiaohongshu/videos/transcript/get.md
+
 ## xiaohongshu.pgy.creators.followers.history
 
 Get a Xiaohongshu creator's follower count for each of the last 30 or 60 days, by PGY creator ID, with the net gain over the period and that gain as a share. Shows whether a creator is growing, or lost or bought followers all at once. One object a call; $0.0400 per call. Errors and timeouts are not charged.
@@ -275,6 +284,24 @@ Get the figures PGY shows a brand for one Xiaohongshu note, by note ID: impressi
 - Request: `GET /v1/xiaohongshu/pgy/notes/get`
 - Parameters: `id` (required), `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/xiaohongshu/pgy/notes/get.md
+
+## xiaohongshu.notes.media.get
+
+Give a RedNote (Xiaohongshu) image note by ID, link or share text and get each picture's address without watermark, at the largest size the platform keeps, with its width, height and format, and for a live photo the address of its video. The addresses need no headers; once they expire, another call gives new ones. Image notes only; a video note's files are xiaohongshu.videos.media.get's. One object a call; $0.0200 per call. Errors and timeouts are not charged.
+
+- Name: RedNote (Xiaohongshu) image downloader, originals and live photos API
+- Request: `GET /v1/xiaohongshu/notes/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/xiaohongshu/notes/media/get.md
+
+## xiaohongshu.videos.media.get
+
+Give a RedNote (Xiaohongshu) video note by ID, link or share text and get the address of every file of its video, without watermark: each quality in each codec (H.264, H.265 and the like) with its width, height, bit rate and size and backup addresses, the cover, and the subtitle files the platform made (SRT, by language). The addresses need no headers; once one stops working, another call gives new ones. Video notes only; an image note's pictures are xiaohongshu.notes.media.get's. One object a call; $0.0200 per call. Errors and timeouts are not charged.
+
+- Name: RedNote (Xiaohongshu) video downloader API
+- Request: `GET /v1/xiaohongshu/videos/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/xiaohongshu/videos/media/get.md
 
 ## How this differs from Xiaohongshu's official open platform
 

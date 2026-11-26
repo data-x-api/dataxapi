@@ -1,8 +1,8 @@
 # DataXAPI
 
-> 一个 HTTP 接口取市场数据，按次付费。所有接口的参数名、返回格式、报错结构都统一。21 个平台，237 个接口。免费试用最多 333 次，不用绑卡。
+> 一个 HTTP 接口取市场数据，按次付费。所有接口的参数名、返回格式、报错结构都统一。21 个平台，254 个接口。免费试用最多 333 次，不用绑卡。
 
-生成自 catalog revision 720fc3ea8dadb865, price book 19。英文版：https://dataxapi.com/llms.txt
+生成自 catalog revision 0051cce45e9530b9, price book 22。英文版：https://dataxapi.com/llms.txt
 
 ## 怎么调用
 
@@ -33,9 +33,10 @@
 - `account-audit`：这个号做得怎么样？`social.accounts.get`, `social.accounts.posts.list`，17 个平台，例如 2 次调用 ≤ $0.004
 - `viral`：这条为什么火？`social.posts.get`, `social.transcripts.get`，18 个平台，例如 2 次调用 ≤ $0.004
 - `creators`：这个品类该找谁？`social.accounts.search`，12 个平台，例如 2 次调用 ≤ $0.004
-- `transcripts`：这条视频说了什么？`social.transcripts.get`，7 个平台，例如 1 次调用 ≤ $0.002
+- `transcripts`：这条视频说了什么？`social.transcripts.get`，13 个平台，例如 1 次调用 ≤ $0.002
 - `ads`：对手在投什么？`ads.ads.search`，3 个平台，例如 2 次调用 ≤ $0.004
 - `products`：什么在卖、买家怎么评？`commerce.products.search`, `commerce.products.reviews.list`，2 个平台，例如 4 次调用 ≤ $0.008
+- `creator-transcripts`：这个博主最近的视频都说了什么？`social.accounts.posts.list`, `social.transcripts.get`，12 个平台，例如 13 次调用 ≤ $0.216
 
 ## 查询（不用 Key）
 
@@ -49,33 +50,36 @@
 
 ## 各平台的接口
 
-每个平台一份中文清单：接口、参数和价格，链到每个接口的完整约定（参考页的 Markdown 版，去掉 /zh 是英文）。
+每个平台一份中文清单：接口、参数和价格，各链到完整约定（去掉 /zh 是英文）。
 
-每个平台还有一个技能包，写明接口、价格和各自回答的问题：`https://dataxapi.com/skills/dataxapi-<platform>.zip`（平台编号里的 `_` 换成 `-`）。
+每个平台一个技能包，写明接口、价格和各自回答的问题：`https://dataxapi.com/skills/dataxapi-<platform>.zip`（平台编号里的 `_` 换成 `-`）。
 
 `+`：另有备用版（参数和返回相同，价格更高），编号在平台或分组后加 `backup`，如 `weibo.backup.trends.list`。
 
-- [抖音](https://dataxapi.com/zh/apis/douyin.md) `douyin` (36): comments.replies.list, hashtags.videos.list, index.brands.history, index.brands.metrics, index.creators.videos.list, index.creators.audience.get, index.creators.metrics, index.keywords.audience.get, index.keywords.history, index.keywords.related, index.trends.list, index.videos.search, trends.list, users.get, users.history, users.search, users.videos.list+, videos.comments.list, videos.get, videos.metrics, videos.related, videos.search+, videos.trending, xingtu.creators.rates.get, xingtu.creators.search, xingtu.creators.get, xingtu.creators.audience.get, xingtu.creators.metrics, xingtu.creators.videos.list, xingtu.creators.keywords.get, xingtu.creators.scores.get, xingtu.creators.content_mix.get, xingtu.creators.conversion.get, xingtu.campaigns.list, xingtu.videos.get, keywords.related
-- [B站](https://dataxapi.com/zh/apis/bilibili.md) `bilibili` (8): comments.replies.list, trends.list, users.get, users.videos.list+, videos.comments.list, videos.get, videos.search, videos.trending
-- [快手](https://dataxapi.com/zh/apis/kuaishou.md) `kuaishou` (8): comments.replies.list, trends.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search
+- [抖音](https://dataxapi.com/zh/apis/douyin.md) `douyin` (36): hashtags.videos.list, index.brands.history, index.brands.metrics, index.creators.videos.list, index.creators.audience.get, index.creators.metrics, index.keywords.audience.get, index.keywords.history, index.keywords.related, index.trends.list, index.videos.search, trends.list, users.get, users.history, users.search, users.videos.list+, videos.comments.list, videos.get, videos.metrics, videos.related, videos.search+, videos.trending, xingtu.creators.rates.get, xingtu.creators.search, xingtu.creators.get, xingtu.creators.audience.get+, xingtu.creators.metrics, xingtu.creators.videos.list, xingtu.creators.keywords.get, xingtu.creators.scores.get, xingtu.creators.content_mix.get, xingtu.creators.conversion.get, xingtu.campaigns.list, xingtu.videos.get, keywords.related, music.get
+- [B站](https://dataxapi.com/zh/apis/bilibili.md) `bilibili` (7): trends.list, users.get, users.videos.list+, videos.comments.list, videos.get, videos.search, videos.trending
+- [快手](https://dataxapi.com/zh/apis/kuaishou.md) `kuaishou` (7): trends.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search
 - [Telegram](https://dataxapi.com/zh/apis/telegram.md) `telegram` (3): channels.get, channels.messages.list, messages.get
-- [X（推特）](https://dataxapi.com/zh/apis/x.md) `x` (21): communities.posts.list, lists.posts.list, posts.article.get, posts.get, posts.quotes.list, posts.replies.list, posts.retweeters.list, posts.search, threads.posts.list, trends.list, users.followers.list, users.following.list, users.get, users.mentions.list, users.posts.list, users.search, communities.get, communities.members.list, lists.followers.list, lists.members.list, posts.transcript.get
+- [X（推特）](https://dataxapi.com/zh/apis/x.md) `x` (20): communities.posts.list, lists.posts.list, posts.article.get, posts.get, posts.quotes.list, posts.replies.list, posts.retweeters.list, posts.search, threads.posts.list, trends.list, users.followers.list, users.following.list, users.get, users.mentions.list, users.posts.list, users.search, communities.get, communities.members.list, lists.followers.list, lists.members.list
 - [Facebook](https://dataxapi.com/zh/apis/facebook.md) `facebook` (4): pages.get, pages.posts.list, posts.comments.list, posts.get
 - [Google 广告](https://dataxapi.com/zh/apis/google.md) `google` (3): ads.get, advertisers.ads.list, advertisers.search
-- [LinkedIn](https://dataxapi.com/zh/apis/linkedin.md) `linkedin` (7): ads.get, ads.search, companies.get, companies.posts.list, posts.get, posts.search, posts.transcript.get
-- [Meta 广告库](https://dataxapi.com/zh/apis/meta.md) `meta` (5): ads.get, ads.search, ads.transcript.get, advertisers.ads.list, advertisers.search
+- [LinkedIn](https://dataxapi.com/zh/apis/linkedin.md) `linkedin` (6): ads.get, ads.search, companies.get, companies.posts.list, posts.get, posts.search
+- [Meta 广告库](https://dataxapi.com/zh/apis/meta.md) `meta` (4): ads.get, ads.search, advertisers.ads.list, advertisers.search
 - [Threads](https://dataxapi.com/zh/apis/threads.md) `threads` (4): posts.get, posts.search, users.get, users.posts.list
-- [Instagram](https://dataxapi.com/zh/apis/instagram.md) `instagram` (8): comments.replies.list, hashtags.posts.list, posts.comments.list, posts.get, posts.transcript.get, users.get, users.posts.list, users.search
-- [TikTok](https://dataxapi.com/zh/apis/tiktok.md) `tiktok` (18): ads.search, ads.get, comments.replies.list, creative_center.ads.get, creative_center.ads.search, hashtags.videos.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search, videos.transcript.get, shop.products.get, shop.products.reviews.list, shop.products.search, shop.sellers.products.list, users.followers.list
-- [微博](https://dataxapi.com/zh/apis/weibo.md) `weibo` (10): comments.replies.list, posts.comments.list, posts.get, posts.likers.list, posts.search, trends.list+, users.followers.list, users.get, users.posts.list, users.search
-- [小红书](https://dataxapi.com/zh/apis/xiaohongshu.md) `xiaohongshu` (30): images.search, notes.get, comments.replies.list, notes.comments.list, notes.search, pgy.keywords.history, pgy.keywords.related, topics.notes.list, topics.get, trends.list, users.get, users.notes.list, users.search, shop.products.get, shop.products.reviews.list, shop.products.search, pgy.creators.search, pgy.creators.get, pgy.creators.audience.get, pgy.creators.metrics, pgy.creators.notes.list, keywords.related, videos.get, pgy.creators.followers.history, pgy.creators.related, pgy.notes.trending, pgy.creators.costs.metrics, pgy.creators.followers.metrics, pgy.creators.costs.history, pgy.notes.get
-- [YouTube](https://dataxapi.com/zh/apis/youtube.md) `youtube` (10): channels.get, channels.search, channels.videos.list, comments.replies.list, videos.comments.list, videos.get, videos.search, videos.transcript.get, channels.posts.list, posts.get
-- [微信视频号](https://dataxapi.com/zh/apis/wechat_channels.md) `wechat_channels` (12): users.get+, videos.get, videos.comments.list, videos.share_link.get, users.collections.list, collections.videos.list, users.videos.list+, videos.search+, users.search, videos.metrics, comments.replies.list, users.live_replays.list
+- [Instagram](https://dataxapi.com/zh/apis/instagram.md) `instagram` (6): hashtags.posts.list, posts.comments.list, posts.get, users.get, users.posts.list, users.search
+- [TikTok](https://dataxapi.com/zh/apis/tiktok.md) `tiktok` (16): ads.search, ads.get, creative_center.ads.get, creative_center.ads.search, hashtags.videos.list, users.get, users.search, users.videos.list, videos.comments.list, videos.get, videos.search, shop.products.get, shop.products.reviews.list, shop.products.search, shop.sellers.products.list, users.followers.list
+- [微博](https://dataxapi.com/zh/apis/weibo.md) `weibo` (9): posts.comments.list, posts.get, posts.likers.list, posts.search, trends.list+, users.followers.list, users.get, users.posts.list, users.search
+- [小红书](https://dataxapi.com/zh/apis/xiaohongshu.md) `xiaohongshu` (29): images.search, notes.get, notes.comments.list, notes.search, pgy.keywords.history, pgy.keywords.related, topics.notes.list, topics.get, trends.list, users.get, users.notes.list, users.search, shop.products.get, shop.products.reviews.list, shop.products.search, pgy.creators.search, pgy.creators.get, pgy.creators.audience.get, pgy.creators.metrics, pgy.creators.notes.list, keywords.related, videos.get, pgy.creators.followers.history, pgy.creators.related, pgy.notes.trending, pgy.creators.costs.metrics, pgy.creators.followers.metrics, pgy.creators.costs.history, pgy.notes.get
+- [YouTube](https://dataxapi.com/zh/apis/youtube.md) `youtube` (8): channels.get, channels.search, channels.videos.list, videos.comments.list, videos.get, videos.search, channels.posts.list, posts.get
+- [微信视频号](https://dataxapi.com/zh/apis/wechat_channels.md) `wechat_channels` (11): users.get+, videos.get, videos.comments.list, videos.share_link.get, users.collections.list, collections.videos.list, users.videos.list+, videos.search+, users.search, videos.metrics, users.live_replays.list
 - [微信搜一搜](https://dataxapi.com/zh/apis/wechat.md) `wechat` (5): posts.search+, accounts.search, index.keywords.history, keywords.related, miniprograms.search
 - [微信公众号](https://dataxapi.com/zh/apis/wechat_mp.md) `wechat_mp` (8): accounts.articles.list, accounts.get, articles.comments.list, articles.get, articles.metrics, comments.replies.list, accounts.search, accounts.owner.get
-- [Reddit](https://dataxapi.com/zh/apis/reddit.md) `reddit` (11): posts.comments.list, posts.get, posts.search, posts.trending, subreddits.posts.list, trends.list, users.get, users.posts.list, subreddits.get, users.subreddits.list, posts.transcript.get
-- [知乎](https://dataxapi.com/zh/apis/zhihu.md) `zhihu` (16): answers.comments.list, answers.get, articles.get, columns.articles.list, comments.replies.list, pins.get, posts.search, questions.answers.list, questions.get, trends.list, users.answers.list, users.articles.list, users.followers.list, users.get, users.pins.list, users.search
+- [Reddit](https://dataxapi.com/zh/apis/reddit.md) `reddit` (10): posts.comments.list, posts.get, posts.search, posts.trending, subreddits.posts.list, trends.list, users.get, users.posts.list, subreddits.get, users.subreddits.list
+- [知乎](https://dataxapi.com/zh/apis/zhihu.md) `zhihu` (15): answers.comments.list, answers.get, articles.get, columns.articles.list, pins.get, posts.search, questions.answers.list, questions.get, trends.list, users.answers.list, users.articles.list, users.followers.list, users.get, users.pins.list, users.search
 - [Pinterest](https://dataxapi.com/zh/apis/pinterest.md) `pinterest` (2): pins.get, pins.search
+- 一条内容的文件（视频、音频、图片），8 个平台：平台编号后接 `videos.media.get`或`notes.media.get`或`posts.media.get`
+- 视频转文字，13 个平台：平台编号后接 `videos.transcript.get`或`ads.transcript.get`或`posts.transcript.get`
+- 评论下的回复，10 个平台：平台编号后接 `comments.replies.list`
 
 ## 你的账户
 

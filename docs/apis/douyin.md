@@ -1,10 +1,10 @@
 # Douyin API
 
-38 endpoints read Douyin: videos, hashtags, users, comments, trends, keywords, trend-index, Xingtu. From $0.0020 a call. No Douyin login and no cookie; a failed call is free.
+39 endpoints read Douyin: videos, hashtags, users, comments, trends, keywords, trend-index, Xingtu. From $0.0020 a call. No Douyin login and no cookie; a failed call is free.
 
-> 38 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 42 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## douyin.comments.replies.list
 
@@ -177,6 +177,15 @@ Get one Douyin video or image post by ID or link: caption, author, engagement co
 - Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
 - Whole contract: https://dataxapi.com/apis/douyin/videos/get.md
 
+## douyin.videos.transcript.get
+
+Give a Douyin video's link, share text or ID and get what is said in it: the whole text, each sentence with its start and end time, and ready SRT subtitles, with the title, author and length; speakers can be told apart. Charged a call, plus by the minute of video when its speech is recognised; nothing when nobody speaks. A video of up to 5 minutes comes back as text; one over 5 minutes and up to 2 hours is answered at once with a job: call again with it a little later for the text, charged by its actual minutes and only when the text is delivered. One object a call; $0.0020 a call, plus $0.0038 a minute when the speech is recognised (a part minute counts as one); none when the platform's own captions are used; at most $0.0210 a call for a video of up to 5 minutes, a longer one, up to 2 hours, by its actual minutes. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: Douyin video transcript (video to text) API
+- Request: `GET /v1/douyin/videos/transcript/get`
+- Parameters: `id`, `url`, `speakers`, `job`, `view`, `fields`; give exactly one of id, url, job
+- Whole contract: https://dataxapi.com/apis/douyin/videos/transcript/get.md
+
 ## douyin.videos.metrics
 
 Get a Douyin video's counts as of now, by its ID: plays and likes. One object a call; $0.0020 per call. Errors and timeouts are not charged.
@@ -330,6 +339,24 @@ Get the suggestions Douyin's search box lists as a keyword is typed into it (aut
 - Parameters: `keyword` (required), `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/keywords/related.md
 
+## douyin.videos.media.get
+
+Give a Douyin video or image post by ID, link or share text and get the address of every file it has: the video without watermark in each quality (with the platform's play address beside it), the cover, the background music, and each picture of an image post as a JPEG with its live photo video. The addresses need no headers; where a signature says when one expires, expires_at says so, and another call gives new ones. One object a call; $0.0020 per call. Errors and timeouts are not charged.
+
+- Name: Douyin video downloader, no watermark API
+- Request: `GET /v1/douyin/videos/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/douyin/videos/media/get.md
+
+## douyin.music.get
+
+Get one piece of Douyin music by its ID: name, author, length, the address of its audio file (mostly an MP3), cover, whether Douyin marks it as commercial music (in its commercial music library), whether it is a video's original sound, and how many people have posted with it. The ID is that of a video's background music, or an id of the music chart. One object a call; $0.0020 per call. Errors and timeouts are not charged.
+
+- Name: Douyin music detail API
+- Request: `GET /v1/douyin/music/get`
+- Parameters: `id` (required), `view`, `fields`
+- Whole contract: https://dataxapi.com/apis/douyin/music/get.md
+
 ## douyin.backup.users.videos.list
 
 The backup of Douyin user videos, to call when the original cannot serve: the same parameters and result, at a higher price. Up to 20 items a call; $0.0300 per call. Errors and timeouts are not charged.
@@ -347,6 +374,15 @@ The backup of Douyin video search, to call when the original cannot serve: the s
 - Request: `GET /v1/douyin/backup/videos/search`
 - Parameters: `query` (required), `sort`, `published_within`, `cursor`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/backup/videos/search.md
+
+## douyin.xingtu.backup.creators.audience.get
+
+The backup of Douyin Xingtu creator audience, to call when the original cannot serve: the same parameters and result, at a higher price. One object a call; $0.0400 per call. Errors and timeouts are not charged.
+
+- Name: Douyin Xingtu creator audience (backup) API
+- Request: `GET /v1/douyin/xingtu/backup/creators/audience/get`
+- Parameters: `id` (required), `view`, `fields`
+- Whole contract: https://dataxapi.com/apis/douyin/xingtu/backup/creators/audience/get.md
 
 ## How this differs from Douyin's official open platform
 

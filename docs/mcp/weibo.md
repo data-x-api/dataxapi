@@ -1,10 +1,10 @@
 # Weibo data in your AI
 
-Ask your AI about Weibo and it answers with live data: 11 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
+Ask your AI about Weibo and it answers with live data: 13 endpoints through 5 MCP tools or one skill package, from $0.0020 a call. Paste one prompt with your key to connect; a failed call is never charged.
 
-Updated 2026-11-06
+Updated 2026-11-21
 
-- Endpoints: 11 (on Weibo, one response shape)
+- Endpoints: 13 (on Weibo, one response shape)
 - Price: from $0.0020 (each endpoint at its own price; a failed call is free)
 - MCP tools: `find`, `describe`, `call`, `read_more`, `account` (4 of them free, without a key)
 - Skill package: [dataxapi-weibo](https://dataxapi.com/skills/dataxapi-weibo.zip)
@@ -46,11 +46,11 @@ What happens when you ask about Weibo: your AI looks the endpoint up for free, t
 
 ## The Weibo skill package
 
-For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 11 Weibo endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
+For agents that read skills (Claude Code, Codex, Cursor): one SKILL.md that lists the 13 Weibo endpoints with their prices, how to call them by MCP, command line or REST, how paging works and which endpoint answers which question.
 
 Tell your AI: Install the DataXAPI skill dataxapi-weibo from https://dataxapi.com/skills/dataxapi-weibo.zip.
 
-## All 11 Weibo endpoints your AI can call
+## All 13 Weibo endpoints your AI can call
 
 Each one is a capability ID your AI passes to `call`. The name leads to the endpoint's page: its parameters, fields and a recorded response.
 
@@ -59,6 +59,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Weibo comment replies](https://dataxapi.com/apis/weibo/comments/replies/list/) | `weibo.comments.replies.list` | $0.0020 |
 | [Weibo post comments](https://dataxapi.com/apis/weibo/posts/comments/list/) | `weibo.posts.comments.list` | $0.0020 |
 | [Weibo post detail](https://dataxapi.com/apis/weibo/posts/get/) | `weibo.posts.get` | $0.0020 |
+| [Weibo video transcript (video to text)](https://dataxapi.com/apis/weibo/posts/transcript/get/) | `weibo.posts.transcript.get` | $0.0020 a call, plus $0.0038 a minute when the speech is recognised |
 | [Weibo post likers](https://dataxapi.com/apis/weibo/posts/likers/list/) | `weibo.posts.likers.list` | $0.0020 |
 | [Weibo realtime search](https://dataxapi.com/apis/weibo/posts/search/) | `weibo.posts.search` | $0.0020 |
 | [Weibo hot search board](https://dataxapi.com/apis/weibo/trends/list/) | `weibo.trends.list` | $0.0020 |
@@ -66,6 +67,7 @@ Each one is a capability ID your AI passes to `call`. The name leads to the endp
 | [Weibo user profile](https://dataxapi.com/apis/weibo/users/get/) | `weibo.users.get` | $0.0020 |
 | [Weibo user posts](https://dataxapi.com/apis/weibo/users/posts/list/) | `weibo.users.posts.list` | $0.0020 |
 | [Weibo user search](https://dataxapi.com/apis/weibo/users/search/) | `weibo.users.search` | $0.0020 |
+| [Weibo video and image downloader](https://dataxapi.com/apis/weibo/posts/media/get/) | `weibo.posts.media.get` | $0.0020 |
 | [Weibo hot search board (backup)](https://dataxapi.com/apis/weibo/backup/trends/list/) | `weibo.backup.trends.list` | $0.0300 |
 
 [Every Weibo price, and what is charged →](https://dataxapi.com/pricing/weibo/) · [Weibo API](https://dataxapi.com/apis/weibo/) · [MCP](https://dataxapi.com/mcp/)
@@ -98,4 +100,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/weibo/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/weibo/)

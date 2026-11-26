@@ -1,10 +1,10 @@
 # Weibo API
 
-11 endpoints read Weibo: posts, users, comments, trends. From $0.0020 a call. No Weibo login and no cookie; a failed call is free.
+13 endpoints read Weibo: posts, users, comments, trends. From $0.0020 a call. No Weibo login and no cookie; a failed call is free.
 
-> 11 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
+> 13 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19.
+Generated from catalog revision 0051cce45e9530b9, price book 22.
 
 ## weibo.comments.replies.list
 
@@ -32,6 +32,15 @@ Get one Weibo post by ID: the whole text (of a long post too), author, likes, co
 - Request: `GET /v1/weibo/posts/get`
 - Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
 - Whole contract: https://dataxapi.com/apis/weibo/posts/get.md
+
+## weibo.posts.transcript.get
+
+Give a Weibo video post's link, share text or ID and get what is said in its video: the whole text, each sentence with its start and end time, and ready SRT subtitles, with the post's text, author and length; speakers can be told apart. Charged a call, plus by the minute of video when its speech is recognised; nothing when nobody speaks. A video of up to 5 minutes comes back as text; one over 5 minutes and up to 2 hours is answered at once with a job: call again with it a little later for the text, charged by its actual minutes and only when the text is delivered. One object a call; $0.0020 a call, plus $0.0038 a minute when the speech is recognised (a part minute counts as one); none when the platform's own captions are used; at most $0.0210 a call for a video of up to 5 minutes, a longer one, up to 2 hours, by its actual minutes. Errors, timeouts and objects that do not exist are not charged.
+
+- Name: Weibo video transcript (video to text) API
+- Request: `GET /v1/weibo/posts/transcript/get`
+- Parameters: `id`, `url`, `speakers`, `job`, `view`, `fields`; give exactly one of id, url, job
+- Whole contract: https://dataxapi.com/apis/weibo/posts/transcript/get.md
 
 ## weibo.posts.likers.list
 
@@ -95,6 +104,15 @@ Get a page of Weibo users for search terms: ID, name, avatar, profile link. Up t
 - Request: `GET /v1/weibo/users/search`
 - Parameters: `query` (required), `cursor`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/weibo/users/search.md
+
+## weibo.posts.media.get
+
+Give a Weibo post by ID, link or share text and get its video in each quality the platform has (up to 4K where there is one, each with width, height, bit rate, size, whether it is watermarked and when it expires) and its cover, or each picture at its largest size. Video and picture posts only: a text post is answered as having no files. The addresses need no headers; once they expire, another call gives new ones. One object a call; $0.0020 per call. Errors and timeouts are not charged.
+
+- Name: Weibo video and image downloader API
+- Request: `GET /v1/weibo/posts/media/get`
+- Parameters: `id`, `url`, `view`, `fields`; give exactly one of id, url
+- Whole contract: https://dataxapi.com/apis/weibo/posts/media/get.md
 
 ## weibo.backup.trends.list
 

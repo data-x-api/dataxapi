@@ -42,12 +42,33 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | Field | Type | Description | From view | This endpoint |
 | --- | --- | --- | --- | --- |
 | `post_id` | text | ID of the post it belongs to. | `compact` | Yes |
+| `status` | text | done: the text is here; processing: a long video is still being recognised and there is no text yet: call the same endpoint with job after retry_after_seconds seconds. Values: `done`, `processing`. | `compact` | Not provided here |
+| `job` | text | A long video's job: call the same endpoint with it for the text, within 24 hours of submitting; only while processing. | `compact` | Not provided here |
+| `retry_after_seconds` | integer | About how many seconds to wait before asking again; only while processing. | `compact` | Not provided here |
 | `lang` | text | Language code. | `compact` | Not provided here |
 | `text` | text | The whole text. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `compact` | Yes |
 | `segments` | list of object | Timed segments. | `standard` | Yes |
 | `segments[].start` | number | Start, in seconds. | `standard` | Yes |
 | `segments[].end` | number | End, in seconds. | `standard` | Yes |
 | `segments[].text` | text | Text of the segment. | `standard` | Yes |
+| `segments[].speaker` | text | Who said the segment (1, 2…, one number a person); null where telling speakers apart was not asked for. | `standard` | Not provided here |
+| `segments[].words` | list of object | The timing of each word (character) of the segment. | `full` | Not provided here |
+| `segments[].words[].start` | number | Start, in seconds. | `full` | Not provided here |
+| `segments[].words[].end` | number | End, in seconds. | `full` | Not provided here |
+| `segments[].words[].text` | text | The word (character). | `full` | Not provided here |
+| `duration` | number | Length of what was transcribed, in seconds; what an endpoint billed by the minute charges by. | `standard` | Not provided here |
+| `post` | object | The post the words are from: title, caption, author, length, time posted, likes and comments, as far as the platform gives them. | `standard` | Not provided here |
+| `post.title` | text | Title; none on a platform without titles. | `standard` | Not provided here |
+| `post.text` | text | Caption or description. Long text: the compact view keeps the first 500 characters and says so in `warnings`. | `standard` | Not provided here |
+| `post.url` | link | Link to the post. | `standard` | Not provided here |
+| `post.published_at` | time | Time posted. | `standard` | Not provided here |
+| `post.duration` | number | Length of the video as the platform gives it, in seconds. | `standard` | Not provided here |
+| `post.author` | object | Author. | `standard` | Not provided here |
+| `post.author.id` | text | Author's ID. | `standard` | Not provided here |
+| `post.author.name` | text | Author's name. | `standard` | Not provided here |
+| `post.metrics` | object | Engagement counts. | `standard` | Not provided here |
+| `post.metrics.likes` | integer | Likes. | `standard` | Not provided here |
+| `post.metrics.comments` | integer | Comments. | `standard` | Not provided here |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
@@ -69,7 +90,7 @@ One object per call: there is nothing to page.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-21 08:32 UTC, under price book 19, in effect since 2026-11-17 18:04 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -173,7 +194,7 @@ Add this to your MCP client, then ask your agent to call `tiktok.videos.transcri
 
 From a response recorded 2026-10-12 18:47 UTC. Names, text and IDs are examples, and so are the links: none is the recorded one (the page shows no one's personal data); the figures are as recorded. Long lists are cut. The request ID, cursor and balance are made up.
 
-Size as sent: 4.6 KB in the standard view (947 B compact, 4.6 KB full).
+Size as sent: 4.8 KB in the standard view (1.1 KB compact, 4.8 KB full).
 
 ```jsonc
 {
@@ -205,7 +226,16 @@ Size as sent: 4.6 KB in the standard view (947 B compact, 4.6 KB full).
     "fetched_at": "2026-10-12T18:47:26.000Z",
     "cached": false,
     "replayed": false,
-    "unavailable": { "lang": "capability" },
+    "unavailable": {
+      "lang": "capability",
+      "segments.speaker": "capability",
+      "segments.words": "capability",
+      "duration": "capability",
+      "post": "capability",
+      "status": "capability",
+      "job": "capability",
+      "retry_after_seconds": "capability"
+    },
     "billing": {
       "amount": "0.002",
       "currency": "USD",
@@ -314,11 +344,9 @@ Or paste this to any AI:
 
 Part of DataXAPI's Social media data. The same key also works for: Creators, Ads, E-commerce.
 
-The same thing on other platforms: [Meta ad video transcript](https://dataxapi.com/apis/meta/ads/transcript/get/), [Instagram video transcript](https://dataxapi.com/apis/instagram/posts/transcript/get/), [YouTube video transcript](https://dataxapi.com/apis/youtube/videos/transcript/get/), [LinkedIn video transcript](https://dataxapi.com/apis/linkedin/posts/transcript/get/), [Reddit video transcript](https://dataxapi.com/apis/reddit/posts/transcript/get/), [X video transcript](https://dataxapi.com/apis/x/posts/transcript/get/)
+The same thing on other platforms: [Bilibili video transcript (video to text)](https://dataxapi.com/apis/bilibili/videos/transcript/get/), [Douyin video transcript (video to text)](https://dataxapi.com/apis/douyin/videos/transcript/get/), [Kuaishou video transcript (video to text)](https://dataxapi.com/apis/kuaishou/videos/transcript/get/), [Meta ad video transcript](https://dataxapi.com/apis/meta/ads/transcript/get/), [Instagram video transcript](https://dataxapi.com/apis/instagram/posts/transcript/get/), [Weibo video transcript (video to text)](https://dataxapi.com/apis/weibo/posts/transcript/get/), [YouTube video transcript](https://dataxapi.com/apis/youtube/videos/transcript/get/), [LinkedIn video transcript](https://dataxapi.com/apis/linkedin/posts/transcript/get/), [Reddit video transcript](https://dataxapi.com/apis/reddit/posts/transcript/get/), [X video transcript](https://dataxapi.com/apis/x/posts/transcript/get/), [Xiaohongshu video transcript (video to text)](https://dataxapi.com/apis/xiaohongshu/videos/transcript/get/), [WeChat Channels video transcript](https://dataxapi.com/apis/wechat_channels/videos/transcript/get/)
 
-More Social media data on other platforms: [Douyin comment replies](https://dataxapi.com/apis/douyin/comments/replies/list/), [Douyin hashtag videos](https://dataxapi.com/apis/douyin/hashtags/videos/list/), [Bilibili comment replies](https://dataxapi.com/apis/bilibili/comments/replies/list/), [Bilibili hot searches](https://dataxapi.com/apis/bilibili/trends/list/), [Bilibili user profile](https://dataxapi.com/apis/bilibili/users/get/), [Bilibili user videos](https://dataxapi.com/apis/bilibili/users/videos/list/), [Bilibili video comments](https://dataxapi.com/apis/bilibili/videos/comments/list/)
-
-TikTok endpoints: [TikTok Ads Library search](https://dataxapi.com/apis/tiktok/ads/search/), [TikTok Ads Library ad detail](https://dataxapi.com/apis/tiktok/ads/get/), [TikTok comment replies](https://dataxapi.com/apis/tiktok/comments/replies/list/), [TikTok hashtag videos](https://dataxapi.com/apis/tiktok/hashtags/videos/list/), [TikTok user profile](https://dataxapi.com/apis/tiktok/users/get/), [TikTok user search](https://dataxapi.com/apis/tiktok/users/search/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [TikTok video comments](https://dataxapi.com/apis/tiktok/videos/comments/list/), [TikTok video detail](https://dataxapi.com/apis/tiktok/videos/get/), [TikTok video search](https://dataxapi.com/apis/tiktok/videos/search/), [TikTok video transcript](https://dataxapi.com/apis/tiktok/videos/transcript/get/), [TikTok user followers](https://dataxapi.com/apis/tiktok/users/followers/list/)
+TikTok endpoints: [TikTok Ads Library search](https://dataxapi.com/apis/tiktok/ads/search/), [TikTok Ads Library ad detail](https://dataxapi.com/apis/tiktok/ads/get/), [TikTok comment replies](https://dataxapi.com/apis/tiktok/comments/replies/list/), [TikTok hashtag videos](https://dataxapi.com/apis/tiktok/hashtags/videos/list/), [TikTok user profile](https://dataxapi.com/apis/tiktok/users/get/), [TikTok user search](https://dataxapi.com/apis/tiktok/users/search/), [TikTok user videos](https://dataxapi.com/apis/tiktok/users/videos/list/), [TikTok video comments](https://dataxapi.com/apis/tiktok/videos/comments/list/), [TikTok video detail](https://dataxapi.com/apis/tiktok/videos/get/), [TikTok video search](https://dataxapi.com/apis/tiktok/videos/search/), [TikTok video transcript](https://dataxapi.com/apis/tiktok/videos/transcript/get/), [TikTok user followers](https://dataxapi.com/apis/tiktok/users/followers/list/), [TikTok video downloader, no watermark](https://dataxapi.com/apis/tiktok/videos/media/get/)
 
 TikTok Creative Center endpoints: [TikTok Creative Center Top Ad detail](https://dataxapi.com/apis/tiktok/creative_center/ads/get/), [TikTok Creative Center Top Ads search](https://dataxapi.com/apis/tiktok/creative_center/ads/search/)
 
@@ -326,11 +354,11 @@ TikTok Shop endpoints: [TikTok Shop product detail](https://dataxapi.com/apis/ti
 
 How-to guides and answers: [How to get a TikTok video transcript](https://dataxapi.com/guides/tiktok-video-transcript/), [Can ChatGPT read TikTok?](https://dataxapi.com/answers/can-chatgpt-read-tiktok/)
 
-Skills that use this endpoint: [Breaking down a hit](https://dataxapi.com/skills/viral/), [Videos to text](https://dataxapi.com/skills/transcripts/)
+Skills that use this endpoint: [Breaking down a hit](https://dataxapi.com/skills/viral/), [Videos to text](https://dataxapi.com/skills/transcripts/), [A creator's videos to text](https://dataxapi.com/skills/creator-transcripts/)
 
 Tools built on this endpoint: [TikTok transcript extractor: look it up (sign-in)](https://dataxapi.com/tools/tiktok-transcript/)
 
-Related: [All TikTok endpoints](https://dataxapi.com/apis/tiktok/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 7 platforms, side by side](https://dataxapi.com/roles/transcripts-get/), [The transcript object's fields](https://dataxapi.com/docs/objects/transcript/)
+Related: [All TikTok endpoints](https://dataxapi.com/apis/tiktok/), [Social media data](https://dataxapi.com/categories/social/), [The same thing on 13 platforms, side by side](https://dataxapi.com/roles/transcripts-get/), [The transcript object's fields](https://dataxapi.com/docs/objects/transcript/)
 
 ## Questions
 
@@ -348,4 +376,4 @@ The answer is 404 not_found and nothing is charged. reason says which: not_found
 
 ---
 
-Last checked 2026-11-21 08:32 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/tiktok/videos/transcript/get/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/tiktok/videos/transcript/get/)

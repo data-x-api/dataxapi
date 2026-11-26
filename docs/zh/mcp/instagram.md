@@ -1,10 +1,10 @@
 # 在 AI 里用 Instagram 数据
 
-问 AI Instagram 上的事，它用实时数据回答：8 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
+问 AI Instagram 上的事，它用实时数据回答：9 个接口，通过 5 个 MCP 工具或一个技能包（Skill），一次 $0.0020 起。贴一段带 Key 的提示词就接好，失败的调用不收费。
 
 更新于 2026-11-06
 
-- 接口：8 (Instagram，同一种返回格式)
+- 接口：9 (Instagram，同一种返回格式)
 - 价格：$0.0020 起 (按接口各自的标价；失败不收费)
 - MCP 工具：`find`, `describe`, `call`, `read_more`, `account` (其中 4 个免费，不用 Key)
 - 技能包：[dataxapi-instagram](https://dataxapi.com/skills/dataxapi-instagram.zip)
@@ -46,11 +46,11 @@
 
 ## Instagram 技能包
 
-给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 Instagram 的 8 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
+给会读技能的 agent（Claude Code、Codex、Cursor）：一个 SKILL.md，列出 Instagram 的 9 个接口和价格，怎么用 MCP、命令行或 REST 调用，怎么翻页，以及哪个接口回答哪类问题。
 
 对你的 AI 说：帮我从 https://dataxapi.com/skills/dataxapi-instagram.zip 装上 DataXAPI 技能 dataxapi-instagram。
 
-## AI 能调的 Instagram 接口，全部 8 个
+## AI 能调的 Instagram 接口，全部 9 个
 
 每一个都是 AI 传给 `call` 的接口编号。点名字进接口页：参数、字段和一份录好的返回。
 
@@ -64,6 +64,7 @@
 | [Instagram 用户资料](https://dataxapi.com/zh/apis/instagram/users/get/) | `instagram.users.get` | $0.0020 |
 | [Instagram 用户帖子](https://dataxapi.com/zh/apis/instagram/users/posts/list/) | `instagram.users.posts.list` | $0.0020 |
 | [Instagram 用户搜索](https://dataxapi.com/zh/apis/instagram/users/search/) | `instagram.users.search` | $0.0040 |
+| [Instagram 视频和图片下载地址](https://dataxapi.com/zh/apis/instagram/posts/media/get/) | `instagram.posts.media.get` | $0.0020 |
 
 [Instagram 的全部价格和扣费规则 →](https://dataxapi.com/zh/pricing/instagram/) · [Instagram API](https://dataxapi.com/zh/apis/instagram/) · [MCP 服务](https://dataxapi.com/zh/mcp/)
 
@@ -95,4 +96,4 @@
 
 ---
 
-按目录修订号 720fc3ea8dadb865、价目版本 19生成。 [网页版](https://dataxapi.com/zh/mcp/instagram/)
+按目录修订号 0051cce45e9530b9、价目版本 22生成。 [网页版](https://dataxapi.com/zh/mcp/instagram/)

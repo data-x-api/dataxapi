@@ -1,6 +1,6 @@
 # Douyin Xingtu API (星图)
 
-12 endpoints read Douyin Xingtu (星图): creator search, rate cards, audience profiles, reach and conversion. From $0.0020 to $0.0400 a call. No Douyin login and no cookie; a failed call is free.
+13 endpoints read Douyin Xingtu (星图): creator search, rate cards, audience profiles, reach and conversion. From $0.0020 to $0.0400 a call. No Douyin login and no cookie; a failed call is free.
 
 Also known as: 巨量星图, 抖音星图
 
@@ -20,7 +20,7 @@ The search also filters by followers, expected CPM and gender and orders by the 
 
 Updates: Live, read from Xingtu at the moment of the call
 
-## The 12 endpoints
+## The 13 endpoints
 
 ### Creators (10)
 
@@ -42,6 +42,12 @@ Updates: Live, read from Xingtu at the moment of the call
 | Endpoint | Request | Returns | Price |
 | --- | --- | --- | --- |
 | [Douyin Xingtu marketing calendar](https://dataxapi.com/apis/douyin/xingtu/campaigns/list.md) | `GET /v1/douyin/xingtu/campaigns/list` | Xingtu campaign list | $0.0040 / call |
+
+### Backup versions (1)
+
+| Endpoint | Request | Returns | Price |
+| --- | --- | --- | --- |
+| [Douyin Xingtu creator audience (backup)](https://dataxapi.com/apis/douyin/xingtu/backup/creators/audience/get.md) | `GET /v1/douyin/xingtu/backup/creators/audience/get` | Audience | $0.0400 / call |
 
 ### Videos (1)
 
@@ -123,4 +129,4 @@ No. You hold one DataXAPI key: no Douyin login, no cookie, no advertiser account
 
 How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Last checked 2026-11-20 07:17 UTC. Catalog revision 720fc3ea8dadb865. [HTML version](https://dataxapi.com/apis/douyin/xingtu/)
+Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/douyin/xingtu/)

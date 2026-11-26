@@ -1,8 +1,8 @@
 # DataXAPI MCP server: market data in your AI, connected with one prompt
 
-Copy one prompt with your key in it, paste it into your agent, and ask. It reads one page and sets itself up: 5 tools, 237 endpoints on 21 platforms, from $0.0003 a call, and a failed call is never charged.
+Copy one prompt with your key in it, paste it into your agent, and ask. It reads one page and sets itself up: 5 tools, 254 endpoints on 21 platforms, from $0.0003 a call, and a failed call is never charged.
 
-Updated 2026-11-10
+Updated 2026-11-25
 
 ## Copy this prompt
 
@@ -107,4 +107,4 @@ Yes, on the web and in the desktop apps: add a custom connector with the address
 
 ---
 
-Generated from catalog revision 720fc3ea8dadb865, price book 19. [Page](https://dataxapi.com/mcp/)
+Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/)

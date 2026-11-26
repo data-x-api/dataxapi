@@ -1,10 +1,10 @@
 # 微信视频号 API
 
-15 个接口读微信视频号：视频、用户、合集、评论。一次 $0.0150 起。不用登录微信视频号，不用 Cookie；失败不收费。
+17 个接口读微信视频号：视频、用户、合集、评论。一次 $0.0150 起。不用登录微信视频号，不用 Cookie；失败不收费。
 
 也叫：WeChat Channels
 
-## 微信视频号的 15 个接口，各取什么
+## 微信视频号的 17 个接口，各取什么
 
 - [微信视频号账号资料](https://dataxapi.com/zh/apis/wechat_channels/users/get.md)：按视频号账号编号取资料：名称、简介、头像、IP 属地、作品数。
 - [微信视频号作品详情](https://dataxapi.com/zh/apis/wechat_channels/videos/get.md)：按作品编号、搜索结果的 export/ 编号或分享链接取一条视频号作品：文案、作者、发布时间、点赞、评论、转发、收藏数，以及视频文件地址和解密密钥。
@@ -21,6 +21,8 @@
 - [微信视频号作品互动数据](https://dataxapi.com/zh/apis/wechat_channels/videos/metrics.md)：按作品编号取视频号作品最近的数字：点赞、评论、转发、收藏，带作品文案和发布账号。数字不是调用这一刻的，可能是几个小时前的，返回里写明是什么时候取的。比取整个作品详情便宜。
 - [微信视频号评论回复](https://dataxapi.com/zh/apis/wechat_channels/comments/replies/list.md)：按评论编号和作品编号取一页视频号评论下面的回复（二级评论）：正文、回复者、点赞数、发布时间、IP 属地、回复的是哪一条。一页约 10 条，可翻页。
 - [微信视频号直播回放](https://dataxapi.com/zh/apis/wechat_channels/users/live_replays/list.md)：按视频号账号编号取它的直播回放，从新到旧，只给第一页（实测一页最多 48 条）：标题、开播时间、时长、封面，以及回放视频的点赞、评论、转发、收藏数（是回放这条视频的数，不是直播间的观看、在线或点赞人数）。
+- [视频号视频下载（文件地址和解密）](https://dataxapi.com/zh/apis/wechat_channels/videos/media/get.md)：给一条视频号作品的编号、分享链接或搜索结果的 export/ 编号，返回视频文件地址（带宽高、大小、时长）、封面，以及解密方法和密钥：视频号的文件只有开头 131072 字节加了密，按 decrypt 给的方法解开就是能播放的 MP4。地址和密钥要用同一次返回的那一对，不用带请求头；地址失效了再调一次即可。
+- [视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get.md)：给一条视频号作品的分享链接、编号或搜索结果的 export/ 编号，返回视频里说的话：全文、每一句的起止时间和现成的 SRT 字幕，连同文案、作者和时长；可以区分说话人。视频号文件的解密由我们完成，不用自己处理。每次收费，识别语音的另按视频分钟数收，没人说话不收。5 分钟以内的视频直接返回文字；超过 5 分钟、2 小时以内的先回一个凭证（job），过一会儿带着它再调这个接口取文字，按实际分钟数收，只在取到文字时收。
 
 ## 接口
 
@@ -32,13 +34,15 @@
 | [微信视频号账号资料（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/get.md) | `GET /v1/wechat_channels/backup/users/get` | 账号 | $0.0300 / 次 |
 | [微信视频号用户作品（备用版）](https://dataxapi.com/zh/apis/wechat_channels/backup/users/videos/list.md) | `GET /v1/wechat_channels/backup/users/videos/list` | 内容列表 | $0.0600 / 次 |
 
-### 视频 (5)
+### 视频 (7)
 
 | 接口 | 请求 | 返回 | 价格 |
 | --- | --- | --- | --- |
 | [微信搜一搜视频号视频搜索](https://dataxapi.com/zh/apis/wechat_channels/videos/search.md) | `GET /v1/wechat_channels/videos/search` | 内容列表 | $0.0200 / 次 |
 | [微信视频号作品详情](https://dataxapi.com/zh/apis/wechat_channels/videos/get.md) | `GET /v1/wechat_channels/videos/get` | 内容 | $0.0200 / 次 |
+| [视频号视频下载（文件地址和解密）](https://dataxapi.com/zh/apis/wechat_channels/videos/media/get.md) | `GET /v1/wechat_channels/videos/media/get` | 视频和图片文件 | $0.0200 / 次 |
 | [微信视频号作品分享链接](https://dataxapi.com/zh/apis/wechat_channels/videos/share_link/get.md) | `GET /v1/wechat_channels/videos/share_link/get` | 视频号分享链接 | $0.0200 / 次 |
+| [视频号视频转文字（逐字稿）](https://dataxapi.com/zh/apis/wechat_channels/videos/transcript/get.md) | `GET /v1/wechat_channels/videos/transcript/get` | 逐字稿 | $0.0200 / 次 |
 | [微信视频号作品评论](https://dataxapi.com/zh/apis/wechat_channels/videos/comments/list.md) | `GET /v1/wechat_channels/videos/comments/list` | 评论列表 | $0.0200 / 次 |
 | [微信视频号作品互动数据](https://dataxapi.com/zh/apis/wechat_channels/videos/metrics.md) | `GET /v1/wechat_channels/videos/metrics` | 内容 | $0.0150 / 次 |
 
@@ -67,7 +71,7 @@
 ## 调用前要知道的
 
 - **每页条数**：列表每页 1 到 100 条，各接口不同。10 个列表里有 7 个能翻页：把 `page.next_cursor` 作为 `cursor` 传回，每一页是一次单独的调用。其余只有一页。
-- **给不了的字段**：15 个接口里有 13 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
+- **给不了的字段**：17 个接口里有 15 个填不满它返回的对象。每个接口的页面列出了给不了哪些，每次返回也在 `meta.unavailable` 里再写一遍：缺的字段不会被悄悄写成 0。
 - **对象不存在时读起来像空结果**：微信视频号评论回复、微信视频号直播回放：对象不存在和对象下面没有东西分不出来，所以返回空结果而不是 404。
 - **预览结构**：有 2 个接口返回的是预览结构，字段还可能调整；其余返回统一的结构，所有平台都一样。
 
@@ -84,7 +88,7 @@
 
 ### 通过 API 能拿到微信视频号的哪些数据？
 
-15 个接口：视频、用户、合集、评论。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
+17 个接口：视频、用户、合集、评论。每个接口的页面写明参数、返回字段，并附一份录制的真实返回。
 
 ### 怎么调用微信视频号 API？
 
@@ -179,4 +183,4 @@
 
 怎么调用、怎么计费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-最后核对于 2026-11-20 07:17 UTC。目录修订号 720fc3ea8dadb865。 [网页版](https://dataxapi.com/zh/apis/wechat_channels/)
+最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/wechat_channels/)
