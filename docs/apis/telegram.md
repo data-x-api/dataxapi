@@ -4,7 +4,7 @@
 
 > 3 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 0051cce45e9530b9, price book 22.
+Generated from catalog revision 0264e2d6dd4ff743, price book 23.
 
 ## telegram.channels.get
 

@@ -2,7 +2,7 @@
 
 > 254 个接口，每个一行：名称（链到完整约定）、请求、价格、返回什么。基础地址 `https://api.dataxapi.com`。怎么调用、怎么付费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-生成自 catalog revision 0051cce45e9530b9, price book 22。英文版：https://dataxapi.com/llms-full.txt
+生成自 catalog revision 0264e2d6dd4ff743, price book 23。英文版：https://dataxapi.com/llms-full.txt
 
 ## 抖音
 

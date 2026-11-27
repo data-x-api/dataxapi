@@ -107,4 +107,4 @@ Yes, on the web and in the desktop apps: add a custom connector with the address
 
 ---
 
-Generated from catalog revision 0051cce45e9530b9, price book 22. [Page](https://dataxapi.com/mcp/)
+Generated from catalog revision 0264e2d6dd4ff743, price book 23. [Page](https://dataxapi.com/mcp/)

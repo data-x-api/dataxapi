@@ -98,4 +98,4 @@ bearer_token_env_var = "DATAXAPI_API_KEY"
 - [目录](https://api.dataxapi.com/v1/catalog/capabilities)、[状态](https://api.dataxapi.com/v1/catalog/status)、[错误码](https://api.dataxapi.com/v1/catalog/errors)：都不用 Key。
 - [技能包](https://dataxapi.com/skills/manifest.json)，以及 agent 用来发现服务的几个文件：[API 目录](https://dataxapi.com/.well-known/api-catalog)、[MCP 服务卡片](https://dataxapi.com/.well-known/mcp/server-card.json)、[技能索引](https://dataxapi.com/.well-known/agent-skills/index.json)、[AI 目录](https://dataxapi.com/.well-known/ai-catalog.json)。
 
-按目录修订号 0051cce45e9530b9、价目版本 22生成。English: https://dataxapi.com/agents.md
+按目录修订号 0264e2d6dd4ff743、价目版本 23生成。English: https://dataxapi.com/agents.md

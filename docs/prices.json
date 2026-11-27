@@ -1,9 +1,9 @@
 {
- "revision": "0051cce45e9530b9",
- "generated_from": "catalog revision 0051cce45e9530b9, price book 22",
+ "revision": "0264e2d6dd4ff743",
+ "generated_from": "catalog revision 0264e2d6dd4ff743, price book 23",
  "prices": {
-  "version": "22",
-  "effective_at": "2026-11-25T13:46:46.822Z",
+  "version": "23",
+  "effective_at": "2026-11-27T06:13:19.913Z",
   "currency": "USD"
  },
  "base_url": "https://api.dataxapi.com",

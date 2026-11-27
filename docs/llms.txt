@@ -2,7 +2,7 @@
 
 > Market data over one HTTP interface, paid per call. Every endpoint shares one set of parameter names, one envelope and one error structure. 254 endpoints on 21 platforms. Free trial: up to 333 calls, no card.
 
-Generated from catalog revision 0051cce45e9530b9, price book 22. In Chinese: https://dataxapi.com/zh/llms.txt
+Generated from catalog revision 0264e2d6dd4ff743, price book 23. In Chinese: https://dataxapi.com/zh/llms.txt
 
 ## Call it
 

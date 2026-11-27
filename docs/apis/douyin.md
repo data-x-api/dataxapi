@@ -4,7 +4,7 @@
 
 > 42 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 0051cce45e9530b9, price book 22.
+Generated from catalog revision 0264e2d6dd4ff743, price book 23.
 
 ## douyin.comments.replies.list
 
@@ -30,7 +30,7 @@ Get a brand's day-by-day search, content and spread indexes on Douyin over a dat
 
 - Name: Douyin trend-index brand trends API
 - Request: `GET /v1/douyin/index/brands/history`
-- Parameters: `brand` (required), `since` (required), `until` (required), `view`, `fields`
+- Parameters: `brand` (required), `since`, `until`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/index/brands/history.md
 
 ## douyin.index.brands.metrics
@@ -39,7 +39,7 @@ Get the daily averages of a brand's search, content and spread indexes on Douyin
 
 - Name: Douyin trend-index brand comparison API
 - Request: `GET /v1/douyin/index/brands/metrics`
-- Parameters: `brand` (required), `since` (required), `until` (required), `view`, `fields`
+- Parameters: `brand` (required), `since`, `until`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/index/brands/metrics.md
 
 ## douyin.index.creators.videos.list
@@ -48,7 +48,7 @@ Get the videos the platform's own index tool lists as a Douyin account's top vid
 
 - Name: Douyin trend-index creator top videos API
 - Request: `GET /v1/douyin/index/creators/videos/list`
-- Parameters: `id` (required), `since` (required), `until` (required), `view`, `fields`
+- Parameters: `id` (required), `since`, `until`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/index/creators/videos/list.md
 
 ## douyin.index.creators.audience.get
@@ -75,7 +75,7 @@ Get who is behind a keyword on Douyin over a date range, from the platform's own
 
 - Name: Douyin trend-index keyword audience API
 - Request: `GET /v1/douyin/index/keywords/audience/get`
-- Parameters: `keyword` (required), `since` (required), `until` (required), `view`, `fields`
+- Parameters: `keyword` (required), `since`, `until`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/index/keywords/audience/get.md
 
 ## douyin.index.keywords.history
@@ -84,7 +84,7 @@ Get the day-by-day search index and composite index of a keyword, or of one to f
 
 - Name: Douyin trend-index keyword trends API
 - Request: `GET or POST /v1/douyin/index/keywords/history`
-- Parameters: `keyword`, `keywords`, `since` (required), `until` (required), `view`, `fields`; give exactly one of keywords, keyword
+- Parameters: `keyword`, `keywords`, `since`, `until`, `view`, `fields`; give exactly one of keywords, keyword
 - Whole contract: https://dataxapi.com/apis/douyin/index/keywords/history.md
 
 ## douyin.index.keywords.related
@@ -93,7 +93,7 @@ Get the keywords related to a keyword on Douyin in one week, from the platform's
 
 - Name: Douyin trend-index related keywords API
 - Request: `GET /v1/douyin/index/keywords/related`
-- Parameters: `keyword` (required), `until` (required), `view`, `fields`
+- Parameters: `keyword` (required), `until`, `view`, `fields`
 - Whole contract: https://dataxapi.com/apis/douyin/index/keywords/related.md
 
 ## douyin.index.trends.list

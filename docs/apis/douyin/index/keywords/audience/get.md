@@ -32,8 +32,8 @@ The first 8 rows of a response recorded 2026-10-12 21:50 UTC for 咖啡.
 | Parameter | Type | required | Description |
 | --- | --- | --- | --- |
 | `keyword` | text | Yes | One keyword; letter case does not matter. Example: `咖啡`. |
-| `since` | time | Yes | The first day counted: the China-time (UTC+8) calendar day this moment falls on. Example: `2026-09-01T00:00:00Z`. |
-| `until` | time | Yes | The last day counted, read the same way; the platform publishes a day or two late. Example: `2026-09-30T00:00:00Z`. |
+| `since` | time |  | The first day counted: the China-time (UTC+8) calendar day this moment falls on; left out, the 30 days that end on until. Example: `2026-09-01T00:00:00Z`. |
+| `until` | time |  | The last day counted, read the same way; the platform publishes a day or two late; left out, yesterday. Example: `2026-09-30T00:00:00Z`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -90,7 +90,7 @@ One object per call: there is nothing to page.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-27 06:18 UTC, under price book 23, in effect since 2026-11-27 06:13 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -283,11 +283,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": [
-    "keyword is required",
-    "since is required",
-    "until is required"
-  ],
+  "problems": ["keyword is required"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -407,4 +403,4 @@ Connect DataXAPI once (one prompt with your key, on the agents page), then ask i
 
 ---
 
-Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/douyin/index/keywords/audience/get/)
+Last checked 2026-11-27 06:18 UTC. Catalog revision 0264e2d6dd4ff743. [HTML version](https://dataxapi.com/apis/douyin/index/keywords/audience/get/)

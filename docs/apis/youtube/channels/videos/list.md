@@ -122,7 +122,7 @@ With `username`, `type=short`, `sort=popular`: one page, no cursor.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-27 06:18 UTC, under price book 23, in effect since 2026-11-27 06:13 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -451,4 +451,4 @@ A channel that does not exist cannot be told from a channel without such videos:
 
 ---
 
-Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/youtube/channels/videos/list/)
+Last checked 2026-11-27 06:18 UTC. Catalog revision 0264e2d6dd4ff743. [HTML version](https://dataxapi.com/apis/youtube/channels/videos/list/)

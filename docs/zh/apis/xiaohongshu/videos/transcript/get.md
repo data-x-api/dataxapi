@@ -94,7 +94,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费（5 分钟以内的视频） | $0.0390 (更长的视频按实际分钟数收，最长 2 小时；带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-27 06:18 UTC，按价目版本 23，2026-11-27 06:13 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -408,4 +408,4 @@ MCP 服务地址：`https://api.dataxapi.com/mcp`。你的客户端要填的配�
 
 ---
 
-最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get/)
+最后核对于 2026-11-27 06:18 UTC。目录修订号 0264e2d6dd4ff743。 [网页版](https://dataxapi.com/zh/apis/xiaohongshu/videos/transcript/get/)

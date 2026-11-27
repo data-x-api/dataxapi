@@ -33,8 +33,8 @@ The first 7 rows of a response recorded 2026-10-12 21:47 UTC for 咖啡.
 | --- | --- | --- | --- |
 | `keyword` | text | give exactly one of `keywords`, `keyword` | One keyword, at most 50 characters and without a comma; letter case does not matter. Example: `咖啡`. |
 | `keywords` | list of text | give exactly one of `keywords`, `keyword` | One to five keywords, each at most 50 characters and without a comma; letter case does not matter. One item comes back per keyword that has figures; a keyword the index does not cover is not in the answer. Example: `["咖啡","CityWalk"]`. |
-| `since` | time | Yes | The first day wanted: the China-time (UTC+8) calendar day this moment falls on; 2026-09-01 means 1 September. Example: `2026-09-01T00:00:00Z`. |
-| `until` | time | Yes | The last day wanted, read the same way. The platform publishes a day or two late: a day it has no figure for yet has a null index. Example: `2026-09-30T00:00:00Z`. |
+| `since` | time |  | The first day wanted: the China-time (UTC+8) calendar day this moment falls on; 2026-09-01 means 1 September; left out, the 30 days that end on until. Example: `2026-09-01T00:00:00Z`. |
+| `until` | time |  | The last day wanted, read the same way. The platform publishes a day or two late: a day it has no figure for yet has a null index; left out, yesterday. Example: `2026-09-30T00:00:00Z`. |
 | `view` | text |  | How much of each item to return. All three cost the same. Values: `compact`, `standard` (default), `full`. |
 | `fields` | list of text |  | Return only these fields. Each by its path, such as `author.name`. |
 
@@ -85,7 +85,7 @@ Everything comes in one page; no cursor is issued.
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0060 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-26 12:17 UTC, under price book 22, in effect since 2026-11-25 13:46 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-27 06:18 UTC, under price book 23, in effect since 2026-11-27 06:13 UTC; the Playground reads the price in force before a run.
 
 ## If the object does not exist
 
@@ -322,11 +322,7 @@ An example written to the specification, not a recorded response.
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": [
-    "since is required",
-    "until is required",
-    "give exactly one of keywords, keyword"
-  ],
+  "problems": ["give exactly one of keywords, keyword"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -442,4 +438,4 @@ Connect DataXAPI once (one prompt with your key, on the agents page), then ask i
 
 ---
 
-Last checked 2026-11-26 12:17 UTC. Catalog revision 0051cce45e9530b9. [HTML version](https://dataxapi.com/apis/douyin/index/keywords/history/)
+Last checked 2026-11-27 06:18 UTC. Catalog revision 0264e2d6dd4ff743. [HTML version](https://dataxapi.com/apis/douyin/index/keywords/history/)

@@ -33,8 +33,8 @@
 | --- | --- | --- | --- |
 | `keyword` | 文本 | `keywords`、`keyword` 里给且只给一个 | 一个关键词，不超过 50 个字符、不含逗号，不分大小写。示例：`咖啡`。 |
 | `keywords` | 文本列表 | `keywords`、`keyword` 里给且只给一个 | 1 到 5 个关键词，每个不超过 50 个字符、不含逗号，不分大小写；每个有数的词返回一条，平台没收录的词不在返回里。示例：`["咖啡","CityWalk"]`。 |
-| `since` | 时间 | 是 | 从哪一天起（含）：取这个时刻所在的中国时间（UTC+8）自然日，写 2026-09-01 就是 9 月 1 日。示例：`2026-09-01T00:00:00Z`。 |
-| `until` | 时间 | 是 | 到哪一天止（含），取法同上。平台的数通常晚一到两天出：还没出数的日子，指数为 null。示例：`2026-09-30T00:00:00Z`。 |
+| `since` | 时间 |  | 从哪一天起（含）：取这个时刻所在的中国时间（UTC+8）自然日，写 2026-09-01 就是 9 月 1 日；不写时取到 until 为止共 30 天。示例：`2026-09-01T00:00:00Z`。 |
+| `until` | 时间 |  | 到哪一天止（含），取法同上。平台的数通常晚一到两天出：还没出数的日子，指数为 null；不写时是昨天。示例：`2026-09-30T00:00:00Z`。 |
 | `view` | 文本 |  | 返回档位。三档价格相同。取值：`compact`、`standard`（默认）、`full`。 |
 | `fields` | 文本列表 |  | 只要这些字段。按路径写，例如 `author.name`。 |
 
@@ -85,7 +85,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0060 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-26 12:17 UTC，按价目版本 22，2026-11-25 13:46 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-27 06:18 UTC，按价目版本 23，2026-11-27 06:13 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -322,11 +322,7 @@ dataxapi call douyin.index.keywords.history since=2026-09-01T00:00:00Z until=202
   "retry": "after_fix",
   "retry_after_seconds": null,
   "param": null,
-  "problems": [
-    "since is required",
-    "until is required",
-    "give exactly one of keywords, keyword"
-  ],
+  "problems": ["give exactly one of keywords, keyword"],
   "docs_url": "https://dataxapi.com/docs/errors#invalid_params"
 }
 ```
@@ -442,4 +438,4 @@ since 到 until 之间的任意整天，两头都算；时间段长短不影响�
 
 ---
 
-最后核对于 2026-11-26 12:17 UTC。目录修订号 0051cce45e9530b9。 [网页版](https://dataxapi.com/zh/apis/douyin/index/keywords/history/)
+最后核对于 2026-11-27 06:18 UTC。目录修订号 0264e2d6dd4ff743。 [网页版](https://dataxapi.com/zh/apis/douyin/index/keywords/history/)
