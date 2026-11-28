@@ -97,7 +97,7 @@ wechat_channels.videos.search 的备用版：参数和返回相同，另一来�
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.1 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-27 06:18 UTC，按价目版本 23，2026-11-27 06:13 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-28 06:28 UTC，按价目版本 30，2026-11-28 04:43 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 常见报错
 
@@ -425,4 +425,4 @@ $0.1 一次。单次最高扣费 $0.1。
 
 ---
 
-最后核对于 2026-11-27 06:18 UTC。目录修订号 0264e2d6dd4ff743。 [网页版](https://dataxapi.com/zh/apis/wechat_channels/backup/videos/search/)
+最后核对于 2026-11-28 06:28 UTC。目录修订号 ceced48b38f71468。 [网页版](https://dataxapi.com/zh/apis/wechat_channels/backup/videos/search/)

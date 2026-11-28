@@ -67,22 +67,26 @@ Three views: `compact` (the most used fields, long text cut short), `standard` (
 | `metrics.views` | integer | Views. | `compact` | Yes |
 | `metrics.reposts` | integer | Reposts. On this platform: Retweets; quotes are counted apart, in ext.quotes. | `compact` | Yes |
 | `images` | list of link | Image addresses. | `standard` | Yes |
-| `hashtags` | list of text | Hashtags, without the #. | `standard` | Yes |
-| `mentions` | list of object | Accounts mentioned in the text. | `standard` | Yes |
-| `mentions[].id` | text | Account ID. | `standard` | Yes |
-| `mentions[].username` | text | Handle. | `standard` | Yes |
-| `mentions[].name` | text | Display name. | `standard` | Yes |
+| `hashtags` | list of text | Hashtags, without the #. | `standard` | May be absent |
+| `mentions` | list of object | Accounts mentioned in the text. | `standard` | May be absent |
+| `mentions[].id` | text | Account ID. | `standard` | May be absent |
+| `mentions[].username` | text | Handle. | `standard` | May be absent |
+| `mentions[].name` | text | Display name. | `standard` | May be absent |
 | `is_pinned` | yes/no | Whether the author pinned it. | `standard` | Not provided here |
 | `post_id` | text | ID of the thread's root post when this is a reply; otherwise null. | `compact` | Yes |
 | `parent_id` | text | ID of the item it replies to directly; otherwise null. | `compact` | Yes |
 | `root_id` | text | ID of the first-level reply its thread hangs under. | `compact` | The platform has none |
 | `ext.quotes` | integer | Times it was quoted. | `full` | Yes |
-| `ext.quoted_id` | text | ID of the post it quotes. | `full` | Yes |
+| `ext.quoted_id` | text | ID of the post it quotes. | `full` | May be absent |
 | `approximate` | list of object | Which numbers of this item are approximate or lower bounds; absent when all are exact. | `compact` | Yes |
 | `approximate[].field` | text | Path of the field, such as metrics.views. | `compact` | Yes |
 | `approximate[].kind` | text | Approximate, or a lower bound. Values: `approximate`, `lower_bound`. | `compact` | Yes |
 
 A field with no value on an item is `null`. A field this endpoint cannot give is left out and listed in `meta.unavailable`.
+
+With `query`, `sort=popular`: `hashtags`, `mentions`, `ext.quoted_id` may be absent; `meta.unavailable` of each answer says what that answer could not give.
+
+With `query`, `sort=latest`: `hashtags`, `mentions`, `ext.quoted_id` may be absent; `meta.unavailable` of each answer says what that answer could not give.
 
 Typical size of one item: `compact` 707 B, `standard` 1.8 KB, `full` 1.8 KB (measured on the response recorded 2026-10-12 19:10 UTC).
 
@@ -101,7 +105,7 @@ For the next page pass `page.next_cursor` as `cursor`; a cursor is valid for 1 h
 | Invalid parameters, a failure or a timeout | not charged |
 | The most one call can cost | $0.0020 (send `X-Max-Price` to refuse anything above your own limit) |
 
-Prices as read 2026-11-27 06:18 UTC, under price book 23, in effect since 2026-11-27 06:13 UTC; the Playground reads the price in force before a run.
+Prices as read 2026-11-28 06:28 UTC, under price book 30, in effect since 2026-11-28 04:43 UTC; the Playground reads the price in force before a run.
 
 ## Errors
 
@@ -426,4 +430,4 @@ Errors and timeouts are not charged.
 
 ---
 
-Last checked 2026-11-27 06:18 UTC. Catalog revision 0264e2d6dd4ff743. [HTML version](https://dataxapi.com/apis/x/posts/search/)
+Last checked 2026-11-28 06:28 UTC. Catalog revision ceced48b38f71468. [HTML version](https://dataxapi.com/apis/x/posts/search/)

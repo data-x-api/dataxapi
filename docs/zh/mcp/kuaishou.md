@@ -97,4 +97,4 @@
 
 ---
 
-按目录修订号 0264e2d6dd4ff743、价目版本 23生成。 [网页版](https://dataxapi.com/zh/mcp/kuaishou/)
+按目录修订号 ceced48b38f71468、价目版本 30生成。 [网页版](https://dataxapi.com/zh/mcp/kuaishou/)

@@ -67,22 +67,26 @@
 | `metrics.views` | 整数 | 播放或阅读数。 | `compact` | 有 |
 | `metrics.reposts` | 整数 | 转发数。在这个平台上：转推数；引用另计，在 ext.quotes。 | `compact` | 有 |
 | `images` | 链接列表 | 图片地址。 | `standard` | 有 |
-| `hashtags` | 文本列表 | 话题标签，不带 #。 | `standard` | 有 |
-| `mentions` | 对象列表 | 正文里提及的账号。 | `standard` | 有 |
-| `mentions[].id` | 文本 | 账号编号。 | `standard` | 有 |
-| `mentions[].username` | 文本 | 账号名。 | `standard` | 有 |
-| `mentions[].name` | 文本 | 显示名。 | `standard` | 有 |
+| `hashtags` | 文本列表 | 话题标签，不带 #。 | `standard` | 可能没有 |
+| `mentions` | 对象列表 | 正文里提及的账号。 | `standard` | 可能没有 |
+| `mentions[].id` | 文本 | 账号编号。 | `standard` | 可能没有 |
+| `mentions[].username` | 文本 | 账号名。 | `standard` | 可能没有 |
+| `mentions[].name` | 文本 | 显示名。 | `standard` | 可能没有 |
 | `is_pinned` | 是否 | 是否被作者置顶。 | `standard` | 这个接口不提供 |
 | `post_id` | 文本 | 它回复的那条内容所在的主帖编号；不是回复则为 null。 | `compact` | 有 |
 | `parent_id` | 文本 | 它直接回复的那一条的编号；不是回复则为 null。 | `compact` | 有 |
 | `root_id` | 文本 | 所在回复串里第一层那一条的编号。 | `compact` | 平台没有 |
 | `ext.quotes` | 整数 | 被引用的次数。 | `full` | 有 |
-| `ext.quoted_id` | 文本 | 它引用的那条帖子的编号。 | `full` | 有 |
+| `ext.quoted_id` | 文本 | 它引用的那条帖子的编号。 | `full` | 可能没有 |
 | `approximate` | 对象列表 | 这一条里哪些数是约数或下限；都是准确值时不出现。 | `compact` | 有 |
 | `approximate[].field` | 文本 | 字段的路径，如 metrics.views。 | `compact` | 有 |
 | `approximate[].kind` | 文本 | 约数，还是下限。取值：`approximate`、`lower_bound`。 | `compact` | 有 |
 
 某一条本来就没有这个值时，字段给 `null`。这个接口给不了的字段不出现，统一列在 `meta.unavailable`。
+
+带 `query`, `sort=popular` 时：`hashtags`、`mentions`、`ext.quoted_id` 可能没有；每次返回的 `meta.unavailable` 写明这一次给不了哪些。
+
+带 `query`, `sort=latest` 时：`hashtags`、`mentions`、`ext.quoted_id` 可能没有；每次返回的 `meta.unavailable` 写明这一次给不了哪些。
 
 每条数据的典型体积：`compact` 707 B、`standard` 1.8 KB、`full` 1.8 KB（按 2026-10-12 19:10 UTC 录下的那次返回量的）。
 
@@ -101,7 +105,7 @@
 | 参数不合法、出错、超时 | 不收费 |
 | 单次最高扣费 | $0.0020 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 
-价格读取于 2026-11-27 06:18 UTC，按价目版本 23，2026-11-27 06:13 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-28 06:28 UTC，按价目版本 30，2026-11-28 04:43 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 常见报错
 
@@ -426,4 +430,4 @@ $0.0020 一次。单次最高扣费 $0.0020。
 
 ---
 
-最后核对于 2026-11-27 06:18 UTC。目录修订号 0264e2d6dd4ff743。 [网页版](https://dataxapi.com/zh/apis/x/posts/search/)
+最后核对于 2026-11-28 06:28 UTC。目录修订号 ceced48b38f71468。 [网页版](https://dataxapi.com/zh/apis/x/posts/search/)

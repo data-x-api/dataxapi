@@ -1,8 +1,8 @@
 # DataXAPI：全部接口
 
-> 254 个接口，每个一行：名称（链到完整约定）、请求、价格、返回什么。基础地址 `https://api.dataxapi.com`。怎么调用、怎么付费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
+> 258 个接口，每个一行：名称（链到完整约定）、请求、价格、返回什么。基础地址 `https://api.dataxapi.com`。怎么调用、怎么付费、怎么处理报错，所有接口都一样：https://dataxapi.com/zh/llms.txt
 
-生成自 catalog revision 0264e2d6dd4ff743, price book 23。英文版：https://dataxapi.com/llms-full.txt
+生成自 catalog revision ceced48b38f71468, price book 30。英文版：https://dataxapi.com/llms-full.txt
 
 ## 抖音
 
@@ -43,6 +43,7 @@
 - [抖音星图营销活动日历](https://dataxapi.com/zh/apis/douyin/xingtu/campaigns/list.md) `GET /v1/douyin/xingtu/campaigns/list` $0.004 一次。按起止时间取星图营销日历上的活动：平台大事件、电商节点、情绪节点、创意营销、行业活动，每个带名称、介绍、类型、进行到哪一步、招商期和活动期。一次给全，不翻页。
 - [抖音星图视频数据报告（播放量、完播率）](https://dataxapi.com/zh/apis/douyin/xingtu/videos/get.md) `GET /v1/douyin/xingtu/videos/get` $0.004 一次。按视频编号或链接取星图对一条抖音视频的数据报告：播放量和各项互动数，加上完播率、互动率、时长、作者粉丝数和作者的星图达人编号（可接着查这位达人的报价和传播数据）。星图收录的视频才有（多是星图达人的视频）。
 - [抖音搜索框联想词](https://dataxapi.com/zh/apis/douyin/keywords/related.md) `GET /v1/douyin/keywords/related` $0.02 一次。按关键词取抖音搜索框里输入这个词时给的联想词（下拉补全），按抖音列出的顺序排，一次约 10 个。只有词和名次，没有指数。
+- [抖音直播搜索](https://dataxapi.com/zh/apis/douyin/lives/search.md) `GET /v1/douyin/lives/search` $0.02 一次。按抖音号或昵称找主播，看此刻是否在直播：账号编号、抖音号、昵称、头像、粉丝数、是否在播，在播的给直播的房间编号和标题。按内容词（如“游戏”）一般搜不到。
 - [抖音无水印视频和图片下载地址](https://dataxapi.com/zh/apis/douyin/videos/media/get.md) `GET /v1/douyin/videos/media/get` $0.002 一次。给一条抖音视频或图文的编号、链接或分享口令，返回它的全部文件地址：无水印视频的各档清晰度（另给一个平台的播放跳转地址）、封面、背景音乐、图文每张图的 JPEG 和实况图视频。地址不用带请求头，签名里写了过期时间的都给出 expires_at，过期了再调一次即可。
 - [抖音音乐详情（背景音乐 MP3 和使用人数）](https://dataxapi.com/zh/apis/douyin/music/get.md) `GET /v1/douyin/music/get` $0.002 一次。按音乐编号取一首抖音音乐：名字、作者、时长、音频文件地址（多为 MP3）、封面、抖音是否把它标为商用音乐（在抖音商用音乐库里）、是不是视频原声，以及用它发过作品的人数。音乐编号在视频的背景音乐里、音乐榜的 id 里。
 - [抖音用户视频（备用版）](https://dataxapi.com/zh/apis/douyin/backup/users/videos/list.md) `GET /v1/douyin/backup/users/videos/list` $0.03 一次。抖音用户视频的备用版，原接口取不到时改调：参数和返回相同，价格更高。
@@ -278,6 +279,8 @@
 - [微信公众号资料](https://dataxapi.com/zh/apis/wechat_mp/accounts/get.md) `GET /v1/wechat_mp/accounts/get` $0.02 一次。按公众号原始编号取资料：名称、IP 属地、原创文章数、关联的视频号、是否被封禁。
 - [微信公众号文章评论](https://dataxapi.com/zh/apis/wechat_mp/articles/comments/list.md) `GET /v1/wechat_mp/articles/comments/list` $0.02 一次。按文章链接取一页公众号文章的精选评论：正文、评论者、点赞数、回复数、发布时间、IP 属地、是否置顶。
 - [微信公众号文章详情](https://dataxapi.com/zh/apis/wechat_mp/articles/get.md) `GET /v1/wechat_mp/articles/get` $0.02 一次。按文章链接取一篇公众号文章：标题、正文、发布时间、公众号的名称和编号，以及头条还是次条、内容形态、封面、摘要、署名作者、阅读原文链接和发文 IP 属地。
+- [微信公众号文章详情和互动数据](https://dataxapi.com/zh/apis/wechat_mp/articles/full/get.md) `GET /v1/wechat_mp/articles/full/get` $0.04 一次。按文章长链接一次取一篇公众号文章的正文和此刻的数字：标题、正文、发布时间、公众号，以及阅读、点赞、推荐、分享、收藏、评论数，不用分两次调。
+- [微信公众号低粉爆文榜](https://dataxapi.com/zh/apis/wechat_mp/articles/trending.md) `GET /v1/wechat_mp/articles/trending` $0.06 一次。按天取公众号低粉爆文榜：近 3、7 或 30 天发的文章里，阅读数远超本号平时水平的，按爆文分排好，带阅读、点赞、推荐、分享、评论数和高出平时的倍数。
 - [微信公众号文章互动数据](https://dataxapi.com/zh/apis/wechat_mp/articles/metrics.md) `GET /v1/wechat_mp/articles/metrics` $0.02 一次。按文章长链接取这篇公众号文章此刻的数字：阅读、点赞、推荐、分享、收藏、评论。
 - [微信公众号评论回复](https://dataxapi.com/zh/apis/wechat_mp/comments/replies/list.md) `GET /v1/wechat_mp/comments/replies/list` $0.02 一次。按评论编号和文章链接取公众号文章一条评论下面的回复：正文、回复者、点赞数、发布时间、IP 属地、回复的是哪一条。只给前面的一批，不翻页。
 - [微信公众号账号搜索](https://dataxapi.com/zh/apis/wechat_mp/accounts/search.md) `GET /v1/wechat_mp/accounts/search` 按返回条数 $0.05635 一条，每次最少 $0.06、最多 $0.84525。按名字或关键词找公众号，最像的排前面：原始编号、微信号、名称、头像、主体名称，和第三方数据库的预估活跃粉丝、头条平均阅读和点赞、每周发文数（估计值，非官方，可能滞后数月）。按条计费，limit 定条数（默认 5，最多 15）。只要编号不要估计值，用按次计费的 wechat.accounts.search 更省。
@@ -302,6 +305,7 @@
 - [知乎回答评论](https://dataxapi.com/zh/apis/zhihu/answers/comments/list.md) `GET /v1/zhihu/answers/comments/list` $0.002 一次。按回答编号取一页知乎评论：正文、评论者、点赞数、回复数、发布时间、IP 属地。
 - [知乎回答详情](https://dataxapi.com/zh/apis/zhihu/answers/get.md) `GET /v1/zhihu/answers/get` $0.002 一次。按回答编号或链接取一条知乎回答：所属问题、正文、作者、发布时间。
 - [知乎文章详情](https://dataxapi.com/zh/apis/zhihu/articles/get.md) `GET /v1/zhihu/articles/get` $0.002 一次。按文章编号或链接取一篇知乎专栏文章：标题、正文、作者、赞同数、评论数、话题。
+- [知乎搜索框联想词](https://dataxapi.com/zh/apis/zhihu/keywords/related.md) `GET /v1/zhihu/keywords/related` $0.002 一次。按关键词取知乎搜索框里输入这个词时给的联想词（下拉补全），按知乎列出的顺序排，一次约 10 个。只有词和名次，没有指数。
 - [知乎专栏文章列表](https://dataxapi.com/zh/apis/zhihu/columns/articles/list.md) `GET /v1/zhihu/columns/articles/list` $0.002 一次。按专栏编号取一页知乎专栏里的文章：标题、正文、作者、发布时间、赞同数、评论数。
 - [知乎评论回复](https://dataxapi.com/zh/apis/zhihu/comments/replies/list.md) `GET /v1/zhihu/comments/replies/list` $0.002 一次。按一级评论的编号取一页它下面的回复：正文、回复者、点赞数、回复的是哪一条、IP 属地。
 - [知乎想法详情](https://dataxapi.com/zh/apis/zhihu/pins/get.md) `GET /v1/zhihu/pins/get` $0.002 一次。按想法编号或链接取一条知乎想法：正文、图片、作者、发布时间、点赞、评论、收藏、转发数。

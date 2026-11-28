@@ -100,7 +100,7 @@ The server lists 5 tools:
 - [Catalog](https://api.dataxapi.com/v1/catalog/capabilities), [status](https://api.dataxapi.com/v1/catalog/status), [error codes](https://api.dataxapi.com/v1/catalog/errors): no key needed.
 - [Skill packages](https://dataxapi.com/skills/manifest.json), and the files an agent finds a service by: [API catalog](https://dataxapi.com/.well-known/api-catalog), [MCP server card](https://dataxapi.com/.well-known/mcp/server-card.json), [index of skills](https://dataxapi.com/.well-known/agent-skills/index.json), [AI catalog](https://dataxapi.com/.well-known/ai-catalog.json).
 
-Generated from catalog revision 0264e2d6dd4ff743, price book 23.
+Generated from catalog revision ceced48b38f71468, price book 30.
 
 ---
 

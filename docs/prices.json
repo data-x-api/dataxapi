@@ -1,9 +1,9 @@
 {
- "revision": "0264e2d6dd4ff743",
- "generated_from": "catalog revision 0264e2d6dd4ff743, price book 23",
+ "revision": "ceced48b38f71468",
+ "generated_from": "catalog revision ceced48b38f71468, price book 30",
  "prices": {
-  "version": "23",
-  "effective_at": "2026-11-27T06:13:19.913Z",
+  "version": "30",
+  "effective_at": "2026-11-28T04:43:07.516Z",
   "currency": "USD"
  },
  "base_url": "https://api.dataxapi.com",
@@ -1438,6 +1438,24 @@
    "docs": "https://dataxapi.com/apis/wechat_mp/articles/get/"
   },
   {
+   "id": "wechat_mp.articles.full.get",
+   "path": "/v1/wechat_mp/articles/full/get",
+   "unit": "call",
+   "price": "0.04",
+   "max_charge": "0.04",
+   "charge_when_empty": "0",
+   "docs": "https://dataxapi.com/apis/wechat_mp/articles/full/get/"
+  },
+  {
+   "id": "wechat_mp.articles.trending",
+   "path": "/v1/wechat_mp/articles/trending",
+   "unit": "call",
+   "price": "0.06",
+   "max_charge": "0.06",
+   "charge_when_empty": "0.06",
+   "docs": "https://dataxapi.com/apis/wechat_mp/articles/trending/"
+  },
+  {
    "id": "wechat_mp.articles.metrics",
    "path": "/v1/wechat_mp/articles/metrics",
    "unit": "call",
@@ -1693,6 +1711,15 @@
    "charge_when_empty": "0",
    "charge_when_not_found": "0.002",
    "docs": "https://dataxapi.com/apis/zhihu/articles/get/"
+  },
+  {
+   "id": "zhihu.keywords.related",
+   "path": "/v1/zhihu/keywords/related",
+   "unit": "call",
+   "price": "0.002",
+   "max_charge": "0.002",
+   "charge_when_empty": "0.002",
+   "docs": "https://dataxapi.com/apis/zhihu/keywords/related/"
   },
   {
    "id": "zhihu.columns.articles.list",
@@ -2182,6 +2209,15 @@
    "max_charge": "0.02",
    "charge_when_empty": "0.02",
    "docs": "https://dataxapi.com/apis/douyin/keywords/related/"
+  },
+  {
+   "id": "douyin.lives.search",
+   "path": "/v1/douyin/lives/search",
+   "unit": "call",
+   "price": "0.02",
+   "max_charge": "0.02",
+   "charge_when_empty": "0.02",
+   "docs": "https://dataxapi.com/apis/douyin/lives/search/"
   },
   {
    "id": "xiaohongshu.keywords.related",

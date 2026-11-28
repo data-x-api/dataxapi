@@ -95,4 +95,4 @@ Every key can carry a daily or monthly budget, and every call a `max_price`. Whe
 
 ---
 
-Generated from catalog revision 0264e2d6dd4ff743, price book 23. [Page](https://dataxapi.com/mcp/wechat_mp/)
+Generated from catalog revision ceced48b38f71468, price book 30. [Page](https://dataxapi.com/mcp/wechat_mp/)

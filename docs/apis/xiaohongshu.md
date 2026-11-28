@@ -4,7 +4,7 @@
 
 > 33 endpoints. How to call, pay and handle errors is the same everywhere: https://dataxapi.com/llms.txt
 
-Generated from catalog revision 0264e2d6dd4ff743, price book 23.
+Generated from catalog revision ceced48b38f71468, price book 30.
 
 ## xiaohongshu.images.search
 

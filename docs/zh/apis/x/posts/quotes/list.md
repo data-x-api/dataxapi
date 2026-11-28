@@ -102,7 +102,7 @@
 | 单次最高扣费 | $0.0060 (带 `X-Max-Price` 可以设自己的上限，超过就不执行) |
 | 带 `sort=popular` 时 | $0.0020 一次；单次最高 $0.0020 |
 
-价格读取于 2026-11-27 06:18 UTC，按价目版本 23，2026-11-27 06:13 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
+价格读取于 2026-11-28 06:28 UTC，按价目版本 30，2026-11-28 04:43 UTC 起生效；在 Playground 里运行前会再读一次当前价格。
 
 ## 对象不存在时
 
@@ -425,4 +425,4 @@ X 列表的接口：[X 列表帖子](https://dataxapi.com/zh/apis/x/lists/posts/
 
 ---
 
-最后核对于 2026-11-27 06:18 UTC。目录修订号 0264e2d6dd4ff743。 [网页版](https://dataxapi.com/zh/apis/x/posts/quotes/list/)
+最后核对于 2026-11-28 06:28 UTC。目录修订号 ceced48b38f71468。 [网页版](https://dataxapi.com/zh/apis/x/posts/quotes/list/)

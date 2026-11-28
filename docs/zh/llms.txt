@@ -2,7 +2,7 @@
 
 > 一个 HTTP 接口取市场数据，按次付费。所有接口的参数名、返回格式、报错结构都统一。21 个平台，254 个接口。免费试用最多 333 次，不用绑卡。
 
-生成自 catalog revision 0264e2d6dd4ff743, price book 23。英文版：https://dataxapi.com/llms.txt
+生成自 catalog revision ceced48b38f71468, price book 30。英文版：https://dataxapi.com/llms.txt
 
 ## 怎么调用
 
